@@ -13,9 +13,15 @@
             "matchpath": "wiki.call-cc.org/man/5/Module.*",
             "type": "Section"
         },
+        "#content a:first-of-type h2": {
+            "matchpath": "wiki.call-cc.org/man/5/[^M][^o][^d][^u]",
+            "type": "Guide"
+        },
         "div#content a h3": "Section",
         "span.definition.procedure tt": "Procedure",
-        "span.definition.syntax tt": "Macro"
+        "span.definition.syntax tt": "Macro",
+        "span.definition.parameter tt": "Parameter",
+        "span.definition.constant tt": "Constant"
     },
     "ignore": [
     ],
