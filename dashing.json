@@ -1,0 +1,25 @@
+{
+    "name": "Chicken Scheme",
+    "package": "chicken",
+    "index": "wiki.call-cc.org/man/5/Modules.html",
+    "selectors": {
+        "div#content a:first-of-type h2": {
+            "matchpath": "wiki.call-cc.org/man/5/Module.*",
+            "type": "Module",
+            "regexp": "Module ",
+            "replacement": ""
+        },
+        "div#content a h2": {
+            "matchpath": "wiki.call-cc.org/man/5/Module.*",
+            "type": "Section"
+        },
+        "div#content a h3": "Section",
+        "span.definition.procedure tt": "Procedure",
+        "span.definition.syntax tt": "Macro"
+    },
+    "ignore": [
+    ],
+    "icon32x32": "wiki.call-cc.org/chicken-small.png",
+    "allowJS": false,
+    "ExternalURL": "http://wiki.call-cc.org/man/5/The%20User%27s%20Manual"
+}
