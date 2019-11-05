@@ -1,7 +1,7 @@
 {
     "name": "Chicken Scheme",
     "package": "chicken",
-    "index": "wiki.call-cc.org/man/5/Modules.html",
+    "index": "wiki.call-cc.org/man/5/index.html",
     "selectors": {
         "div#content a:first-of-type h2": {
             "matchpath": "wiki.call-cc.org/man/5/Module.*",
@@ -21,7 +21,9 @@
         "span.definition.procedure tt": "Procedure",
         "span.definition.syntax tt": "Macro",
         "span.definition.parameter tt": "Parameter",
-        "span.definition.constant tt": "Constant"
+        "span.definition.constant tt": "Constant",
+        "span.definition.type tt": "Type",
+        "span.definition.read tt": "Literal"
     },
     "ignore": [
     ],
