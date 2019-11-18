@@ -1,5 +1,5 @@
 # Download the relevant docs
-wget --mirror --convert-links --adjust-extension --page-requisite --no-parent --reject-regex "(.*)\?(.*)" http://wiki.call-cc.org/man/5/
+wget --mirror --convert-links --adjust-extension --page-requisite --no-parent --reject-regex "(.*)\?(.*)" http://wiki.call-cc.org/man/5/ 
 
 # Adjust chicken.css
 cat <<EOF >> wiki.call-cc.org/chicken.css
@@ -12,4 +12,5 @@ cat <<EOF >> wiki.call-cc.org/chicken.css
 }
 EOF
 
+# then build it
 dashing build
