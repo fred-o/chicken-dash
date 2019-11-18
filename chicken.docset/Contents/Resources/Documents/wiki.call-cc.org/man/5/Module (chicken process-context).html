@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken process-context) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process-context)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process-context)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process-context)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken process-context).html#module-chicken-process-context">Module (chicken process-context)</a>
+<ol>
+<li><a href="Module (chicken process-context).html#information-about-the-programs-invocation">Information about the program&#39;s invocation</a>
+<ol>
+<li><a href="Module (chicken process-context).html#argcargv">argc+argv</a></li>
+<li><a href="Module (chicken process-context).html#argv">argv</a></li></ol></li>
+<li><a href="Module (chicken process-context).html#command-line-arguments">command-line-arguments</a>
+<ol>
+<li><a href="Module (chicken process-context).html#executable-pathname">executable-pathname</a></li></ol></li>
+<li><a href="Module (chicken process-context).html#program-name">program-name</a></li>
+<li><a href="Module (chicken process-context).html#access-to-environment-variables">Access to environment variables</a>
+<ol>
+<li><a href="Module (chicken process-context).html#get-environment-variables">get-environment-variables</a></li>
+<li><a href="Module (chicken process-context).html#get-environment-variable">get-environment-variable</a></li>
+<li><a href="Module (chicken process-context).html#set-environment-variable">set-environment-variable!</a></li>
+<li><a href="Module (chicken process-context).html#unset-environment-variable">unset-environment-variable!</a></li></ol></li>
+<li><a href="Module (chicken process-context).html#process-filesystem-context">Process filesystem context</a>
+<ol>
+<li><a href="Module (chicken process-context).html#change-directory">change-directory</a></li>
+<li><a href="Module (chicken process-context).html#current-directory">current-directory</a></li></ol></li></ol></li></ol></div><a href="Module (chicken process-context).html#module-chicken-process-context">
+<a class="dashingAutolink" name="autolink-1188"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20process-context%29"></a><a class="dashingAutolink" name="autolink-1194"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20process-context%29"></a><h2 id="module-chicken-process-context">Module (chicken process-context)</h2></a>
+<p>This module provides access to the current process context.</p><a href="Module (chicken process-context).html#information-about-the-programs-invocation">
+<a class="dashingAutolink" name="autolink-1189"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Information%20about%20the%20program%27s%20invocation"></a><h3 id="information-about-the-programs-invocation">Information about the program&#39;s invocation</h3></a><a href="Module (chicken process-context).html#argcargv">
+<h4 id="argcargv">argc+argv</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1195"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28argc%2Bargv%29"></a><tt>(argc+argv)</tt>
+<br/></span>
+<p>Returns two values: an integer and a foreign-pointer object representing the <tt>argc</tt> and <tt>argv</tt> arguments passed to the current process.</p><a href="Module (chicken process-context).html#argv">
+<h4 id="argv">argv</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1196"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28argv%29"></a><tt>(argv)</tt>
+<br/></span>
+<p>Return a list of all supplied command-line arguments. The first item in the list is a string containing the name of the executing program. The other items are the arguments passed to the application. It depends on the host-shell whether arguments are expanded (&#39;globbed&#39;) or not.</p><a href="Module (chicken process-context).html#command-line-arguments">
+<a class="dashingAutolink" name="autolink-1190"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/command-line-arguments"></a><h3 id="command-line-arguments">command-line-arguments</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1205"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/%28command-line-arguments%29"></a><tt>(command-line-arguments)</tt>
+<br/></span>
+<p>Contains the list of arguments passed to this program, with the name of the program and any runtime options (all options starting with <tt>-:</tt>) removed.</p><a href="Module (chicken process-context).html#executable-pathname">
+<h4 id="executable-pathname">executable-pathname</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1197"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28executable-pathname%29"></a><tt>(executable-pathname)</tt>
+<br/></span>
+<p>Returns a full pathname of the currently-running executable, or <tt>#f</tt> if it couldn&#39;t be determined. When evaluating code in the interpreter, this will be a path to <tt>csi</tt>.</p><a href="Module (chicken process-context).html#program-name">
+<a class="dashingAutolink" name="autolink-1191"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/program-name"></a><h3 id="program-name">program-name</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1206"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/%28program-name%29"></a><tt>(program-name)</tt>
+<br/></span>
+<p>The name of the currently executing program. This is equivalent to <tt>(car (argv))</tt> for compiled programs or the filename following the <tt>-script</tt> option in interpreted scripts.</p><a href="Module (chicken process-context).html#access-to-environment-variables">
+<a class="dashingAutolink" name="autolink-1192"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Access%20to%20environment%20variables"></a><h3 id="access-to-environment-variables">Access to environment variables</h3></a><a href="Module (chicken process-context).html#get-environment-variables">
+<h4 id="get-environment-variables">get-environment-variables</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1198"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28get-environment-variables%29"></a><tt>(get-environment-variables)</tt>
+<br/></span>
+<p>Returns a association list of the environment variables and their current values (see also <a href="http://srfi.schemers.org/srfi-98/" class="external">SRFI-98</a>).</p><a href="Module (chicken process-context).html#get-environment-variable">
+<h4 id="get-environment-variable">get-environment-variable</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1199"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28get-environment-variable%20STRING%29"></a><tt>(get-environment-variable STRING)</tt>
+<br/></span>
+<p>Returns the value of the environment variable <tt>STRING</tt> or <tt>#f</tt> if that variable is not defined. See also <a href="http://srfi.schemers.org/srfi-98/" class="external">SRFI-98</a>.</p><a href="Module (chicken process-context).html#set-environment-variable">
+<h4 id="set-environment-variable">set-environment-variable!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1200"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-environment-variable%21%20VARIABLE%20VALUE%29"></a><tt>(set-environment-variable! VARIABLE VALUE)</tt>
+<br/></span>
+<p>Sets the environment variable named <tt>VARIABLE</tt> to <tt>VALUE</tt>. Both arguments should be strings. If the variable is not defined in the environment, a new definition is created.</p><a href="Module (chicken process-context).html#unset-environment-variable">
+<h4 id="unset-environment-variable">unset-environment-variable!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1201"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28unset-environment-variable%21%20VARIABLE%29"></a><tt>(unset-environment-variable! VARIABLE)</tt>
+<br/></span>
+<p>Removes the definition of the environment variable <tt>VARIABLE</tt> from the environment of the current process. If the variable is not defined, nothing happens.</p><a href="Module (chicken process-context).html#process-filesystem-context">
+<a class="dashingAutolink" name="autolink-1193"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Process%20filesystem%20context"></a><h3 id="process-filesystem-context">Process filesystem context</h3></a><a href="Module (chicken process-context).html#change-directory">
+<h4 id="change-directory">change-directory</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1202"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28change-directory%20NAME%29"></a><tt>(change-directory NAME)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1203"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28current-directory%29%20NAME%29"></a><tt>(set! (current-directory) NAME)</tt>
+<br/></span>
+<p>Changes the current working directory to <tt>NAME</tt>.</p><a href="Module (chicken process-context).html#current-directory">
+<h4 id="current-directory">current-directory</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1204"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-directory%29"></a><tt>(current-directory)</tt>
+<br/></span>
+<p>Returns the name of the current working directory.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken process signal).html" class="internal">Module (chicken process signal)</a></p>
+<p>Next: <a href="Module (chicken process-context posix).html" class="internal">Module (chicken process-context posix)</a></p></div></body></html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken keyword) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20keyword)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20keyword)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20keyword)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken keyword).html#module-chicken-keyword">Module (chicken keyword)</a>
+<ol>
+<li><a href="Module (chicken keyword).html#get-keyword">get-keyword</a></li>
+<li><a href="Module (chicken keyword).html#keyword">keyword?</a></li>
+<li><a href="Module (chicken keyword).html#keyword-string">keyword-&gt;string</a></li>
+<li><a href="Module (chicken keyword).html#string-keyword">string-&gt;keyword</a></li></ol></li></ol></div><a href="Module (chicken keyword).html#module-chicken-keyword">
+<a class="dashingAutolink" name="autolink-846"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20keyword%29"></a><a class="dashingAutolink" name="autolink-851"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20keyword%29"></a><h2 id="module-chicken-keyword">Module (chicken keyword)</h2></a>
+<p>Keywords are written like symbols, but prefixed with <tt>#:</tt>.  They evaluate to themselves. While they behave a lot like symbols in that they are interned when read and can be compared in constant time with <tt>eq?</tt>, they are a distinct type.  In particular, they have no plist, they cannot be bound or assigned to and aren&#39;t <tt>eq?</tt> to a symbol with the same spelling.  Procedures can use keywords to accept optional named parameters in addition to normal required parameters.</p>
+<p>The parameter <tt>keyword-style</tt> and the compiler/interpreter option <tt>-keyword-style</tt> can be used to allow an additional keyword syntax, either compatible to Common LISP, or to DSSSL.  As long as this parameter is set to <tt>#:suffix</tt>, CHICKEN conforms to <a href="http://srfi.schemers.org/srfi-88/srfi-88.html" class="external">SRFI-88</a>.</p><a href="Module (chicken keyword).html#get-keyword">
+<h4 id="get-keyword">get-keyword</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-847"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28get-keyword%20KEYWORD%20ARGLIST%20%5BTHUNK%5D%29"></a><tt>(get-keyword KEYWORD ARGLIST [THUNK])</tt>
+<br/></span>
+<p>Returns the argument from <tt>ARGLIST</tt> specified under the keyword <tt>KEYWORD</tt>. If the keyword is not found, then the zero-argument procedure <tt>THUNK</tt> is invoked and the result value is returned. If <tt>THUNK</tt> is not given, <tt>#f</tt> is returned.</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren2">(<span class="default">increase x . args</span>)</span>
+  <span class="paren2">(<span class="default">+ x <span class="paren3">(<span class="default">get-keyword <span class="keyword">#:amount</span> args <span class="paren4">(<span class="default"><i><span class="symbol">lambda</span></i> <span class="paren5">(<span class="default"></span>)</span> 1</span>)</span></span>)</span></span>)</span> </span>)</span>
+<span class="paren1">(<span class="default">increase 123</span>)</span>                                      ==&gt; 124
+<span class="paren1">(<span class="default">increase 123 <span class="keyword">#:amount</span> 10</span>)</span>                          ==&gt; 133</tt></pre>
+<p>Note: the <tt>KEYWORD</tt> may actually be any kind of object.</p><a href="Module (chicken keyword).html#keyword">
+<h4 id="keyword">keyword?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-848"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28keyword%3F%20X%29"></a><tt>(keyword? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a keyword, or <tt>#f</tt> otherwise.</p><a href="Module (chicken keyword).html#keyword-string">
+<h4 id="keyword-string">keyword-&gt;string</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-849"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28keyword-%3Estring%20KEYWORD%29"></a><tt>(keyword-&gt;string KEYWORD)</tt>
+<br/></span>
+<p>Transforms <tt>KEYWORD</tt> into a string.</p><a href="Module (chicken keyword).html#string-keyword">
+<h4 id="string-keyword">string-&gt;keyword</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-850"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-%3Ekeyword%20STRING%29"></a><tt>(string-&gt;keyword STRING)</tt>
+<br/></span>
+<p>Returns a keyword with the name <tt>STRING</tt>.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken irregex).html" class="internal">Module (chicken irregex)</a></p>
+<p>Next: <a href="Module (chicken load).html" class="internal">Module (chicken load)</a></p></div></body></html>

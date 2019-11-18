@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken memory representation) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20memory%20representation)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20memory%20representation)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20memory%20representation)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken memory representation).html#module-chicken-memory-representation">Module (chicken memory representation)</a>
+<ol>
+<li><a href="Module (chicken memory representation).html#extending-procedures-with-data">Extending procedures with data</a>
+<ol>
+<li><a href="Module (chicken memory representation).html#extend-procedure">extend-procedure</a></li>
+<li><a href="Module (chicken memory representation).html#extended-procedure">extended-procedure?</a></li>
+<li><a href="Module (chicken memory representation).html#procedure-data">procedure-data</a></li>
+<li><a href="Module (chicken memory representation).html#set-procedure-data">set-procedure-data!</a></li></ol></li>
+<li><a href="Module (chicken memory representation).html#low-level-data-access">Low-level data access</a>
+<ol>
+<li><a href="Module (chicken memory representation).html#vector-like">vector-like?</a></li>
+<li><a href="Module (chicken memory representation).html#block-ref">block-ref</a></li>
+<li><a href="Module (chicken memory representation).html#block-set">block-set!</a></li>
+<li><a href="Module (chicken memory representation).html#number-of-slots">number-of-slots</a></li>
+<li><a href="Module (chicken memory representation).html#number-of-bytes">number-of-bytes</a></li>
+<li><a href="Module (chicken memory representation).html#object-copy">object-copy</a></li></ol></li>
+<li><a href="Module (chicken memory representation).html#record-instance">Record instance</a>
+<ol>
+<li><a href="Module (chicken memory representation).html#make-record-instance">make-record-instance</a></li>
+<li><a href="Module (chicken memory representation).html#record-instance">record-instance?</a></li>
+<li><a href="Module (chicken memory representation).html#record-instance-type">record-instance-type</a></li>
+<li><a href="Module (chicken memory representation).html#record-instance-length">record-instance-length</a></li>
+<li><a href="Module (chicken memory representation).html#record-instance-slot">record-instance-slot</a></li>
+<li><a href="Module (chicken memory representation).html#record-instance-slot-set">record-instance-slot-set!</a></li>
+<li><a href="Module (chicken memory representation).html#record-vector">record-&gt;vector</a></li></ol></li>
+<li><a href="Module (chicken memory representation).html#magic">Magic</a>
+<ol>
+<li><a href="Module (chicken memory representation).html#object-become">object-become!</a></li>
+<li><a href="Module (chicken memory representation).html#mutate-procedure">mutate-procedure!</a></li></ol></li></ol></li></ol></div><a href="Module (chicken memory representation).html#module-chicken-memory-representation">
+<a class="dashingAutolink" name="autolink-885"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20memory%20representation%29"></a><a class="dashingAutolink" name="autolink-890"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20memory%20representation%29"></a><h2 id="module-chicken-memory-representation">Module (chicken memory representation)</h2></a>
+<p>The procedures from this module operate on the in-memory representation of Scheme objects.  These procedures <i>are</i> safe, so, for example, unlike the procedures from <tt>(chicken memory)</tt> these procedures <i>will</i> type-check and range-check their arguments, but you still need to know what you&#39;re doing because the effects may be surprising for the uninitiated.</p><a href="Module (chicken memory representation).html#extending-procedures-with-data">
+<a class="dashingAutolink" name="autolink-886"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Extending%20procedures%20with%20data"></a><h3 id="extending-procedures-with-data">Extending procedures with data</h3></a><a href="Module (chicken memory representation).html#extend-procedure">
+<h4 id="extend-procedure">extend-procedure</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-891"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28extend-procedure%20PROCEDURE%20X%29"></a><tt>(extend-procedure PROCEDURE X)</tt>
+<br/></span>
+<p>Returns a copy of the procedure <tt>PROCEDURE</tt> which contains an additional data slot initialized to <tt>X</tt>. If <tt>PROCEDURE</tt> is already an extended procedure, then its data slot is changed to contain <tt>X</tt> and the same procedure is returned. Signals an error when <tt>PROCEDURE</tt> is not a procedure.</p><a href="Module (chicken memory representation).html#extended-procedure">
+<h4 id="extended-procedure">extended-procedure?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-892"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28extended-procedure%3F%20PROCEDURE%29"></a><tt>(extended-procedure? PROCEDURE)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>PROCEDURE</tt> is an extended procedure, or <tt>#f</tt> otherwise.</p><a href="Module (chicken memory representation).html#procedure-data">
+<h4 id="procedure-data">procedure-data</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-893"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28procedure-data%20PROCEDURE%29"></a><tt>(procedure-data PROCEDURE)</tt>
+<br/></span>
+<p>Returns the data object contained in the extended procedure <tt>PROCEDURE</tt>, or <tt>#f</tt> if it is not an extended procedure.</p><a href="Module (chicken memory representation).html#set-procedure-data">
+<h4 id="set-procedure-data">set-procedure-data!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-894"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-procedure-data%21%20PROCEDURE%20X%29"></a><tt>(set-procedure-data! PROCEDURE X)</tt>
+<br/></span>
+<p>Changes the data object contained in the extended procedure <tt>PROCEDURE</tt> to <tt>X</tt>. Signals an error when <tt>PROCEDURE</tt> is not an extended procedure.</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> foo
+  <span class="paren2">(<span class="default">letrec <span class="paren3">(<span class="default"><span class="paren4">(<span class="default">f <span class="paren5">(<span class="default"><i><span class="symbol">lambda</span></i> <span class="paren6">(<span class="default"></span>)</span> <span class="paren6">(<span class="default">procedure-data x</span>)</span></span>)</span></span>)</span>
+           <span class="paren4">(<span class="default">x #f</span>)</span> </span>)</span>
+    <span class="paren3">(<span class="default">set! x <span class="paren4">(<span class="default">extend-procedure f 123</span>)</span></span>)</span>
+    x</span>)</span> </span>)</span>
+<span class="paren1">(<span class="default">foo</span>)</span>                                         ==&gt; 123
+<span class="paren1">(<span class="default">set-procedure-data! foo &#39;hello</span>)</span>
+<span class="paren1">(<span class="default">foo</span>)</span>                                         ==&gt; hello</tt></pre><a href="Module (chicken memory representation).html#low-level-data-access">
+<a class="dashingAutolink" name="autolink-887"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Low-level%20data%20access"></a><h3 id="low-level-data-access">Low-level data access</h3></a>
+<p>These procedures operate with what are known as <i>vector-like objects</i>. A <i>vector-like object</i> is a vector, record structure, pair, symbol or keyword: it is an aggregation of other Scheme objects.</p>
+<p>Note that strings and blobs are not considered vector-like (they are considered to be <i>byte vectors</i>, which are objects of mostly unstructured binary data).</p><a href="Module (chicken memory representation).html#vector-like">
+<h4 id="vector-like">vector-like?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-895"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28vector-like%3F%20X%29"></a><tt>(vector-like? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> when <tt>X</tt> is a vector-like object, returns <tt>#f</tt> otherwise.</p><a href="Module (chicken memory representation).html#block-ref">
+<h4 id="block-ref">block-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-896"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28block-ref%20VECTOR%2A%20INDEX%29"></a><tt>(block-ref VECTOR* INDEX)</tt>
+<br/></span>
+<p>Returns the contents of the <tt>INDEX</tt>th slot of the vector-like object <tt>VECTOR*</tt>.</p><a href="Module (chicken memory representation).html#block-set">
+<h4 id="block-set">block-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-897"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28block-set%21%20VECTOR%2A%20INDEX%20X%29"></a><tt>(block-set! VECTOR* INDEX X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-898"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28block-ref%20VECTOR%2A%20INDEX%29%20X%29"></a><tt>(set! (block-ref VECTOR* INDEX) X)</tt>
+<br/></span>
+<p>Sets the contents of the <tt>INDEX</tt>th slot of the vector-like object <tt>VECTOR*</tt> to the value of <tt>X</tt>.</p><a href="Module (chicken memory representation).html#number-of-slots">
+<h4 id="number-of-slots">number-of-slots</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-899"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28number-of-slots%20VECTOR%2A%29"></a><tt>(number-of-slots VECTOR*)</tt>
+<br/></span>
+<p>Returns the number of slots that the vector-like object <tt>VECTOR*</tt> contains.</p><a href="Module (chicken memory representation).html#number-of-bytes">
+<h4 id="number-of-bytes">number-of-bytes</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-900"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28number-of-bytes%20BLOCK%29"></a><tt>(number-of-bytes BLOCK)</tt>
+<br/></span>
+<p>Returns the number of bytes that the object <tt>BLOCK</tt> contains. <tt>BLOCK</tt> may be any non-immediate value.</p><a href="Module (chicken memory representation).html#object-copy">
+<h4 id="object-copy">object-copy</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-901"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28object-copy%20X%29"></a><tt>(object-copy X)</tt>
+<br/></span>
+<p>Copies <tt>X</tt> recursively and returns the fresh copy. Objects allocated in static memory are copied back into garbage collected storage.</p><a href="Module (chicken memory representation).html#record-instance">
+<a class="dashingAutolink" name="autolink-888"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Record%20instance"></a><h3 id="record-instance">Record instance</h3></a><a href="Module (chicken memory representation).html#make-record-instance">
+<h4 id="make-record-instance">make-record-instance</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-902"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-record-instance%20SYMBOL%20ARG1%20...%29"></a><tt>(make-record-instance SYMBOL ARG1 ...)</tt>
+<br/></span>
+<p>Returns a new instance of the record type <tt>SYMBOL</tt>, with its slots initialized to <tt>ARG1 ...</tt>.  To illustrate:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define-record-type</span></i> point <span class="paren2">(<span class="default">make-point x y</span>)</span> point?
+  <span class="paren2">(<span class="default">x point-x point-x-set!</span>)</span>
+  <span class="paren2">(<span class="default">y point-y point-y-set!</span>)</span></span>)</span></tt></pre>
+<p>expands into something quite similar to:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">begin
+  <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren3">(<span class="default">make-point x y</span>)</span>
+    <span class="paren3">(<span class="default">make-record-instance &#39;point x y</span>)</span> </span>)</span>
+  <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren3">(<span class="default">point? x</span>)</span>
+    <span class="paren3">(<span class="default">and <span class="paren4">(<span class="default">record-instance? x</span>)</span>
+         <span class="paren4">(<span class="default">eq? &#39;point <span class="paren5">(<span class="default">block-ref x 0</span>)</span></span>)</span> </span>)</span> </span>)</span>
+  <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren3">(<span class="default">point-x p</span>)</span> <span class="paren3">(<span class="default">block-ref p 1</span>)</span></span>)</span>
+  <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren3">(<span class="default">point-x-set! p x</span>)</span> <span class="paren3">(<span class="default">block-set! p 1 x</span>)</span></span>)</span>
+  <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren3">(<span class="default">point-y p</span>)</span> <span class="paren3">(<span class="default">block-ref p 2</span>)</span></span>)</span>
+  <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren3">(<span class="default">point-y-set! p y</span>)</span> <span class="paren3">(<span class="default">block-set! p 1 y</span>)</span></span>)</span> </span>)</span></tt></pre><a href="Module (chicken memory representation).html#record-instance">
+<h4 id="record-instance">record-instance?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-903"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28record-instance%3F%20X%20%5BSYMBOL%5D%29"></a><tt>(record-instance? X [SYMBOL])</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a record structure, or <tt>#f</tt> otherwise.</p>
+<p>Further, returns <tt>#t</tt> if <tt>X</tt> is of type <tt>SYMBOL</tt>, or <tt>#f</tt> otherwise.</p><a href="Module (chicken memory representation).html#record-instance-type">
+<h4 id="record-instance-type">record-instance-type</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-904"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28record-instance-type%20RECORD%29"></a><tt>(record-instance-type RECORD)</tt>
+<br/></span>
+<p>Returns type symbol of the record structure <tt>RECORD</tt>. Signals an error if <tt>RECORD</tt> is not a record structure.</p><a href="Module (chicken memory representation).html#record-instance-length">
+<h4 id="record-instance-length">record-instance-length</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-905"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28record-instance-length%20RECORD%29"></a><tt>(record-instance-length RECORD)</tt>
+<br/></span>
+<p>Returns number of slots for the record structure <tt>RECORD</tt>. The record-instance type is not counted. Signals an error if <tt>RECORD</tt> is not a record structure.</p><a href="Module (chicken memory representation).html#record-instance-slot">
+<h4 id="record-instance-slot">record-instance-slot</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-906"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28record-instance-slot%20RECORD%20INDEX%29"></a><tt>(record-instance-slot RECORD INDEX)</tt>
+<br/></span>
+<p>Returns the contents of the <tt>INDEX</tt>th slot of the record structure <tt>RECORD</tt>. The slot index range is the open interval <tt>[0 record-instance-length)</tt>. Signals an error if <tt>RECORD</tt> is not a record structure.</p><a href="Module (chicken memory representation).html#record-instance-slot-set">
+<h4 id="record-instance-slot-set">record-instance-slot-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-907"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28record-instance-slot-set%21%20RECORD%20INDEX%20X%29"></a><tt>(record-instance-slot-set! RECORD INDEX X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-908"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28record-instance-slot%20RECORD%20INDEX%29%20X%29"></a><tt>(set! (record-instance-slot RECORD INDEX) X)</tt>
+<br/></span>
+<p>Sets the <tt>INDEX</tt>th slot of the record structure <tt>RECORD</tt> to <tt>X</tt>. The slot index range is the open interval <tt>[0 record-instance-length)</tt>. Signals an error if <tt>RECORD</tt> is not a record structure.</p><a href="Module (chicken memory representation).html#record-vector">
+<h4 id="record-vector">record-&gt;vector</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-909"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28record-%3Evector%20RECORD%29"></a><tt>(record-&gt;vector RECORD)</tt>
+<br/></span>
+<p>Returns a new vector with the type and the elements of the record structure <tt>RECORD</tt>. Signals an error if <tt>RECORD</tt> is not a record structure.</p><a href="Module (chicken memory representation).html#magic">
+<a class="dashingAutolink" name="autolink-889"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Magic"></a><h3 id="magic">Magic</h3></a><a href="Module (chicken memory representation).html#object-become">
+<h4 id="object-become">object-become!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-910"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28object-become%21%20ALIST%29"></a><tt>(object-become! ALIST)</tt>
+<br/></span>
+<p>Changes the identity of the value of the car of each pair in <tt>ALIST</tt> to the value of the cdr. Neither value may be immediate (i.e. exact integers, characters, booleans or the empty list).</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> x <span class="string">&#34;i used to be a string&#34;</span></span>)</span>
+<span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> y &#39;#<span class="paren2">(<span class="default">and now i am a vector</span>)</span></span>)</span>
+<span class="paren1">(<span class="default">object-become! <span class="paren2">(<span class="default">list <span class="paren3">(<span class="default">cons x y</span>)</span></span>)</span></span>)</span>
+x                                    ==&gt; #<span class="paren1">(<span class="default">and now i am a vector</span>)</span>
+y                                    ==&gt; #<span class="paren1">(<span class="default">and now i am a vector</span>)</span>
+<span class="paren1">(<span class="default">eq? x y</span>)</span>                            ==&gt; #t</tt></pre>
+<p>Note: this operation invokes a major garbage collection.</p>
+<p>The effect of using <tt>object-become!</tt> on evicted data (see <tt>object-evict</tt>) is undefined.</p><a href="Module (chicken memory representation).html#mutate-procedure">
+<h4 id="mutate-procedure">mutate-procedure!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-911"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28mutate-procedure%21%20OLD%20PROC%29"></a><tt>(mutate-procedure! OLD PROC)</tt>
+<br/></span>
+<p>Replaces the procedure <tt>OLD</tt> with the result of calling the one-argument procedure <tt>PROC</tt>. <tt>PROC</tt> will receive a copy of <tt>OLD</tt> that will be identical in behaviour to the result of <tt>OLD</tt>:</p>
+<pre><tt class="highlight scheme-language"> <span class="comment">;;; Replace arbitrary procedure with tracing one:
+</span>
+ <span class="paren1">(<span class="default">mutate-procedure! my-proc
+   <span class="paren2">(<span class="default"><i><span class="symbol">lambda</span></i> <span class="paren3">(<span class="default">new</span>)</span>
+     <span class="paren3">(<span class="default"><i><span class="symbol">lambda</span></i> args
+       <span class="paren4">(<span class="default">printf <span class="string">&#34;~s called with arguments: ~s~%&#34;</span> new args</span>)</span>
+       <span class="paren4">(<span class="default">apply new args</span>)</span> </span>)</span> </span>)</span> </span>)</span></tt></pre>
+<hr/>
+<p>Previous: <a href="Module (chicken memory).html" class="internal">Module (chicken memory)</a></p>
+<p>Next: <a href="Module (chicken module).html" class="internal">Module (chicken module)</a></p></div></body></html>

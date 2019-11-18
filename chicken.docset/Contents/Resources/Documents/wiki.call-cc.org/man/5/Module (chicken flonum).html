@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken flonum) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20flonum)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20flonum)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20flonum)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken flonum).html#module-chicken-flonum">Module (chicken flonum)</a>
+<ol>
+<li><a href="Module (chicken flonum).html#arithmetic-floating-point-operations">Arithmetic floating-point operations</a></li></ol></li>
+<li><a href="Module (chicken flonum).html#flonum-limits">Flonum limits</a></li></ol></div><a href="Module (chicken flonum).html#module-chicken-flonum">
+<a class="dashingAutolink" name="autolink-684"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20flonum%29"></a><a class="dashingAutolink" name="autolink-687"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20flonum%29"></a><h2 id="module-chicken-flonum">Module (chicken flonum)</h2></a>
+<p>Because CHICKEN supports a full numeric tower, operations can sometimes incur a subtantial overhead to simply detect the type of numbers you&#39;re passing in.  When you know you&#39;re definitely dealing only with flonums, you can choose to use flonum-specific operations to avoid this overhead.</p>
+<p>This is purely a performance hack.  You might want to consider adding <a href="Types.html" class="internal">type annotations</a> instead, this often gives the same performance boost without having to rewrite all numeric operators in your code.</p><a href="Module (chicken flonum).html#arithmetic-floating-point-operations">
+<a class="dashingAutolink" name="autolink-686"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Arithmetic%20floating-point%20operations"></a><h3 id="arithmetic-floating-point-operations">Arithmetic floating-point operations</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-688"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp%2B%20X%20Y%29"></a><tt>(fp+ X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-689"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp-%20X%20Y%29"></a><tt>(fp- X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-690"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp%2A%20X%20Y%29"></a><tt>(fp* X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-691"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp%2F%20X%20Y%29"></a><tt>(fp/ X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-692"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpgcd%20X%20Y%29"></a><tt>(fpgcd X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-693"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpneg%20X%29"></a><tt>(fpneg X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-694"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpmin%20X%20Y%29"></a><tt>(fpmin X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-695"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpmax%20X%20Y%29"></a><tt>(fpmax X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-696"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp%3D%20X%20Y%29"></a><tt>(fp= X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-697"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp%3E%20X%20Y%29"></a><tt>(fp&gt; X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-698"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp%3C%20X%20Y%29"></a><tt>(fp&lt; X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-699"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp%3E%3D%20X%20Y%29"></a><tt>(fp&gt;= X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-700"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fp%3C%3D%20X%20Y%29"></a><tt>(fp&lt;= X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-701"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpfloor%20X%29"></a><tt>(fpfloor X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-702"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpceiling%20X%29"></a><tt>(fpceiling X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-703"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fptruncate%20X%29"></a><tt>(fptruncate X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-704"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpround%20X%29"></a><tt>(fpround X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-705"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpsin%20X%29"></a><tt>(fpsin X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-706"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpcos%20X%29"></a><tt>(fpcos X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-707"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fptan%20X%29"></a><tt>(fptan X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-708"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpasin%20X%29"></a><tt>(fpasin X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-709"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpacos%20X%29"></a><tt>(fpacos X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-710"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpatan%20X%29"></a><tt>(fpatan X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-711"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpatan2%20X%20Y%29"></a><tt>(fpatan2 X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-712"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fplog%20X%29"></a><tt>(fplog X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-713"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpexp%20X%29"></a><tt>(fpexp X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-714"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpexpt%20X%20Y%29"></a><tt>(fpexpt X Y)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-715"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpsqrt%20X%29"></a><tt>(fpsqrt X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-716"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpabs%20X%29"></a><tt>(fpabs X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-717"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fpinteger%3F%20X%29"></a><tt>(fpinteger? X)</tt>
+<br/></span>
+<p>Arithmetic floating-point operations.</p>
+<p>In safe mode, these procedures throw a type error when given non-float arguments. In unsafe mode, these procedures do not check their arguments. A non-flonum argument in unsafe mode can crash the application.</p>
+<p>Note: <tt>fpround</tt> uses the rounding mode that your C library implements, which is usually different from R5RS.</p><a href="Module (chicken flonum).html#flonum-limits">
+<a class="dashingAutolink" name="autolink-685"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Flonum%20limits"></a><h2 id="flonum-limits">Flonum limits</h2></a><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-674"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/maximum-flonum"></a><tt>maximum-flonum</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-675"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/minimum-flonum"></a><tt>minimum-flonum</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-676"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/flonum-radix"></a><tt>flonum-radix</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-677"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/flonum-epsilon"></a><tt>flonum-epsilon</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-678"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/flonum-precision"></a><tt>flonum-precision</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-679"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/flonum-decimal-precision"></a><tt>flonum-decimal-precision</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-680"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/flonum-maximum-exponent"></a><tt>flonum-maximum-exponent</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-681"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/flonum-minimum-exponent"></a><tt>flonum-minimum-exponent</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-682"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/flonum-maximum-decimal-exponent"></a><tt>flonum-maximum-decimal-exponent</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-683"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/flonum-minimum-decimal-exponent"></a><tt>flonum-minimum-decimal-exponent</tt>
+<br/></span>
+<p>Platform-specific flonum limits.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-718"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28flonum-print-precision%20%5BPRECISION%5D%29"></a><tt>(flonum-print-precision [PRECISION])</tt>
+<br/></span>
+<p>Gets and sets the number of significant digits printed for a floating-point number. <tt>PRECISION</tt> must be a positive <tt>fixnum</tt>.  Returns the setting that was previously in effect.</p>
+<p>The default print precision is 15 on nearly all systems, and 7 on the rare system on which the <tt>double</tt> type is only single-precision.</p>
+<p><b>Note:</b> To ensure read/write invariance for <i>all</i> floating-point numbers, you must increase print precision from 15 to 17 (or from 7 to 9).  For example:</p>
+<pre><tt>&gt; (define a (expt 2 -53))
+&gt; (define b (+ a (* 2 (expt 10 -32))))
+&gt; (eqv? a b)
+#f
+&gt; (flonum-print-precision 15)
+&gt; (cons a b)
+(1.11022302462516e-16 .
+ 1.11022302462516e-16)            ;; same printed representation
+&gt; (flonum-print-precision 17)
+&gt; (cons a b)
+(1.1102230246251565e-16 .
+ 1.1102230246251568e-16)          ;; differs in last place</tt></pre>
+<p>On the downside, this will result in unnecessarily precise representations of many numbers:</p>
+<pre><tt>&gt; (flonum-print-precision 17)
+&gt; 0.1
+0.10000000000000001</tt></pre>
+<p>The maximum number of decimal digits required to uniquely represent all floating-point numbers of a certain precision is given by the formula <tt>ceil(1+N*log10(2))</tt>, where N is the number of bits of precision; for double-precision, <tt>N=53</tt>.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken fixnum).html" class="internal">Module (chicken fixnum)</a></p>
+<p>Next: <a href="Module (chicken foreign).html" class="internal">Module (chicken foreign)</a></p></div></body></html>

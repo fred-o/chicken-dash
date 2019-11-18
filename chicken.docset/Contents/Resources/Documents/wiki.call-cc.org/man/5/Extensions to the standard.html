@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Extensions to the R5RS standard - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Extensions%20to%20the%20standard?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Extensions%20to%20the%20standard?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Extensions%20to%20the%20standard?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Extensions to the standard.html#extensions-to-the-r5rs-standard">Extensions to the R5RS standard</a>
+<ol>
+<li><a href="Extensions to the standard.html#identifiers">Identifiers</a></li>
+<li><a href="Extensions to the standard.html#brackets-and-braces">Brackets and braces</a></li>
+<li><a href="Extensions to the standard.html#non-standard-procedures-and-syntax">Non-standard procedures and syntax</a>
+<ol>
+<li><a href="Extensions to the standard.html#cond-expand">cond-expand</a></li></ol></li>
+<li><a href="Extensions to the standard.html#user-defined-character-names">User defined character names</a></li>
+<li><a href="Extensions to the standard.html#special-characters-in-strings">Special characters in strings</a></li></ol></li>
+<li><a href="Extensions to the standard.html#non-standard-read-syntax">Non-standard read syntax</a>
+<ol>
+<li><a href="Extensions to the standard.html#escapes-in-symbols">Escapes in symbols</a></li>
+<li><a href="Extensions to the standard.html#multiline-block-comment">Multiline Block Comment</a></li>
+<li><a href="Extensions to the standard.html#expression-comment">Expression Comment</a></li>
+<li><a href="Extensions to the standard.html#external-representation">External Representation</a></li>
+<li><a href="Extensions to the standard.html#location-expression">Location Expression</a></li>
+<li><a href="Extensions to the standard.html#blob-literals">Blob literals</a></li>
+<li><a href="Extensions to the standard.html#keyword">Keyword</a></li>
+<li><a href="Extensions to the standard.html#multiline-string-constant">Multiline String Constant</a></li>
+<li><a href="Extensions to the standard.html#multiline-string-constant-with-embedded-expressions">Multiline String Constant with Embedded Expressions</a></li>
+<li><a href="Extensions to the standard.html#foreign-declare">Foreign Declare</a></li>
+<li><a href="Extensions to the standard.html#string-escape-sequences">String escape sequences</a></li>
+<li><a href="Extensions to the standard.html#bang">Bang</a></li>
+<li><a href="Extensions to the standard.html#case-sensitive-expression">Case Sensitive Expression</a></li>
+<li><a href="Extensions to the standard.html#case-insensitive-expression">Case Insensitive Expression</a></li>
+<li><a href="Extensions to the standard.html#conditional-expansion">Conditional Expansion</a></li></ol></li></ol></div><a href="Extensions to the standard.html#extensions-to-the-r5rs-standard">
+<a class="dashingAutolink" name="autolink-134"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/Extensions%20to%20the%20R5RS%20standard"></a><h2 id="extensions-to-the-r5rs-standard">Extensions to the R5RS standard</h2></a><a href="Extensions to the standard.html#identifiers">
+<a class="dashingAutolink" name="autolink-135"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Identifiers"></a><h3 id="identifiers">Identifiers</h3></a>
+<p>Identifiers may contain special characters if delimited with <tt>| ... |</tt>.</p><a href="Extensions to the standard.html#brackets-and-braces">
+<a class="dashingAutolink" name="autolink-136"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Brackets%20and%20braces"></a><h3 id="brackets-and-braces">Brackets and braces</h3></a>
+<p>The brackets <tt>[ ... ]</tt> and the braces <tt> { ... } </tt> are provided as an alternative syntax for <tt>( ... )</tt>.  A number of reader extensions is provided.</p><a href="Extensions to the standard.html#non-standard-procedures-and-syntax">
+<a class="dashingAutolink" name="autolink-137"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Non-standard%20procedures%20and%20syntax"></a><h3 id="non-standard-procedures-and-syntax">Non-standard procedures and syntax</h3></a>
+<p>CHICKEN provides numerous non-standard procedures. See the manual sections on the included library modules (<a href="Included modules.html" class="internal">Included modules</a>) for more information.  Here we only document <tt>cond-expand</tt> because it is always present in a module, even without imports.</p><a href="Extensions to the standard.html#cond-expand">
+<h4 id="cond-expand">cond-expand</h4></a><span class="definition syntax"><em>[syntax]</em> <a class="dashingAutolink" name="autolink-133"></a><a class="dashAnchor" name="//apple_ref/cpp/Macro/%28cond-expand%20FEATURE-CLAUSE%20...%29"></a><tt>(cond-expand FEATURE-CLAUSE ...)</tt>
+<br/></span>
+<p>Expands by selecting feature clauses. This form is allowed to appear in non-toplevel expressions.</p>
+<p>Predefined feature-identifiers are &#34;situation&#34; specific:</p>
+<dl>
+<dt>compile</dt>
+<dd><tt>chicken</tt>, <tt>compiling</tt>, <tt>library</tt>, <tt>eval</tt>, <tt>extras</tt>, <tt>regex</tt>, <tt>srfi-0</tt>, <tt>srfi-2</tt>, <tt>srfi-4</tt>, <tt>srfi-6</tt>, <tt>srfi-8</tt>, <tt>srfi-9</tt>, <tt>srfi-10</tt>, <tt>srfi-11</tt>, <tt>srfi-12</tt>, <tt>srfi-15</tt>, <tt>srfi-16</tt>, <tt>srfi-17</tt>, <tt>srfi-23</tt>, <tt>srfi-26</tt>, <tt>srfi-28</tt>, <tt>srfi-30</tt>, <tt>srfi-31</tt>, <tt>srfi-39</tt>, <tt>srfi-55</tt>, <tt>srfi-61</tt>, <tt>srfi-62</tt></dd>
+<dt>load</dt>
+<dd><tt>chicken</tt>, <tt>extras</tt>, <tt>srfi-0</tt>, <tt>srfi-2</tt>, <tt>srfi-6</tt>, <tt>srfi-8</tt>, <tt>srfi-9</tt>, <tt>srfi-10</tt>, <tt>srfi-12</tt>, <tt>srfi-17</tt>, <tt>srfi-23</tt>, <tt>srfi-28</tt>, <tt>srfi-30</tt>, <tt>srfi-39</tt>, <tt>srfi-55</tt>, <tt>srfi-61</tt>, <tt>srfi-62</tt>. <tt>library</tt> is implicit.</dd>
+<dt>eval</dt>
+<dd><tt>csi</tt>, <tt>chicken</tt>, <tt>extras</tt>, <tt>srfi-0</tt>, <tt>srfi-2</tt>, <tt>srfi-6</tt>, <tt>srfi-8</tt>, <tt>srfi-9</tt>, <tt>srfi-10</tt>, <tt>srfi-11</tt>, <tt>srfi-12</tt>, <tt>srfi-15</tt>, <tt>srfi-16</tt>, <tt>srfi-17</tt>, <tt>srfi-23</tt>, <tt>srfi-26</tt>, <tt>srfi-28</tt>, <tt>srfi-30</tt>, <tt>srfi-31</tt>, <tt>srfi-39</tt>, <tt>srfi-55</tt>, <tt>srfi-61</tt>, <tt>srfi-62</tt>. <tt>library</tt> is implicit.</dd></dl>
+<p>The following feature-identifier classes are available in all situations: <tt>(machine-byte-order)</tt>, <tt>(machine-type)</tt>, <tt>(software-type)</tt>, <tt>(software-version)</tt>, where the actual feature-identifier is platform dependent.</p>
+<p>In addition the following feature-identifiers may exist: <tt>cross-chicken</tt>, <tt>dload</tt>, <tt>manyargs</tt>, <tt>ptables</tt>.</p>
+<p>For further information, see the documentation for <a href="http://srfi.schemers.org/srfi-0/srfi-0.html" class="external">SRFI-0</a>.</p><a href="Extensions to the standard.html#user-defined-character-names">
+<a class="dashingAutolink" name="autolink-138"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/User%20defined%20character%20names"></a><h3 id="user-defined-character-names">User defined character names</h3></a>
+<p>User defined character names are supported. See <tt>char-name</tt>. Characters can be given in hexadecimal notation using the <i>#\xXX</i> syntax where <i>XX</i> specifies the character code. Character codes above 255 are supported and can be read (and are written) using the <i>#\uXXXX</i> and <i>#\UXXXXXXXX</i> notations.</p>
+<p>Non-standard characters names supported are <tt>#\tab</tt>, <tt>#\linefeed</tt>, <tt>#\return</tt>, <tt>#\alarm</tt>, <tt>#\vtab</tt>, <tt>#\nul</tt>, <tt>#\page</tt>, <tt>#\esc</tt>, <tt>#\delete</tt> and <tt>#\backspace</tt>.</p><a href="Extensions to the standard.html#special-characters-in-strings">
+<a class="dashingAutolink" name="autolink-139"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Special%20characters%20in%20strings"></a><h3 id="special-characters-in-strings">Special characters in strings</h3></a>
+<p>CHICKEN supports special characters preceded with a backslash <i>\</i> in quoted string constants. <i>\n</i> denotes the newline-character, <i>\r</i> carriage return, <i>\b</i> backspace, <i>\t</i> TAB, <i>\v</i> vertical TAB, <i>\a</i> alarm, <i>\f</i> formfeed, <i>\xXX</i> a character with the code <tt>XX</tt> in hex and <i>\uXXXX</i> (and <i>\UXXXXXXXX</i>) a unicode character with the code <tt>XXXX</tt>. The latter is encoded in UTF-8 format.</p><a href="Extensions to the standard.html#non-standard-read-syntax">
+<h2 id="non-standard-read-syntax">Non-standard read syntax</h2></a><a href="Extensions to the standard.html#escapes-in-symbols">
+<a class="dashingAutolink" name="autolink-140"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Escapes%20in%20symbols"></a><h3 id="escapes-in-symbols">Escapes in symbols</h3></a>
+<p><tt>| ... |</tt> may be used to escape a sequence of characters when reading a symbol. <tt>\X</tt> escapes a single character in a symbols name:</p>
+<pre><tt> (symbol-&gt;string &#39;|abc def|)       =&gt;   &#34;abc def&#34;
+ (symbol-&gt;string &#39;|abc||def|)      =&gt;   &#34;abcdef&#34;
+ (symbol-&gt;string &#39;|abc|xyz|def|)   =&gt;   &#34;abcxyzdef&#34;
+ (symbol-&gt;string &#39;|abc\|def|)      =&gt;   &#34;abc|def&#34;
+ (symbol-&gt;string &#39;abc\ def)        =&gt;   &#34;abc def&#34;</tt></pre><a href="Extensions to the standard.html#multiline-block-comment">
+<a class="dashingAutolink" name="autolink-141"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Multiline%20Block%20Comment"></a><h3 id="multiline-block-comment">Multiline Block Comment</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-120"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%7C"></a><tt>#|</tt>
+<br/></span>
+<pre><tt>#| ... |# </tt></pre>
+<p>A multiline <i>block</i> comment. May be nested. Implements <a href="http://srfi.schemers.org/srfi-30/srfi-30.html" class="external">SRFI-30</a>.</p><a href="Extensions to the standard.html#expression-comment">
+<a class="dashingAutolink" name="autolink-142"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Expression%20Comment"></a><h3 id="expression-comment">Expression Comment</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-121"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%3B"></a><tt>#;</tt>
+<br/></span>
+<pre><tt>#;EXPRESSION</tt></pre>
+<p>Treats <tt>EXPRESSION</tt> as a comment.  That is, the comment runs through the whole S-expression, regardless of newlines, which saves you from having to comment out every line, or add a newline in the middle of your parens to make the commenting of the last line work, or other things like that. Implements <a href="http://srfi.schemers.org/srfi-62/srfi-62.html" class="external">SRFI-62</a>.</p><a href="Extensions to the standard.html#external-representation">
+<a class="dashingAutolink" name="autolink-143"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/External%20Representation"></a><h3 id="external-representation">External Representation</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-122"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%2C"></a><tt>#,</tt>
+<br/></span>
+<pre><tt>#,(CONSTRUCTORNAME DATUM ...)</tt></pre>
+<p>Allows user-defined extension of external representations. (For more information see the documentation for <a href="http://srfi.schemers.org/srfi-10/srfi-10.html" class="external">SRFI-10</a>)</p><a href="Extensions to the standard.html#location-expression">
+<a class="dashingAutolink" name="autolink-144"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Location%20Expression"></a><h3 id="location-expression">Location Expression</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-123"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%24EXPRESSION"></a><tt> #$EXPRESSION</tt>
+<br/></span>
+<p>An abbreviation for <tt>(location EXPRESSION)</tt>.</p><a href="Extensions to the standard.html#blob-literals">
+<a class="dashingAutolink" name="autolink-145"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Blob%20literals"></a><h3 id="blob-literals">Blob literals</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-124"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%24%7B"></a><tt>#${</tt>
+<br/></span>
+<pre><tt> #${ HEX ... }</tt></pre>
+<p>Syntax for literal &#34;blobs&#34; (byte-sequences). Expects hexadecimal digits and ignores any whitespace characters:</p>
+<pre><tt> #;1&gt; ,d &#39;#${deadbee f}
+ blob of size 4:
+    0: de ad be ef                                     ....</tt></pre><a href="Extensions to the standard.html#keyword">
+<a class="dashingAutolink" name="autolink-146"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Keyword"></a><h3 id="keyword">Keyword</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-125"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%3A"></a><tt>#:</tt>
+<br/></span>
+<pre><tt>#:SYMBOL
+SYMBOL:
+:SYMBOL</tt></pre>
+<p>Syntax for keywords. Keywords are symbols that evaluate to themselves, and as such don&#39;t have to be quoted.  Either <tt>SYMBOL:</tt> or <tt>:SYMBOL</tt> is accepted, depending on the setting of the <tt>keyword-style</tt> parameter, but never both.  <tt>#:SYMBOL</tt> is always accepted.</p><a href="Extensions to the standard.html#multiline-string-constant">
+<a class="dashingAutolink" name="autolink-147"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Multiline%20String%20Constant"></a><h3 id="multiline-string-constant">Multiline String Constant</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-126"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%3C%3C"></a><tt>#&lt;&lt;</tt>
+<br/></span>
+<pre><tt>#&lt;&lt;TAG</tt></pre>
+<p>Specifies a multiline string constant. Anything up to a line equal to <tt>TAG</tt> (or end of file) will be returned as a single string:</p>
+<pre><tt>(define msg #&lt;&lt;END
+ &#34;Hello, world!&#34;, she said.
+END
+)</tt></pre>
+<p>is equivalent to</p>
+<pre><tt>(define msg &#34;\&#34;Hello, world!\&#34;, she said.&#34;)</tt></pre><a href="Extensions to the standard.html#multiline-string-constant-with-embedded-expressions">
+<a class="dashingAutolink" name="autolink-148"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Multiline%20String%20Constant%20with%20Embedded%20Expressions"></a><h3 id="multiline-string-constant-with-embedded-expressions">Multiline String Constant with Embedded Expressions</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-127"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%3C%23"></a><tt>#&lt;#</tt>
+<br/></span>
+<pre><tt>#&lt;#TAG</tt></pre>
+<p>Similar to <tt>#&lt;&lt;</tt>, but allows substitution of embedded Scheme expressions prefixed with <tt>#</tt> and optionally enclosed in curly brackets. Two consecutive <tt>#</tt>s are translated to a single <tt>#</tt>:</p>
+<pre><tt>(define three 3)
+(display #&lt;#EOF
+This is a simple string with an embedded `##&#39; character
+and substituted expressions: (+ three 99) ==&gt; #(+ three 99)
+(three is &#34;#{three}&#34;)
+EOF
+)</tt></pre>
+<p>prints</p>
+<pre><tt>This is a simple string with an embedded `#&#39; character
+and substituted expressions: (+ three 99) ==&gt; 102
+(three is &#34;3&#34;)</tt></pre><a href="Extensions to the standard.html#foreign-declare">
+<a class="dashingAutolink" name="autolink-149"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Foreign%20Declare"></a><h3 id="foreign-declare">Foreign Declare</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-128"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%3E"></a><tt>#&gt;</tt>
+<br/></span>
+<pre><tt>#&gt; ... &lt;#</tt></pre>
+<p>Abbreviation for <tt>(foreign-declare &#34; ... &#34;)</tt>.</p><a href="Extensions to the standard.html#string-escape-sequences">
+<a class="dashingAutolink" name="autolink-150"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/String%20escape%20sequences"></a><h3 id="string-escape-sequences">String escape sequences</h3></a>
+<p>String-literals may contain the following escape sequences:</p>
+<table style="margin-top: 1em; max-width: 40em">
+<tbody><tr>
+<th>Escape sequence</th>
+<th>Character</th></tr>
+
+<tr>
+<td><tt>\n</tt></td>
+<td>line feed / newline</td></tr>
+
+<tr>
+<td><tt>\t</tt></td>
+<td>tab</td></tr>
+
+<tr>
+<td><tt>\r</tt></td>
+<td>carriage return</td></tr>
+
+<tr>
+<td><tt>\b</tt></td>
+<td>backspace</td></tr>
+
+<tr>
+<td><tt>\a</tt></td>
+<td>bell</td></tr>
+
+<tr>
+<td><tt>\v</tt></td>
+<td>vertical tab</td></tr>
+
+<tr>
+<td><tt>\f</tt></td>
+<td>form feed</td></tr>
+
+<tr>
+<td><tt>\x</tt><i>XX</i></td>
+<td>hexadecimal 8-bit character code</td></tr>
+
+<tr>
+<td><tt>\u</tt><i>XXXX</i></td>
+<td>hexadecimal 16-bit Unicode character code</td></tr>
+
+<tr>
+<td><tt>\U</tt><i>XXXXXXXX</i></td>
+<td>hexadecimal 32-bit Unicode character code</td></tr>
+
+<tr>
+<td><tt>\</tt><i>OOO</i></td>
+<td>octal 8-bit character code</td></tr>
+
+<tr>
+<td><tt>\|</tt> &nbsp;&nbsp;<tt>\&#34;</tt> &nbsp;&nbsp; <tt>\\</tt> &nbsp;&nbsp; <tt>\&#39;</tt></td>
+<td>the escaped character</td></tr></tbody></table><a href="Extensions to the standard.html#bang">
+<a class="dashingAutolink" name="autolink-151"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Bang"></a><h3 id="bang">Bang</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-129"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%21"></a><tt>#!</tt>
+<br/></span>
+<pre><tt>#!... </tt></pre>
+<p>Interpretation depends on the directly following characters. Only the following are recognized. Any other case results in a read error.</p>
+<dl>
+<dt>Line Comment</dt>
+<dd>If followed by whitespace or a slash, then everything up the end of the current line is ignored</dd>
+<dt>Eof Object</dt>
+<dd>If followed by the character sequence <tt>eof</tt>, then the (self-evaluating) end-of-file object is returned</dd>
+<dt>DSSSL Formal Parameter List Annotation</dt>
+<dd>If followed by any of the character sequences <tt>optional</tt>, <tt>rest</tt> or <tt>key</tt>, then a symbol with the same name (and prefixed with <tt>#!</tt>) is returned</dd>
+<dt>Read Mark Invocation</dt>
+<dd>If a <i>read mark</i> with the same name as the token is registered, then its procedure is called and the result of the read-mark procedure will be returned</dd></dl><a href="Extensions to the standard.html#case-sensitive-expression">
+<a class="dashingAutolink" name="autolink-152"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Case%20Sensitive%20Expression"></a><h3 id="case-sensitive-expression">Case Sensitive Expression</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-130"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23cs"></a><tt>#cs</tt>
+<br/></span>
+<pre><tt>#cs...</tt></pre>
+<p>Read the next expression in case-sensitive mode (regardless of the current global setting).</p><a href="Extensions to the standard.html#case-insensitive-expression">
+<a class="dashingAutolink" name="autolink-153"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Case%20Insensitive%20Expression"></a><h3 id="case-insensitive-expression">Case Insensitive Expression</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-131"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23ci"></a><tt>#ci</tt>
+<br/></span>
+<pre><tt>#ci...</tt></pre>
+<p>Read the next expression in case-insensitive mode (regardless of the current global setting).</p><a href="Extensions to the standard.html#conditional-expansion">
+<a class="dashingAutolink" name="autolink-154"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Conditional%20Expansion"></a><h3 id="conditional-expansion">Conditional Expansion</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-132"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23%2B"></a><tt>#+</tt>
+<br/></span>
+<pre><tt>#+FEATURE EXPR</tt></pre>
+<p>Rewrites to</p>
+<pre><tt>(cond-expand (FEATURE EXPR) (else))</tt></pre>
+<p>and performs the feature test at macroexpansion time.  Therefore, it may not work as expected when used within a macro form.</p>
+<hr/>
+<p>Previous: <a href="Deviations from the standard.html" class="internal">Deviations from the standard</a></p>
+<p>Next: <a href="Debugging.html" class="internal">Debugging</a></p></div></body></html>

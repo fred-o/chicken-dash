@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Types - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Types?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Types?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Types?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Types.html#types">Types</a>
+<ol>
+<li><a href="Types.html#declaring-types">Declaring types</a>
+<ol>
+<li><a href="Types.html#">:</a></li>
+<li><a href="Types.html#the">the</a></li>
+<li><a href="Types.html#assume">assume</a></li>
+<li><a href="Types.html#define-type">define-type</a></li></ol></li>
+<li><a href="Types.html#type-syntax">Type syntax</a></li>
+<li><a href="Types.html#predicates">Predicates</a></li>
+<li><a href="Types.html#purity">Purity</a></li>
+<li><a href="Types.html#using-type-information-in-extensions">Using type information in extensions</a></li>
+<li><a href="Types.html#optimizations-done-by-specialization">Optimizations done by specialization</a>
+<ol>
+<li><a href="Types.html#define-specialization">define-specialization</a></li>
+<li><a href="Types.html#compiler-typecase">compiler-typecase</a></li></ol></li>
+<li><a href="Types.html#caveats">Caveats</a></li></ol></li></ol></div><a href="Types.html#types">
+<a class="dashingAutolink" name="autolink-1813"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Types"></a><h3 id="types">Types</h3></a>
+<p>A dynamically typed language like Scheme does not restrict the type of values bound or assigned to variables to be constant throughout the run-time of a program. This provides a lot of flexibility and makes it easy to get code up and running quickly, but can make maintenance of larger code bases more difficult as the implicit assignment of types to variables done by the programmer has to be &#34;recovered&#34; when the code is inspected or debugged again. Statically typed languages enforce distinct types for all variables, optionally providing type-inference to compute types without requiring the user to specify explicit type declarations in many cases.</p>
+<p>If the compiler has some knowledge of the types of local or global variables then it can help in catching type-related errors like passing a value of the wrong type to a user-defined or built-in procedure. Type-information also can be used to generate more efficient code by omitting unnecessary type-checks.</p>
+<p>CHICKEN provides an intra-procedural flow-analysis pass and two compiler options for using type-information in this manner:</p>
+<p><tt>-specialize</tt> will replace certain generic library procedure calls with faster type-specific operations.</p>
+<p><tt>-strict-types</tt> makes type-analysis more optimistic and gives more opportunities for specialization, but may result in unsafe code if type-declarations are violated.</p>
+<p>Note that the interpreter will always ignore type-declarations and will not perform any flow-analysis of interpreted code.</p><a href="Types.html#declaring-types">
+<h4 id="declaring-types">Declaring types</h4></a>
+<p>Type information for all core library units is available by default. User-defined global variables can be declared to have a type using the <tt>(declare (type ...))</tt> or <tt>:</tt> syntax.</p>
+<p>All syntax described hereafter is exported from the <tt>(chicken type)</tt> module.</p><a href="Types.html#">
+<h5 id="">:</h5></a><span class="definition syntax"><em>[syntax]</em> <a class="dashingAutolink" name="autolink-1814"></a><a class="dashAnchor" name="//apple_ref/cpp/Macro/%28%3A%20IDENTIFIER%20TYPE%29"></a><tt>(: IDENTIFIER TYPE)</tt>
+<br/></span>
+<p>Declares that the global variable <tt>IDENTIFIER</tt> is of the given type.</p><a href="Types.html#the">
+<h5 id="the">the</h5></a><span class="definition syntax"><em>[syntax]</em> <a class="dashingAutolink" name="autolink-1815"></a><a class="dashAnchor" name="//apple_ref/cpp/Macro/%28the%20TYPE%20EXPRESSION%29"></a><tt>(the TYPE EXPRESSION)</tt>
+<br/></span>
+<p>Equivalent to <tt>EXPRESSION</tt>, but declares that the result will be of the given type. Note that this form always declares the type of a single result, <tt>the</tt> can not be used to declare types for multiple result values. <tt>TYPE</tt> should be a subtype of the type inferred for <tt>EXPRESSION</tt>, the compiler will issue a warning if this should not be the case.</p><a href="Types.html#assume">
+<h5 id="assume">assume</h5></a><span class="definition syntax"><em>[syntax]</em> <a class="dashingAutolink" name="autolink-1816"></a><a class="dashAnchor" name="//apple_ref/cpp/Macro/%28assume%20%28%28VARIABLE%20TYPE%29%20...%29%20BODY%20...%29"></a><tt>(assume ((VARIABLE TYPE) ...) BODY ...)</tt>
+<br/></span>
+<p>Declares that at the start of execution of <tt>BODY ..</tt>, the variables will be of the given types. This is equivalent to</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">let</span></i> <span class="paren2">(<span class="default"><span class="paren3">(<span class="default">VARIABLE <span class="paren4">(<span class="default"><i><span class="symbol">the</span></i> TYPE VARIABLE</span>)</span></span>)</span> ...</span>)</span> 
+  BODY ...</span>)</span></tt></pre><a href="Types.html#define-type">
+<h5 id="define-type">define-type</h5></a><span class="definition syntax"><em>[syntax]</em> <a class="dashingAutolink" name="autolink-1817"></a><a class="dashAnchor" name="//apple_ref/cpp/Macro/%28define-type%20NAME%20TYPE%29"></a><tt>(define-type NAME TYPE)</tt>
+<br/></span>
+<p>Defines a type-abbreviation <tt>NAME</tt> that can be used in place of <tt>TYPE</tt>.  Type-abbreviations defined inside a module are not visible outside of that module.</p><a href="Types.html#type-syntax">
+<h4 id="type-syntax">Type syntax</h4></a>
+<p>Types declared with the <tt>type</tt> declaration (see <a href="Declarations.html" class="internal">Declarations</a>) or <tt>:</tt> should follow the syntax given below:</p>
+<table>
+<tbody><tr>
+<th>TYPE</th>
+<th>meaning</th></tr>
+
+<tr>
+<td><tt>deprecated</tt></td>
+<td>any use of this variable will generate a warning</td></tr>
+
+<tr>
+<td><tt>(deprecated NAME)</tt></td>
+<td>generate a warning and advise alternative NAME</td></tr>
+
+<tr>
+<td>VALUETYPE</td>
+<td></td></tr></tbody></table>
+<table>  
+
+<tbody><tr>
+<th>VALUETYPE</th>
+<th>meaning</th></tr>
+
+<tr>
+<td><tt>(or VALUETYPE ...)</tt></td>
+<td>&#34;union&#34; or &#34;sum&#34; type</td></tr>
+
+<tr>
+<td><tt>(not VALUETYPE)</tt></td>
+<td>non-matching type (*)</td></tr>
+
+<tr>
+<td><tt>(struct STRUCTURENAME)</tt></td>
+<td>record structure of given kind</td></tr>
+
+<tr>
+<td><tt>(procedure [NAME] (VALUETYPE ... [#!optional VALUETYPE ...] [#!rest [VALUETYPE]]) . RESULTS)</tt></td>
+<td>procedure type, optionally with name</td></tr>
+
+<tr>
+<td><tt>(VALUETYPE ... [#!optional VALUETYPE ...] [#!rest [VALUETYPE]] -&gt; . RESULTS)</tt></td>
+<td>alternative procedure type syntax</td></tr>
+
+<tr>
+<td><tt>(VALUETYPE ... [#!optional VALUETYPE ...] [#!rest [VALUETYPE]] --&gt; . RESULTS)</tt></td>
+<td>procedure type that is declared not to modify locally held state</td></tr>
+
+<tr>
+<td><tt>(VALUETYPE -&gt; VALUETYPE : VALUETYPE)</tt></td>
+<td>predicate procedure type</td></tr>
+
+<tr>
+<td><tt>(forall (TYPEVAR ...) VALUETYPE)</tt></td>
+<td>polymorphic type</td></tr>
+
+<tr>
+<td>COMPLEXTYPE</td>
+<td></td></tr>
+
+<tr>
+<td>BASICTYPE</td>
+<td></td></tr>
+
+<tr>
+<td>TYPEVAR</td>
+<td><tt>VARIABLE</tt> or <tt>(VARIABLE TYPE)</tt></td></tr></tbody></table>
+<table>
+<tbody><tr>
+<th>BASICTYPE</th>
+<th>meaning</th></tr>
+
+<tr>
+<td><tt>*</tt></td>
+<td>any value</td></tr>
+
+<tr>
+<td><tt>bignum</tt></td>
+<td>arbitrary precision integer</td></tr>
+
+<tr>
+<td><tt>blob</tt></td>
+<td>byte vector</td></tr>
+
+<tr>
+<td><tt>boolean</tt></td>
+<td>true or false</td></tr>
+
+<tr>
+<td><tt>char</tt></td>
+<td>character</td></tr>
+
+<tr>
+<td><tt>cplxnum</tt></td>
+<td>complex number</td></tr>
+
+<tr>
+<td><tt>eof</tt></td>
+<td>end-of-file object</td></tr>
+
+<tr>
+<td><tt>false</tt></td>
+<td>boolean false</td></tr>
+
+<tr>
+<td><tt>fixnum</tt></td>
+<td>word-sized integer</td></tr>
+
+<tr>
+<td><tt>float</tt></td>
+<td>floating-point number</td></tr>
+
+<tr>
+<td><tt>integer</tt></td>
+<td>exact integer (either fixnum or bignum)</td></tr>
+
+<tr>
+<td><tt>list</tt></td>
+<td>null or pair</td></tr>
+
+<tr>
+<td><tt>locative</tt></td>
+<td>locative object</td></tr>
+
+<tr>
+<td><tt>null</tt></td>
+<td>empty list</td></tr>
+
+<tr>
+<td><tt>number</tt></td>
+<td>fixnum or float</td></tr>
+
+<tr>
+<td><tt>pair</tt></td>
+<td>pair</td></tr>
+
+<tr>
+<td><tt>pointer-vector</tt></td>
+<td>vector or native pointers</td></tr>
+
+<tr>
+<td><tt>pointer</tt></td>
+<td>native pointer</td></tr>
+
+<tr>
+<td><tt>input-port</tt> <tt>output-port</tt></td>
+<td>input- or output-port</td></tr>
+
+<tr>
+<td><tt>procedure</tt></td>
+<td>unspecific procedure</td></tr>
+
+<tr>
+<td><tt>ratnum</tt></td>
+<td>rational number</td></tr>
+
+<tr>
+<td><tt>string</tt></td>
+<td>string</td></tr>
+
+<tr>
+<td><tt>symbol</tt></td>
+<td>symbol</td></tr>
+
+<tr>
+<td><tt>keyword</tt></td>
+<td>keyword object</td></tr>
+
+<tr>
+<td><tt>true</tt></td>
+<td>boolean true</td></tr>
+
+<tr>
+<td><tt>vector</tt></td>
+<td>vector</td></tr></tbody></table>
+<table>
+<tbody><tr>
+<th>COMPLEXTYPE</th>
+<th>meaning</th></tr>
+
+<tr>
+<td><tt>(pair TYPE1 TYPE2)</tt></td>
+<td>pair with given component types</td></tr>
+
+<tr>
+<td><tt>(list-of TYPE)</tt></td>
+<td>proper list with given element type</td></tr>
+
+<tr>
+<td><tt>(list TYPE1 ...)</tt></td>
+<td>proper list with given length and element types</td></tr>
+
+<tr>
+<td><tt>(vector-of TYPE)</tt></td>
+<td>vector with given element types</td></tr>
+
+<tr>
+<td><tt>(vector TYPE1 ...)</tt></td>
+<td>vector with given length and element types</td></tr></tbody></table>
+<table>  
+
+<tbody><tr>
+<th>RESULTS</th>
+<th>meaning</th></tr>
+
+<tr>
+<td><tt>*</tt></td>
+<td>any number of unspecific results</td></tr>
+
+<tr>
+<td><tt>(RESULTTYPE ...)</tt></td>
+<td>specific number of results with given types</td></tr></tbody></table>
+<table>  
+
+<tbody><tr>
+<th>RESULTTYPE</th>
+<th>meaning</th></tr>
+
+<tr>
+<td><tt>undefined</tt></td>
+<td>a single undefined result</td></tr>
+
+<tr>
+<td><tt>noreturn</tt></td>
+<td>procedure does not return normally</td></tr>
+
+<tr>
+<td>VALUETYPE</td>
+<td></td></tr></tbody></table>
+<p>(*) Note: no type-variables are bound inside <tt>(not TYPE)</tt>.</p>
+<p>You can use a shorthand <tt>&#39;SYMBOL</tt> for introducing free variables in <tt>forall</tt> types, for example:</p>
+<pre><tt> (&#39;a -&gt; &#39;a) is translated to (forall (a) (a -&gt; a))</tt></pre>
+<p>If a <tt>forall</tt> already exists, quotes around the free variables introduced by it will be stripped:</p>
+<pre><tt> (forall (a) (&#39;a -&gt; a)) is translated to (forall (a) (a -&gt; a))</tt></pre>
+<p>Note that type-variables in <tt>forall</tt> types may be given &#34;constraint&#34; types, i.e.</p>
+<pre><tt> (: sort (forall (e (s (or (vector-of e) (list-of e))))
+           (s (e e -&gt; *) -&gt; s)))</tt></pre>
+<p>declares that <tt>sort</tt> is a procedure of two arguments, the first being a vector or list of an undetermined element type <tt>e</tt> and the second being a procedure that takes two arguments of the element type. The result of <tt>sort</tt> is of the same type as the first argument.</p>
+<p>Some types are internally represented as structure types, but you can also use these names directly in type-specifications - <tt>TYPE</tt> corresponds to <tt>(struct TYPE)</tt> in this case:</p>
+<table>  
+
+<tbody><tr>
+<th>Structure type</th>
+<th>meaning</th></tr>
+
+<tr>
+<td><tt>u8vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>s8vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>u16vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>s16vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>u32vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>s32vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>u64vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>s64vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>f32vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>f64vector</tt></td>
+<td>SRFI-4 byte vector</td></tr>
+
+<tr>
+<td><tt>thread</tt></td>
+<td>SRFI-18 thread</td></tr>
+
+<tr>
+<td><tt>environment</tt></td>
+<td>evaluation environment</td></tr>
+
+<tr>
+<td><tt>time</tt></td>
+<td>SRFI-18 &#34;time&#34; object</td></tr>
+
+<tr>
+<td><tt>continuation</tt></td>
+<td>continuation object</td></tr>
+
+<tr>
+<td><tt>lock</tt></td>
+<td>lock object from &#34;posix&#34; unit</td></tr>
+
+<tr>
+<td><tt>condition</tt></td>
+<td>object representing exception</td></tr>
+
+<tr>
+<td><tt>hash-table</tt></td>
+<td>SRFI-69 hash-table</td></tr>
+
+<tr>
+<td><tt>tcp-listener</tt></td>
+<td>listener object from &#34;tcp&#34; unit</td></tr></tbody></table>
+<p>Additionally, some aliases are allowed:</p>
+<table>
+<tbody><tr>
+<th>Alias</th>
+<th>Type</th></tr>
+
+<tr>
+<td><tt>any</tt></td>
+<td><tt>*</tt></td></tr>
+
+<tr>
+<td><tt>immediate</tt></td>
+<td><tt>(or eof null fixnum char boolean)</tt></td></tr>
+
+<tr>
+<td><tt>port</tt></td>
+<td><tt>(or input-port output-port)</tt></td></tr>
+
+<tr>
+<td><tt>void</tt></td>
+<td><tt>undefined</tt></td></tr></tbody></table>
+<p>For portability the aliases <tt>&amp;optional</tt> and <tt>&amp;rest</tt> are allowed in procedure type declarations as an alternative to <tt>#!optional</tt> and <tt>#!rest</tt>, respectively.</p><a href="Types.html#predicates">
+<h4 id="predicates">Predicates</h4></a>
+<p>Procedure-types of the form <tt>(DOM -&gt; RNG : TYPE)</tt> specify that the declared procedure will be a predicate, i.e. it accepts a single argument of type <tt>DOM</tt>, returns a result of type <tt>RNG</tt> (usually a boolean) and returns a true value if the argument is of type <tt>TYPE</tt> and false otherwise.</p><a href="Types.html#purity">
+<h4 id="purity">Purity</h4></a>
+<p>Procedure types are assumed to be not referentially transparent and are assumed to possibly modify locally held state. Using the <tt>(... --&gt; ...)</tt> syntax, you can declare a procedure to not modify local state, i.e. not causing any side-effects on local variables or data contain in local variables. This gives more opportunities for optimization but may not be violated or the results are undefined.</p><a href="Types.html#using-type-information-in-extensions">
+<h4 id="using-type-information-in-extensions">Using type information in extensions</h4></a>
+<p>Type information of declared toplevel variables can be used in client code that refers to the definitions in a compiled file. The following compiler options allow saving type-declarations to a file and consulting the type declarations retained in this manner:</p>
+<p><tt>-emit-types-file FILENAME</tt> writes the type-information for all declared definitions in an internal format to <tt>FILENAME</tt>.</p>
+<p><tt>-consult-types-file FILENAME</tt> loads and registers the type-information in <tt>FILENAME</tt> which should be a file generated though a previous use of <tt>-emit-types-file</tt>.</p>
+<p>If library code is used with <tt>import</tt> and a <tt>.types</tt> file of the same name exists in the extension repository path, then it is automatically consulted. This allows code using these libraries to take advantage of type-information for library definitions.</p>
+<p>Note that procedure-definitions in dynamically loaded code that was compiled with <tt>-strict-types</tt> will not check the types of their arguments which will result in unsafe code. Invoking such procedures with incorrectly typed arguments will result in undefined program behaviour.</p><a href="Types.html#optimizations-done-by-specialization">
+<h4 id="optimizations-done-by-specialization">Optimizations done by specialization</h4></a>
+<p>If argument types are known, then calls to known library procedures are replaced with non-checking variants (if available). Additionally, procedure checks can be omitted in cases where the value in operator position of a procedure call is known to be a procedure. Performance results will vary greatly depending on the nature of the compiled code. In general, specialization will not make code that is compiled in unsafe mode any faster: compilation in unsafe mode will omit most type checks anyway. But specialization can often improve the performance of code compiled in safe (default) mode.</p>
+<p>Specializations can also be defined by the user:</p><a href="Types.html#define-specialization">
+<h5 id="define-specialization">define-specialization</h5></a><span class="definition syntax"><em>[syntax]</em> <a class="dashingAutolink" name="autolink-1818"></a><a class="dashAnchor" name="//apple_ref/cpp/Macro/%28define-specialization%20%28NAME%20ARGUMENT%20...%29%20%5BRESULTS%5D%20BODY%29"></a><tt>(define-specialization (NAME ARGUMENT ...) [RESULTS] BODY)</tt>
+<br/></span>
+<p>Declares that calls to the globally defined procedure <tt>NAME</tt> with arguments matching the types given by <tt>ARGUMENT</tt>s should be replaced by <tt>BODY</tt> (a single expression). Each <tt>ARGUMENT</tt> should be an identifier naming a formal parameter, or a list of the form <tt>(IDENTIFIER TYPE)</tt>. In the former case, this argument specializes on the <tt>*</tt> type. If given, <tt>RESULTS</tt> (which follows the syntax given above under &#34;Type Syntax&#34;) adjusts the result types from those previously declared for <tt>NAME</tt>.</p>
+<p><tt>NAME</tt> must have a declared type (for example by using <tt>:</tt>). If it doesn&#39;t, the specialization is ignored.</p>
+<p>User-defined specializations are always local to the compilation unit in which they occur and cannot be exported. When encountered in the interpreter, <tt>define-specialization</tt> does nothing and returns an unspecified result.</p>
+<p>When multiple specializations may apply to a given call, they are prioritized by the order in which they were defined, with earlier specializations taking precedence over later ones.</p>
+<p>There is currently no way of ensuring specializations take place.  You can use the <tt>-debug o</tt> compiler options to see the total number of specializations performed on a particular named function call during compilation.</p><a href="Types.html#compiler-typecase">
+<h5 id="compiler-typecase">compiler-typecase</h5></a><span class="definition syntax"><em>[syntax]</em> <a class="dashingAutolink" name="autolink-1819"></a><a class="dashAnchor" name="//apple_ref/cpp/Macro/%28compiler-typecase%20EXP%20%28TYPE%20BODY%20...%29%20...%20%5B%28else%20BODY%20...%29%5D%29"></a><tt>(compiler-typecase EXP (TYPE BODY ...) ... [(else BODY ...)])</tt>
+<br/></span>
+<p>Evaluates <tt>EXP</tt> and executes the first clause which names a type that matches the type inferred during flow analysis as the result of <tt>EXP</tt>. The result of <tt>EXP</tt> is ignored and should be a single value. If a <tt>compiler-typecase</tt> form occurs in evaluated code, or if it occurs in compiled code but specialization is not enabled, then it must have an <tt>else</tt> clause which specifies the default code to be executed after <tt>EXP</tt>. If no <tt>else</tt> clause is given and no <tt>TYPE</tt> matches, then a compile-time error is signalled.</p><a href="Types.html#caveats">
+<h4 id="caveats">Caveats</h4></a>
+<p>Assignments make flow-analysis much harder and remove opportunities for optimization. Generally you should avoid using a lot of mutations of both local variables and data held in local variables. It may even make your code do unexpected things when these mutations violate type-declarations.</p>
+<p>Note that using threads which modify local state makes all type-analysis pointless.</p>
+<hr/>
+<p>Previous: <a href="Modules.html" class="internal">Modules</a></p>
+<p>Next: <a href="Declarations.html" class="internal">Declarations</a></p></div></body></html>

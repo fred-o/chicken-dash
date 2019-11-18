@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken load) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20load)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20load)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20load)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken load).html#module-chicken-load">Module (chicken load)</a>
+<ol>
+<li><a href="Module (chicken load).html#a-note-on-loading-of-shared-extension-libraries">A note on loading of shared extension libraries</a></li>
+<li><a href="Module (chicken load).html#load-relative">load-relative</a></li>
+<li><a href="Module (chicken load).html#load-noisily">load-noisily</a></li>
+<li><a href="Module (chicken load).html#load-library">load-library</a></li>
+<li><a href="Module (chicken load).html#require">require</a></li>
+<li><a href="Module (chicken load).html#provide">provide</a></li>
+<li><a href="Module (chicken load).html#provided">provided?</a></li>
+<li><a href="Module (chicken load).html#tuning-how-code-is-loaded">Tuning how code is loaded</a>
+<ol>
+<li><a href="Module (chicken load).html#dynamic-load-libraries">dynamic-load-libraries</a></li>
+<li><a href="Module (chicken load).html#load-verbose">load-verbose</a></li>
+<li><a href="Module (chicken load).html#set-dynamic-load-mode">set-dynamic-load-mode!</a></li></ol></li></ol></li></ol></div><a href="Module (chicken load).html#module-chicken-load">
+<a class="dashingAutolink" name="autolink-854"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20load%29"></a><a class="dashingAutolink" name="autolink-863"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20load%29"></a><h2 id="module-chicken-load">Module (chicken load)</h2></a>
+<p>This module contains various procedures for loading code.  Note that the main procedure for loading code, <tt>load</tt>, is part of <a href="Module scheme.html" class="internal">Module scheme</a>; the <tt>chicken load</tt> module only contains <i>extensions</i> to the standard.</p><a href="Module (chicken load).html#a-note-on-loading-of-shared-extension-libraries">
+<a class="dashingAutolink" name="autolink-855"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/A%20note%20on%20loading%20of%20shared%20extension%20libraries"></a><h3 id="a-note-on-loading-of-shared-extension-libraries">A note on loading of shared extension libraries</h3></a>
+<p>The functionality of loading shared objects into the runtime is only available on platforms that support dynamic loading of compiled code. Currently Linux, BSD, Solaris, Windows (with Cygwin) and HP/UX are supported.  Loading source files works everywhere.</p><a href="Module (chicken load).html#load-relative">
+<a class="dashingAutolink" name="autolink-856"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/load-relative"></a><h3 id="load-relative">load-relative</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-864"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28load-relative%20FILE%20%5BEVALPROC%5D%29"></a><tt>(load-relative FILE [EVALPROC])</tt>
+<br/></span>
+<p>Similar to <tt>load</tt>, but loads <tt>FILE</tt> relative to the path of the currently loaded file.</p><a href="Module (chicken load).html#load-noisily">
+<a class="dashingAutolink" name="autolink-857"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/load-noisily"></a><h3 id="load-noisily">load-noisily</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-865"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28load-noisily%20FILE%20%23%21key%20EVALUATOR%20TIME%20PRINTER%29"></a><tt>(load-noisily FILE #!key EVALUATOR TIME PRINTER)</tt>
+<br/></span>
+<p>As <tt>load</tt> but the result(s) of each evaluated toplevel-expression is written to standard output. If <tt>EVALUATOR</tt> is given and not <tt>#f</tt>, then each expression is evaluated by calling this argument with the read expression as argument. If <tt>TIME</tt> is given and not false, then the execution time of each expression is shown (as with the <tt>time</tt> macro). If <tt>PRINTER</tt> is given and not false, then each expression is printed before evaluation by applying the expression to the value of this argument, which should be a one-argument procedure.</p>
+<p>See also the <a href="Module (chicken load).html#load-verbose" class="internal">load-verbose</a> parameter.</p><a href="Module (chicken load).html#load-library">
+<a class="dashingAutolink" name="autolink-858"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/load-library"></a><h3 id="load-library">load-library</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-866"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28load-library%20UNIT%20%5BLIBRARYFILE%5D%29"></a><tt>(load-library UNIT [LIBRARYFILE])</tt>
+<br/></span>
+<p>On platforms that support dynamic loading, <tt>load-library</tt> loads the compiled library unit <tt>UNIT</tt> (which should be a symbol). If the string <tt>LIBRARYFILE</tt> is given, then the given shared library will be loaded and the toplevel code of the specified unit will be executed. If no <tt>LIBRARYFILE</tt> argument is given, then the libraries given in the parameter <tt>dynamic-load-libraries</tt> are searched for the required unit. If the unit is not found, an error is signaled.</p>
+<p>Note that <tt>LIBRARYFILE</tt> is considered relative to the <tt>dlopen(3)</tt> search path by default. In order to use a file relative to the current working directory, a relative or absolute pathname must be used, i.e. <tt>LIBRARYFILE</tt> must contain at least one slash (<tt>&#34;/&#34;</tt>).</p><a href="Module (chicken load).html#require">
+<a class="dashingAutolink" name="autolink-859"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/require"></a><h3 id="require">require</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-867"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28require%20ID%20...%29"></a><tt>(require ID ...)</tt>
+<br/></span>
+<p>If any of the named extension libraries <tt>ID</tt> are not already loaded into the system, then <tt>require</tt> will look up the location of the shared extension library and load it.  If <tt>ID</tt> names a library-unit of the base system, then it is loaded via <tt>load-library</tt>. If no extension library is available for the given ID, then an attempt is made to load the file <tt>ID.so</tt> or <tt>ID.scm</tt> (in that order) from one of the following locations:</p>
+<ul>
+<li>the current directory</li>
+<li>the current repository path (see <tt>repository-path</tt>)</li></ul>
+<p>Each <tt>ID</tt> should be a symbol.</p><a href="Module (chicken load).html#provide">
+<a class="dashingAutolink" name="autolink-860"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/provide"></a><h3 id="provide">provide</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-868"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28provide%20ID%20...%29"></a><tt>(provide ID ...)</tt>
+<br/></span>
+<p>Registers the extension IDs <tt>ID ...</tt> as loaded. This is mainly intended to provide aliases for certain library identifiers.</p><a href="Module (chicken load).html#provided">
+<a class="dashingAutolink" name="autolink-861"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/provided%3F"></a><h3 id="provided">provided?</h3></a>
+<p>procedure: (provided? ID ...)</p>
+<p>Returns <tt>#t</tt> if extension with the IDs <tt>ID ...</tt> are currently loaded, or <tt>#f</tt> otherwise.</p><a href="Module (chicken load).html#tuning-how-code-is-loaded">
+<a class="dashingAutolink" name="autolink-862"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Tuning%20how%20code%20is%20loaded"></a><h3 id="tuning-how-code-is-loaded">Tuning how code is loaded</h3></a><a href="Module (chicken load).html#dynamic-load-libraries">
+<h4 id="dynamic-load-libraries">dynamic-load-libraries</h4></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-852"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/%28dynamic-load-libraries%29"></a><tt>(dynamic-load-libraries)</tt>
+<br/></span>
+<p>A list of strings containing shared libraries that should be checked for explicitly loaded library units (this facility is not available on all platforms). See <tt>load-library</tt>.</p><a href="Module (chicken load).html#load-verbose">
+<h4 id="load-verbose">load-verbose</h4></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-853"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/%28load-verbose%29"></a><tt>(load-verbose)</tt>
+<br/></span>
+<p>A boolean indicating whether loading of source files, compiled code (if available) and compiled libraries should display a message.</p><a href="Module (chicken load).html#set-dynamic-load-mode">
+<h4 id="set-dynamic-load-mode">set-dynamic-load-mode!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-869"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-dynamic-load-mode%21%20MODELIST%29"></a><tt>(set-dynamic-load-mode! MODELIST)</tt>
+<br/></span>
+<p>On systems that support dynamic loading of compiled code via the <tt>dlopen(3)</tt> interface (for example Linux and Solaris), some options can be specified to fine-tune the behaviour of the dynamic linker. <tt>MODE</tt> should be a list of symbols (or a single symbol) taken from the following set:</p>
+<dl>
+<dt><tt>local</tt></dt>
+<dd>If <tt>local</tt> is given, then any C/C++ symbols defined in the dynamically loaded file are not available for subsequently loaded files and libraries. Use this if you have linked foreign code into your dynamically loadable file and if you don&#39;t want to export them (for example because you want to load another file that defines the same symbols).</dd>
+<dt><tt>global</tt></dt>
+<dd>The default is <tt>global</tt>, which means all C/C++ symbols are available to code loaded at a later stage.</dd>
+<dt><tt>now</tt></dt>
+<dd>If <tt>now</tt> is specified, all symbols are resolved immediately.</dd>
+<dt><tt>lazy</tt></dt>
+<dd>Unresolved symbols are resolved as code from the file is executed. This is the default. </dd></dl>
+<p>Note that this procedure does not control the way Scheme variables are handled - this facility is mainly of interest when accessing foreign code.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken keyword).html" class="internal">Module (chicken keyword)</a></p>
+<p>Next: <a href="Module (chicken locative).html" class="internal">Module (chicken locative)</a></p></div></body></html>

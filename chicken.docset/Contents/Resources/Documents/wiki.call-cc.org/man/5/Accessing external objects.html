@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Accessing externally defined data - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Accessing%20external%20objects?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Accessing%20external%20objects?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Accessing%20external%20objects?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Accessing external objects.html#accessing-externally-defined-data">Accessing externally defined data</a></li>
+<li><a href="Accessing external objects.html#returning-large-objects-or-chunks-of-memory-to-scheme">Returning large objects or chunks of memory to Scheme</a></li></ol></div><a href="Accessing external objects.html#accessing-externally-defined-data">
+<a class="dashingAutolink" name="autolink-0"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/Accessing%20externally%20defined%20data"></a><h2 id="accessing-externally-defined-data">Accessing externally defined data</h2></a>
+<p>For a list of the special forms that allow definition of Scheme procedures that access native C/C++ code, consult the documentation on the <a href="Module (chicken foreign).html" class="internal">(chicken foreign)</a> module. The remainder of this chapter merely explains a few special cases.</p><a href="Accessing external objects.html#returning-large-objects-or-chunks-of-memory-to-scheme">
+<h2 id="returning-large-objects-or-chunks-of-memory-to-scheme">Returning large objects or chunks of memory to Scheme</h2></a>
+<p>When you call a C function which needs to return quantities of data, several issues arise:</p>
+<ul>
+<li>the size of the nursery is limited, so <tt>C_alloc</tt> can cause stack overflow</li>
+<li>if you malloc in C, and intend to leave it there, and directly access parts of that data from Scheme, you will need C accessor functions to pinpoint the parts you need and return them as Scheme objects; you will also need a finalizer if you intend for this data to be garbage-collected</li>
+<li>building up lists or other complex Scheme structures from individual pairs, or putting non-immediate objects into vectors, is cumbersome in C</li></ul>
+<p>So some would advise you to just return a pointer to Scheme, use memcpy or any other function(s) which you need to get the data into CHICKEN-managed memory and into the desired kind of data structure, then free the C data.  For this example, we are trying to return an array of doubles into an <tt>f64vector</tt>; we can accomplish that by adding a specialized copy function to the C library being integrated:</p>
+<pre><tt class="highlight C-language">void CopyResults(double* vector) {
+    memcpy(vector, bezierBuffer, totalOutputPoints * sizeof(double));
+}
+
+// The original C function which takes an array of doubles, 
+// does some sort of transmogrification,
+// retains a new malloc&#39;d array of the results
+// and returns the count
+int GenerateResults(double* vector, int count) {
+    ... 
+}</tt></pre>
+<p>and the &#34;egg&#34; which calls the C functions can be implemented like this:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">module memcpy-demo <span class="paren2">(<span class="default">input-&gt;output</span>)</span>
+    <span class="paren2">(<span class="default">import <span class="paren3">(<span class="default">chicken base</span>)</span> scheme <span class="paren3">(<span class="default">chicken foreign</span>)</span> srfi-4</span>)</span>
+
+    <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> CopyResults <span class="paren3">(<span class="default">foreign-lambda void <span class="string">&#34;CopyResults&#34;</span> f64vector</span>)</span></span>)</span>
+
+    <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> GenerateResults <span class="paren3">(<span class="default">foreign-lambda integer <span class="string">&#34;GenerateResults&#34;</span> f64vector integer</span>)</span></span>)</span>
+
+    <span class="paren2">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren3">(<span class="default">input-&gt;output input</span>)</span>
+        <span class="paren3">(<span class="default"><i><span class="symbol">let*</span></i> <span class="paren4">(<span class="default"><span class="paren5">[<span class="default">size <span class="paren6">(<span class="default">GenerateResults input <span class="paren1">(<span class="default">f64vector-length input</span>)</span></span>)</span></span>]</span> 
+               <span class="paren5">[<span class="default">vect <span class="paren6">(<span class="default">make-f64vector size</span>)</span></span>]</span></span>)</span>
+            <span class="paren4">(<span class="default">printf <span class="string">&#34;returned size ~a~%&#34;</span> size</span>)</span>
+            <span class="paren4">(<span class="default">CopyResults vect</span>)</span>
+            vect</span>)</span></span>)</span></span>)</span>
+</tt></pre>
+<p>The foreign-lambda takes care of the details in this case so that an f64vector allocated in the nursery can be treated as a plain old array of doubles in C (assuming your C compiler uses 64-bit values for double).</p>
+<p>Various eggs provide other examples, and some of them do it more efficiently too, but this method is relatively clean and compact.</p>
+<hr/>
+<p>Previous: <a href="Interface to external functions and variables.html" class="internal">Interface to external functions and variables</a></p>
+<p>Next: <a href="Foreign type specifiers.html" class="internal">Foreign type specifiers</a></p></div></body></html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Units and the linking model - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Units%20and%20linking%20model?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Units%20and%20linking%20model?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Units%20and%20linking%20model?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Units and linking model.html#units-and-the-linking-model">Units and the linking model</a></li></ol></div><a href="Units and linking model.html#units-and-the-linking-model">
+<a class="dashingAutolink" name="autolink-1820"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/Units%20and%20the%20linking%20model"></a><h2 id="units-and-the-linking-model">Units and the linking model</h2></a>
+<p>Compiling Scheme code to standalone executables or dynamically loadable files is the most common and simplest way of using CHICKEN. The extension system handles straightforward cases of static linking of modules in a mostly transparent way, which is usually sufficient for normal situations.</p>
+<p>But for more advanced uses like static linking, creating dynamic libraries or embedding compiled code into other (usually C/C++ based) applications it is helpful to understand the internal model CHICKEN uses to organize compiled code and separate compilation units.</p>
+<p>Every compiled Scheme file (from here on called a <i>compilation unit</i>) consists of a <i>toplevel</i> C function holding the compiled toplevel expressions in the order in which they appear in the source file. Scheme functions (<tt>lambda</tt>s) are compiled 1-to-1 into additional C functions, including the intermediate lambda-functions that are the result of the CPS conversion that is done by the compiler.</p>
+<p>The toplevel C function of a compilation unit is comparable to the <tt>main</tt> function in C programs, and for standalone executables the startup code inside the runtime system will eventually call this toplevel function. Dynamically loaded compiled code is structured in the same way, with a toplevel function that is dynamically looked up in the loaded binary and invoked to execute the expressions from the loaded code. Statically linked compilation units are treated similarly, there also exists a toplevel function which is called at some stage in the startup process to execute the forms of the file.</p>
+<p>For standalone executables and dynamically loaded code the toplevel function has a fixed, predefined name (<tt>C_toplevel</tt>). For static linking or for using multiple toplevels in a shared library that combines multiple compilation units (like <tt>libchicken</tt>, for example), non-internal function names have to be different to be properly distinguished, so we assign a unique <i>unit</i> name to each compilation unit that is intended to be linked with other compilation units.</p>
+<p>To set the name of a compilation unit, use</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">declare <span class="paren2">(<span class="default">unit UNITNAME</span>)</span></span>)</span></tt></pre>
+<p><i>Invocation</i> of a unit (actually running the toplevel code contained in it) is done automatically for standalone programs and dynamically loaded compiled code, but must be done explicitly for uniquely named units that are part of a larger library or when doing static linking. To do so, use</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">declare <span class="paren2">(<span class="default">uses UNITNAME</span>)</span></span>)</span></tt></pre>
+<p>Invocation takes place at the start of the current compilation unit, so the toplevel of any <i>used</i> units is executed before the toplevel of the compilation unit that is <i>using</i> one. Invocation can also be done explicitly by using <tt>load-library</tt> (from the <tt>(chicken load)</tt>) module, which takes the name of a unit to be invoked as an argument.</p>
+<p>Note that this model of using code from other compilation units does not address syntax definitions, it&#39;s for running pure, fully expanded and compiled code. Syntax and modules are handled at a higher level, using import libraries, which are compiled or interpreted separate files setting up module information to allow the compiler to properly resolve module namespaces and imports.</p>
+<hr/>
+<p>Previous: <a href="Egg specification format.html" class="internal">Egg specification format</a></p>
+<p>Next: <a href="Deployment.html" class="internal">Deployment</a></p></div></body></html>

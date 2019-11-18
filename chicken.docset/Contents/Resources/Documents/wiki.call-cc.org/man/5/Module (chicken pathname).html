@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken pathname) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20pathname)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20pathname)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20pathname)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken pathname).html#module-chicken-pathname">Module (chicken pathname)</a>
+<ol>
+<li><a href="Module (chicken pathname).html#absolute-pathname">absolute-pathname?</a></li>
+<li><a href="Module (chicken pathname).html#decompose-pathname">decompose-pathname</a></li>
+<li><a href="Module (chicken pathname).html#make-pathname">make-pathname</a></li>
+<li><a href="Module (chicken pathname).html#make-absolute-pathname">make-absolute-pathname</a></li>
+<li><a href="Module (chicken pathname).html#pathname-directory">pathname-directory</a></li>
+<li><a href="Module (chicken pathname).html#pathname-file">pathname-file</a></li>
+<li><a href="Module (chicken pathname).html#pathname-extension">pathname-extension</a></li>
+<li><a href="Module (chicken pathname).html#pathname-replace-directory">pathname-replace-directory</a></li>
+<li><a href="Module (chicken pathname).html#pathname-replace-file">pathname-replace-file</a></li>
+<li><a href="Module (chicken pathname).html#pathname-replace-extension">pathname-replace-extension</a></li>
+<li><a href="Module (chicken pathname).html#pathname-strip-directory">pathname-strip-directory</a></li>
+<li><a href="Module (chicken pathname).html#pathname-strip-extension">pathname-strip-extension</a></li>
+<li><a href="Module (chicken pathname).html#normalize-pathname">normalize-pathname</a></li>
+<li><a href="Module (chicken pathname).html#directory-null">directory-null?</a></li>
+<li><a href="Module (chicken pathname).html#decompose-directory">decompose-directory</a></li>
+<li><a href="Module (chicken pathname).html#windows-specific-notes">Windows specific notes</a></li></ol></li></ol></div><a href="Module (chicken pathname).html#module-chicken-pathname">
+<a class="dashingAutolink" name="autolink-988"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20pathname%29"></a><a class="dashingAutolink" name="autolink-1005"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20pathname%29"></a><h2 id="module-chicken-pathname">Module (chicken pathname)</h2></a>
+<p>This module provides procedures for manipulating paths.  If you want to operate on the files and directories which the paths represent, see <a href="Module (chicken file).html" class="internal">Module (chicken file)</a>.</p><a href="Module (chicken pathname).html#absolute-pathname">
+<a class="dashingAutolink" name="autolink-989"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/absolute-pathname%3F"></a><h3 id="absolute-pathname">absolute-pathname?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-973"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28absolute-pathname%3F%20PATHNAME%29"></a><tt>(absolute-pathname? PATHNAME)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if the string <tt>PATHNAME</tt> names an absolute pathname, and returns <tt>#f</tt> otherwise.</p><a href="Module (chicken pathname).html#decompose-pathname">
+<a class="dashingAutolink" name="autolink-990"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/decompose-pathname"></a><h3 id="decompose-pathname">decompose-pathname</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-974"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28decompose-pathname%20PATHNAME%29"></a><tt>(decompose-pathname PATHNAME)</tt>
+<br/></span>
+<p>Returns three values: the directory-, filename- and extension-components of the file named by the string <tt>PATHNAME</tt>. For any component that is not contained in <tt>PATHNAME</tt>, <tt>#f</tt> is returned.</p><a href="Module (chicken pathname).html#make-pathname">
+<a class="dashingAutolink" name="autolink-991"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/make-pathname"></a><h3 id="make-pathname">make-pathname</h3></a><a href="Module (chicken pathname).html#make-absolute-pathname">
+<a class="dashingAutolink" name="autolink-992"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/make-absolute-pathname"></a><h3 id="make-absolute-pathname">make-absolute-pathname</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-975"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-pathname%20DIRECTORY%20FILENAME%20%5BEXTENSION%5D%29"></a><tt>(make-pathname DIRECTORY FILENAME [EXTENSION])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-976"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-absolute-pathname%20DIRECTORY%20FILENAME%20%5BEXTENSION%5D%29"></a><tt>(make-absolute-pathname DIRECTORY FILENAME [EXTENSION])</tt>
+<br/></span>
+<p>Returns a string that names the file with the components <tt>DIRECTORY, FILENAME</tt> and (optionally) <tt>EXTENSION</tt> with <tt>SEPARATOR</tt> being the directory separation indicator (usually <tt>/</tt> on UNIX systems and <tt>\</tt> on Windows, defaulting to whatever platform this is running on). <tt>DIRECTORY</tt> can be <tt>#f</tt> (meaning no directory component), a string or a list of strings. <tt>FILENAME</tt> and <tt>EXTENSION</tt> should be strings or <tt>#f</tt>. <tt>make-absolute-pathname</tt> returns always an absolute pathname.</p><a href="Module (chicken pathname).html#pathname-directory">
+<a class="dashingAutolink" name="autolink-993"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/pathname-directory"></a><h3 id="pathname-directory">pathname-directory</h3></a><a href="Module (chicken pathname).html#pathname-file">
+<a class="dashingAutolink" name="autolink-994"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/pathname-file"></a><h3 id="pathname-file">pathname-file</h3></a><a href="Module (chicken pathname).html#pathname-extension">
+<a class="dashingAutolink" name="autolink-995"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/pathname-extension"></a><h3 id="pathname-extension">pathname-extension</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-977"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pathname-directory%20PATHNAME%29"></a><tt>(pathname-directory PATHNAME)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-978"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pathname-file%20PATHNAME%29"></a><tt>(pathname-file PATHNAME)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-979"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pathname-extension%20PATHNAME%29"></a><tt>(pathname-extension PATHNAME)</tt>
+<br/></span>
+<p>Accessors for the components of <tt>PATHNAME</tt>. If the pathname does not contain the accessed component, then <tt>#f</tt> is returned.</p><a href="Module (chicken pathname).html#pathname-replace-directory">
+<a class="dashingAutolink" name="autolink-996"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/pathname-replace-directory"></a><h3 id="pathname-replace-directory">pathname-replace-directory</h3></a><a href="Module (chicken pathname).html#pathname-replace-file">
+<a class="dashingAutolink" name="autolink-997"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/pathname-replace-file"></a><h3 id="pathname-replace-file">pathname-replace-file</h3></a><a href="Module (chicken pathname).html#pathname-replace-extension">
+<a class="dashingAutolink" name="autolink-998"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/pathname-replace-extension"></a><h3 id="pathname-replace-extension">pathname-replace-extension</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-980"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pathname-replace-directory%20PATHNAME%20DIRECTORY%29"></a><tt>(pathname-replace-directory PATHNAME DIRECTORY)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-981"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pathname-replace-file%20PATHNAME%20FILENAME%29"></a><tt>(pathname-replace-file PATHNAME FILENAME)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-982"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pathname-replace-extension%20PATHNAME%20EXTENSION%29"></a><tt>(pathname-replace-extension PATHNAME EXTENSION)</tt>
+<br/></span>
+<p>Return a new pathname with the specified component of <tt>PATHNAME</tt> replaced by a new value.</p><a href="Module (chicken pathname).html#pathname-strip-directory">
+<a class="dashingAutolink" name="autolink-999"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/pathname-strip-directory"></a><h3 id="pathname-strip-directory">pathname-strip-directory</h3></a><a href="Module (chicken pathname).html#pathname-strip-extension">
+<a class="dashingAutolink" name="autolink-1000"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/pathname-strip-extension"></a><h3 id="pathname-strip-extension">pathname-strip-extension</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-983"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pathname-strip-directory%20PATHNAME%29"></a><tt>(pathname-strip-directory PATHNAME)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-984"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pathname-strip-extension%20PATHNAME%29"></a><tt>(pathname-strip-extension PATHNAME)</tt>
+<br/></span>
+<p>Return a new pathname with the specified component of <tt>PATHNAME</tt> stripped.</p><a href="Module (chicken pathname).html#normalize-pathname">
+<a class="dashingAutolink" name="autolink-1001"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/normalize-pathname"></a><h3 id="normalize-pathname">normalize-pathname</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-985"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28normalize-pathname%20PATHNAME%20%5BPLATFORM%5D%29"></a><tt>(normalize-pathname PATHNAME [PLATFORM])</tt>
+<br/></span>
+<p>Performs a simple &#34;normalization&#34; on the <tt>PATHNAME</tt>, suitably for <tt>PLATFORM</tt>, which should be one of the symbols <tt>windows</tt> or <tt>unix</tt> and defaults to on whatever platform is currently in use. All relative path elements and duplicate separators are processed and removed.  If <tt>NAME</tt> ends with a <tt>/</tt> or is empty, the appropriate slash is appended to the tail.</p>
+<p>No directories or files are actually tested for existence; this procedure only canonicalises path syntax.</p><a href="Module (chicken pathname).html#directory-null">
+<a class="dashingAutolink" name="autolink-1002"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/directory-null%3F"></a><h3 id="directory-null">directory-null?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-986"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28directory-null%3F%20DIRECTORY%29"></a><tt>(directory-null? DIRECTORY)</tt>
+<br/></span>
+<p>Does the <tt>DIRECTORY</tt> consist only of path separators and the period?</p>
+<p><tt>DIRECTORY</tt> may be a string or a list of strings.</p><a href="Module (chicken pathname).html#decompose-directory">
+<a class="dashingAutolink" name="autolink-1003"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/decompose-directory"></a><h3 id="decompose-directory">decompose-directory</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-987"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28decompose-directory%20DIRECTORY%29"></a><tt>(decompose-directory DIRECTORY)</tt>
+<br/></span>
+<p>Returns 3 values: the <tt>base-origin</tt>, <tt>base-directory</tt>, and the <tt>directory-elements</tt> for the <tt>DIRECTORY</tt>.</p>
+<dl>
+<dt><tt>base-origin</tt></dt>
+<dd>a <tt>string</tt> or <tt>#f</tt>. The drive, if any.</dd>
+<dt><tt>base-directory</tt></dt>
+<dd>a <tt>string</tt> or <tt>#f</tt>. A directory-separator when <tt>DIRECTORY</tt> is an <tt>absolute-pathname</tt>.</dd>
+<dt><tt>directory-elements</tt></dt>
+<dd>a <tt>list-of string</tt> or <tt>#f</tt>. The non-directory-separator bits.</dd></dl>
+<p><tt>DIRECTORY</tt> is a <tt>string</tt>.</p>
+<ul>
+<li>On Windows <tt>(decompose-directory &#34;c:foo/bar&#34;)</tt> =&gt; <tt>&#34;c:&#34; #f (&#34;foo&#34; &#34;bar&#34;)</tt></li></ul><a href="Module (chicken pathname).html#windows-specific-notes">
+<a class="dashingAutolink" name="autolink-1004"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Windows%20specific%20notes"></a><h3 id="windows-specific-notes">Windows specific notes</h3></a>
+<p>Use of UTF8 encoded strings for pathnames is not supported. Windows uses a 16-bit UNICODE encoding with special system calls for wide-character support.  Only single-byte string encoding can be used.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken module).html" class="internal">Module (chicken module)</a></p>
+<p>Next: <a href="Module (chicken platform).html" class="internal">Module (chicken platform)</a></p></div></body></html>

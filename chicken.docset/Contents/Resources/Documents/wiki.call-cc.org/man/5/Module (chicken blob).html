@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken blob) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20blob)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20blob)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20blob)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken blob).html#module-chicken-blob">Module (chicken blob)</a>
+<ol>
+<li><a href="Module (chicken blob).html#make-blob">make-blob</a></li>
+<li><a href="Module (chicken blob).html#blob">blob?</a></li>
+<li><a href="Module (chicken blob).html#blob-size">blob-size</a></li>
+<li><a href="Module (chicken blob).html#blob-string">blob-&gt;string</a></li>
+<li><a href="Module (chicken blob).html#string-blob">string-&gt;blob</a></li>
+<li><a href="Module (chicken blob).html#blob">blob=?</a></li></ol></li></ol></div><a href="Module (chicken blob).html#module-chicken-blob">
+<a class="dashingAutolink" name="autolink-428"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20blob%29"></a><a class="dashingAutolink" name="autolink-435"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20blob%29"></a><h2 id="module-chicken-blob">Module (chicken blob)</h2></a>
+<p>This module contains procedures for dealing with &#34;blobs&#34;.  Blobs are unstructured byte arrays (basically &#34;binary strings&#34;). You can&#39;t do much with them, but they allow conversion to and from <a href="Module srfi-4.html" class="internal">SRFI-4 number vectors</a> which define how to access a blob&#39;s byte contents.</p><a href="Module (chicken blob).html#make-blob">
+<a class="dashingAutolink" name="autolink-429"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/make-blob"></a><h3 id="make-blob">make-blob</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-436"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-blob%20SIZE%29"></a><tt>(make-blob SIZE)</tt>
+<br/></span>
+<p>Returns a blob object of <tt>SIZE</tt> bytes, aligned on an 8-byte boundary, uninitialized.</p><a href="Module (chicken blob).html#blob">
+<a class="dashingAutolink" name="autolink-430"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/blob%3F"></a><h3 id="blob">blob?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-437"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob%3F%20X%29"></a><tt>(blob? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a blob object, or <tt>#f</tt> otherwise.</p><a href="Module (chicken blob).html#blob-size">
+<a class="dashingAutolink" name="autolink-431"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/blob-size"></a><h3 id="blob-size">blob-size</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-438"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-size%20BLOB%29"></a><tt>(blob-size BLOB)</tt>
+<br/></span>
+<p>Returns the number of bytes in <tt>BLOB</tt>.</p><a href="Module (chicken blob).html#blob-string">
+<a class="dashingAutolink" name="autolink-432"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/blob-%3Estring"></a><h3 id="blob-string">blob-&gt;string</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-439"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Estring%20BLOB%29"></a><tt>(blob-&gt;string BLOB)</tt>
+<br/></span>
+<p>Returns a string with the contents of <tt>BLOB</tt>.</p><a href="Module (chicken blob).html#string-blob">
+<a class="dashingAutolink" name="autolink-433"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/string-%3Eblob"></a><h3 id="string-blob">string-&gt;blob</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-440"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-%3Eblob%20STRING%29"></a><tt>(string-&gt;blob STRING)</tt>
+<br/></span>
+<p>Returns a blob with the contents of <tt>STRING</tt>.</p><a href="Module (chicken blob).html#blob">
+<a class="dashingAutolink" name="autolink-434"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/blob%3D%3F"></a><h3 id="blob">blob=?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-441"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob%3D%3F%20BLOB1%20BLOB2%29"></a><tt>(blob=? BLOB1 BLOB2)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if the two argument blobs are of the same size and have the same content.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken bitwise).html" class="internal">Module (chicken bitwise)</a></p>
+<p>Next: <a href="Module (chicken condition).html" class="internal">Module (chicken condition)</a></p></div></body></html>

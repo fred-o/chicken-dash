@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Bugs and limitations - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Bugs%20and%20limitations?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Bugs%20and%20limitations?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Bugs%20and%20limitations?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul><a href="Bugs and limitations.html#bugs-and-limitations">
+<a class="dashingAutolink" name="autolink-3"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/Bugs%20and%20limitations"></a><h2 id="bugs-and-limitations">Bugs and limitations</h2></a>
+<ul>
+<li>Compiling large files takes too much time.</li>
+<li>If a known procedure has unused arguments, but is always called without those parameters, then the optimizer <i>repairs</i> the procedure in certain situations and removes the parameter from the lambda-list.</li>
+<li><tt>port-position</tt> currently works only for input ports.</li>
+<li>Leaf routine optimization can theoretically result in code that thrashes, if tight loops perform excessively many mutations. In practice this doesn&#39;t happen.</li>
+<li>Due to the header representation of block objects, the maximum size of a bytevector-like object (strings, blobs, srfi-4 vectors etc) is 2^24 bytes or 16MiB.  On 64-bit machines the limit is less relevant, at 2^56 bytes, or 65536 TiB (64 PiB).</li>
+<li>Like above, the maximum size of vector-like objects is 2^24 slots on 32 bit machines and 2^56 slots on 64-bit machines.</li>
+<li>Bignums are represented by bytevector objects instead of vector-like objects due to the need to treat digits as opaque data.  This limits bignums to a maximum value of 2^(2^27) on 32-bit machines and 2^(2^59) on 64-bit machines.</li></ul>
+<hr/>
+<p>Previous: <a href="Cross development.html" class="internal">Cross development</a></p>
+<p>Next: <a href="Acknowledgements.html" class="internal">Acknowledgements</a></p></div></body></html>

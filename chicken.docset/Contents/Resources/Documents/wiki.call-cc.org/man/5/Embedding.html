@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Embedding - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Embedding?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Embedding?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Embedding?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Embedding.html#embedding">Embedding</a>
+<ol>
+<li><a href="Embedding.html#chicken_parse_command_line">CHICKEN_parse_command_line</a></li>
+<li><a href="Embedding.html#chicken_initialize">CHICKEN_initialize</a></li>
+<li><a href="Embedding.html#chicken_run">CHICKEN_run</a></li>
+<li><a href="Embedding.html#chicken_eval">CHICKEN_eval</a></li>
+<li><a href="Embedding.html#chicken_eval_string">CHICKEN_eval_string</a></li>
+<li><a href="Embedding.html#chicken_eval_to_string">CHICKEN_eval_to_string</a></li>
+<li><a href="Embedding.html#chicken_eval_string_to_string">CHICKEN_eval_string_to_string</a></li>
+<li><a href="Embedding.html#chicken_apply">CHICKEN_apply</a></li>
+<li><a href="Embedding.html#chicken_apply_to_string">CHICKEN_apply_to_string</a></li>
+<li><a href="Embedding.html#chicken_read">CHICKEN_read</a></li>
+<li><a href="Embedding.html#chicken_load">CHICKEN_load</a></li>
+<li><a href="Embedding.html#chicken_get_error_message">CHICKEN_get_error_message</a></li>
+<li><a href="Embedding.html#chicken_yield">CHICKEN_yield</a></li>
+<li><a href="Embedding.html#chicken_continue">CHICKEN_continue</a></li>
+<li><a href="Embedding.html#chicken_new_gc_root">CHICKEN_new_gc_root</a></li>
+<li><a href="Embedding.html#chicken_new_finalizable_gc_root">CHICKEN_new_finalizable_gc_root</a></li>
+<li><a href="Embedding.html#chicken_delete_gc_root">CHICKEN_delete_gc_root</a></li>
+<li><a href="Embedding.html#chicken_gc_root_ref">CHICKEN_gc_root_ref</a></li>
+<li><a href="Embedding.html#chicken_gc_root_set">CHICKEN_gc_root_set</a></li>
+<li><a href="Embedding.html#chicken_global_lookup">CHICKEN_global_lookup</a></li>
+<li><a href="Embedding.html#chicken_global_ref">CHICKEN_global_ref</a></li>
+<li><a href="Embedding.html#chicken_global_set">CHICKEN_global_set</a></li></ol></li></ol></div><a href="Embedding.html#embedding">
+<a class="dashingAutolink" name="autolink-109"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/Embedding"></a><h2 id="embedding">Embedding</h2></a>
+<p>Compiled Scheme files can be linked with C code, provided the Scheme code was compiled in <i>embedded</i> mode by passing <tt>-DC_EMBEDDED</tt> to the C compiler (this will disable generation of a <tt>main()</tt> function). <tt>csc</tt> will do this, when given the <tt>-embedded</tt> option.</p>
+<p>The following C API is available:</p><a href="Embedding.html#chicken_parse_command_line">
+<a class="dashingAutolink" name="autolink-87"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_parse_command_line"></a><h3 id="chicken_parse_command_line">CHICKEN_parse_command_line</h3></a>
+<pre><tt>[C function] void CHICKEN_parse_command_line (int argc, char *argv[], int *heap, int *stack int *symbols)</tt></pre>
+<p>Parse the programs command-line contained in <tt>argc</tt> and <tt>argv</tt> and return the heap-, stack- and symbol table limits given by runtime options of the form <tt>-:...</tt>, or choose default limits. The library procedure <tt>argv</tt> can access the command-line only if this function has been called by the containing application.</p><a href="Embedding.html#chicken_initialize">
+<a class="dashingAutolink" name="autolink-88"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_initialize"></a><h3 id="chicken_initialize">CHICKEN_initialize</h3></a>
+<pre><tt>[C function] int CHICKEN_initialize (int heap, int stack, int symbols, void *toplevel) </tt></pre>
+<p>Initializes the Scheme execution context and memory. <tt>heap</tt> holds the number of bytes that are to be allocated for the secondary heap. <tt>stack</tt> holds the number of bytes for the primary heap. <tt>symbols</tt> contains the size of the symbol table. The keyword table will be 1/4th the symbol table size.  Passing <tt>0</tt> to one or more of these parameters will select a default size.</p>
+<p><tt>toplevel</tt> should be a pointer to the toplevel entry point procedure. You should pass <tt>C_toplevel</tt> here. In any subsequent call to <tt>CHICKEN_run</tt> you can simply pass <tt>NULL</tt>. Calling this function more than once has no effect. If enough memory is available and initialization was successful, then <tt>1</tt> is returned, otherwise this function returns <tt>0</tt>.</p>
+<p>It is essential to run <tt>CHICKEN_initialize</tt> and subsequent calls to <tt>CHICKEN_run</tt> in the same native thread. The former computes a stack limit address which will not be valid if the runtime system is re-entered in a execution context where the stack is located at a different address.</p><a href="Embedding.html#chicken_run">
+<a class="dashingAutolink" name="autolink-89"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_run"></a><h3 id="chicken_run">CHICKEN_run</h3></a>
+<pre><tt>[C function] C_word CHICKEN_run (void *toplevel)</tt></pre>
+<p>Starts the Scheme program. Call this function once to execute all toplevel expressions in your compiled Scheme program. If the runtime system was not initialized before, then <tt>CHICKEN_initialize</tt> is called with default sizes. <tt>toplevel</tt> is the toplevel entry-point procedure, you usually pass <tt>C_toplevel</tt> here. The result value is the continuation that can be used to re-invoke the Scheme code from the point after it called <a href="Module (chicken platform).html#return-to-host" class="internal"><tt>return-to-host</tt></a>.</p>
+<p>If you just need a Scheme interpreter, you can also pass <tt>CHICKEN_default_toplevel</tt> as the toplevel procedure, which just uses the default library units.</p>
+<p>Once <tt>CHICKEN_run</tt> has been called, Scheme code is executing until all toplevel expressions have been evaluated or until <tt>return-to-host</tt> is called inside the Scheme program.</p><a href="Embedding.html#chicken_eval">
+<a class="dashingAutolink" name="autolink-90"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_eval"></a><h3 id="chicken_eval">CHICKEN_eval</h3></a>
+<pre><tt>[C macro] int CHICKEN_eval (C_word exp, C_word *result)</tt></pre>
+<p>Evaluates the Scheme object passed in <tt>exp</tt>, writing the result value to <tt>result</tt>. The return value is 1 if the operation succeeded, or 0 if an error occurred. Call <tt>CHICKEN_get_error_message</tt> to obtain a description of the error.</p><a href="Embedding.html#chicken_eval_string">
+<a class="dashingAutolink" name="autolink-91"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_eval_string"></a><h3 id="chicken_eval_string">CHICKEN_eval_string</h3></a>
+<pre><tt>[C macro] int CHICKEN_eval_string (char *str, C_word *result)</tt></pre>
+<p>Evaluates the Scheme expression passed in the string <tt>str</tt>, writing the result value to <tt>result</tt>.</p><a href="Embedding.html#chicken_eval_to_string">
+<a class="dashingAutolink" name="autolink-92"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_eval_to_string"></a><h3 id="chicken_eval_to_string">CHICKEN_eval_to_string</h3></a>
+<pre><tt>[C macro] int CHICKEN_eval_to_string (C_word exp, char *result, int size)</tt></pre>
+<p>Evaluates the Scheme expression passed in <tt>exp</tt>, writing a textual representation of the result into <tt>result</tt>. <tt>size</tt> should specify the maximal size of the result string.</p><a href="Embedding.html#chicken_eval_string_to_string">
+<a class="dashingAutolink" name="autolink-93"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_eval_string_to_string"></a><h3 id="chicken_eval_string_to_string">CHICKEN_eval_string_to_string</h3></a>
+<pre><tt>[C macro] int CHICKEN_eval_string_to_string (char *str, char *result, int size)</tt></pre>
+<p>Evaluates the Scheme expression passed in the string <tt>str</tt>, writing a textual representation of the result into <tt>result</tt>. <tt>size</tt> should specify the maximal size of the result string.</p><a href="Embedding.html#chicken_apply">
+<a class="dashingAutolink" name="autolink-94"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_apply"></a><h3 id="chicken_apply">CHICKEN_apply</h3></a>
+<pre><tt>[C macro] int CHICKEN_apply (C_word func, C_word args, C_word *result)</tt></pre>
+<p>Applies the procedure passed in <tt>func</tt> to the list of arguments <tt>args</tt>, writing the result value to <tt>result</tt>.</p><a href="Embedding.html#chicken_apply_to_string">
+<a class="dashingAutolink" name="autolink-95"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_apply_to_string"></a><h3 id="chicken_apply_to_string">CHICKEN_apply_to_string</h3></a>
+<pre><tt>[C macro] int CHICKEN_apply_to_string (C_word func, C_word args, char *result, int size)</tt></pre>
+<p>Applies the procedure passed in <tt>func</tt> to the list of arguments <tt>args</tt>, writing a textual representation of the result into <tt>result</tt>.</p><a href="Embedding.html#chicken_read">
+<a class="dashingAutolink" name="autolink-96"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_read"></a><h3 id="chicken_read">CHICKEN_read</h3></a>
+<pre><tt>[C macro] int CHICKEN_read (char *str, C_word *result)</tt></pre>
+<p>Reads a Scheme object from the string <tt>str</tt>, writing the result value to <tt>result</tt>.</p><a href="Embedding.html#chicken_load">
+<a class="dashingAutolink" name="autolink-97"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_load"></a><h3 id="chicken_load">CHICKEN_load</h3></a>
+<pre><tt>[C macro] int CHICKEN_load (char *filename)</tt></pre>
+<p>Loads the Scheme file <tt>filename</tt> (either in source form or compiled).</p><a href="Embedding.html#chicken_get_error_message">
+<a class="dashingAutolink" name="autolink-98"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_get_error_message"></a><h3 id="chicken_get_error_message">CHICKEN_get_error_message</h3></a>
+<pre><tt>[C macro] void CHICKEN_get_error_message (char *result, int size)</tt></pre>
+<p>Returns a textual description of the most recent error that occurred in executing embedded Scheme code.</p><a href="Embedding.html#chicken_yield">
+<a class="dashingAutolink" name="autolink-99"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_yield"></a><h3 id="chicken_yield">CHICKEN_yield</h3></a>
+<pre><tt>[C macro] int CHICKEN_yield (int *status)</tt></pre>
+<p>If threads have been spawned during earlier invocations of embedded Scheme code, then this function will run the next scheduled thread for one complete time-slice. This is useful, for example, inside an <i>idle</i> handler in a GUI application with background Scheme threads.</p>
+<p>An example:</p>
+<pre><tt>% cat x.scm
+;;; x.scm
+(import (chicken platform) (chicken foreign))
+
+(define (bar x) (gc) (* x x))
+
+(define-external (baz (int i)) double
+  (sqrt i))
+(return-to-host)
+</tt></pre>
+<pre><tt>% cat y.c
+/* y.c */
+
+#include &lt;chicken.h&gt;
+#include &lt;assert.h&gt;
+
+extern double baz(int);
+
+int main() {
+  char buffer[ 256 ];
+  int status;
+  C_word val = C_SCHEME_UNDEFINED;
+  C_word *data[ 1 ];
+
+  data[ 0 ] = &amp;val;
+
+  CHICKEN_run(C_toplevel);
+
+  status = CHICKEN_read(&#34;(bar 99)&#34;, &amp;val);
+  assert(status);
+
+  C_gc_protect(data, 1);
+
+  printf(&#34;data: %08x\n&#34;, val);
+
+  status = CHICKEN_eval_string_to_string(&#34;(bar)&#34;, buffer, 255);
+  assert(!status);
+
+  CHICKEN_get_error_message(buffer, 255);
+  printf(&#34;ouch: %s\n&#34;, buffer);
+
+  status = CHICKEN_eval_string_to_string(&#34;(bar 23)&#34;, buffer, 255);
+  assert(status);
+
+  printf(&#34;-&gt; %s\n&#34;, buffer);
+  printf(&#34;data: %08x\n&#34;, val);
+
+  status = CHICKEN_eval_to_string(val, buffer, 255);
+  assert(status);
+  printf(&#34;-&gt; %s\n&#34;, buffer);
+
+  printf(&#34;-&gt;` %g\n&#34;, baz(22));
+
+  return 0;
+}
+
+% csc x.scm y.c -embedded</tt></pre>
+<p>It is also possible to re-enter the computation following the call to <tt>return-to-host</tt> by calling <tt>CHICKEN_continue</tt>:</p><a href="Embedding.html#chicken_continue">
+<a class="dashingAutolink" name="autolink-100"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_continue"></a><h3 id="chicken_continue">CHICKEN_continue</h3></a>
+<pre><tt>[C function] C_word CHICKEN_continue (C_word k)</tt></pre>
+<p>Re-enters Scheme execution. <tt>k</tt> is the continuation received from the previous invocation of <tt>CHICKEN_run</tt> or <tt>CHICKEN_continue</tt>. When <tt>return-to-host</tt> is called again, this function returns another continuation that can be used to restart again.</p>
+<p>If you invoke callbacks prior to calling <tt>CHICKEN_continue</tt>, make sure that the continuation is not reclaimed by garbage collection. This can be avoided by using <tt>C_gc_protect</tt> or gc-roots.</p>
+<p>Another example:</p>
+<pre><tt>% cat x.scm
+(import (chicken platform) srfi-18) ;; Needs the srfi-18 egg
+
+(define m (make-mutex))
+
+(define (t)
+  (mutex-lock! m)
+  (thread-sleep! 1)
+  (print (thread-name (current-thread)))
+  (mutex-unlock! m)
+  (t) )
+
+(thread-start! (make-thread t &#39;PING!))
+(thread-start! (make-thread t &#39;PONG!))
+
+(let loop ()
+  (return-to-host)
+  (thread-yield!)
+  (loop) )
+
+% cat y.c
+#include &lt;chicken.h&gt;
+
+int main()
+{
+  C_word k = CHICKEN_run(C_toplevel);
+
+  for(;;)
+    k = CHICKEN_continue(k);
+
+  return 0;
+}
+
+% csc x.scm y.c -embedded</tt></pre>
+<p>It is advisable not to mix repeated uses of <tt>CHICKEN_continue</tt>/<tt>return-to-host</tt> (as in the example above) with callbacks. Once <tt>return-to-host</tt> is invoked, the runtime system and any Scheme code executed prior to the invocation is initialized and can be conveniently used via callbacks.</p>
+<p>A simpler interface For handling GC-safe references to Scheme data are the so called <i>gc-roots</i>:</p><a href="Embedding.html#chicken_new_gc_root">
+<a class="dashingAutolink" name="autolink-101"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_new_gc_root"></a><h3 id="chicken_new_gc_root">CHICKEN_new_gc_root</h3></a>
+<pre><tt>[C function] void* CHICKEN_new_gc_root ()</tt></pre>
+<p>Returns a pointer to a <i>GC root</i>, which is an object that holds a reference to a Scheme value that will always be valid, even after a garbage collection. The content of the gc root is initialized to an unspecified value.</p><a href="Embedding.html#chicken_new_finalizable_gc_root">
+<a class="dashingAutolink" name="autolink-102"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_new_finalizable_gc_root"></a><h3 id="chicken_new_finalizable_gc_root">CHICKEN_new_finalizable_gc_root</h3></a>
+<pre><tt>[C function] void* CHICKEN_new_finalizable_gc_root ()</tt></pre>
+<p>Similar to <tt>CHICKEN_new_gc_root</tt>, but allows the stored value to be finalized: if this gc root holds reference to an otherwise unreferenced data object that has a finalizer, the finalizer is still invoked.</p><a href="Embedding.html#chicken_delete_gc_root">
+<a class="dashingAutolink" name="autolink-103"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_delete_gc_root"></a><h3 id="chicken_delete_gc_root">CHICKEN_delete_gc_root</h3></a>
+<pre><tt>[C function] void CHICKEN_delete_gc_root (void *root)</tt></pre>
+<p>Deletes the gc root.</p><a href="Embedding.html#chicken_gc_root_ref">
+<a class="dashingAutolink" name="autolink-104"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_gc_root_ref"></a><h3 id="chicken_gc_root_ref">CHICKEN_gc_root_ref</h3></a>
+<pre><tt>[C macro] C_word CHICKEN_gc_root_ref (void *root)</tt></pre>
+<p>Returns the value stored in the gc root.</p><a href="Embedding.html#chicken_gc_root_set">
+<a class="dashingAutolink" name="autolink-105"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_gc_root_set"></a><h3 id="chicken_gc_root_set">CHICKEN_gc_root_set</h3></a>
+<pre><tt>[C macro] void CHICKEN_gc_root_set (void *root, C_word value)</tt></pre>
+<p>Sets the content of the GC root to a new value.</p>
+<p>Sometimes it is handy to access global variables from C code:</p><a href="Embedding.html#chicken_global_lookup">
+<a class="dashingAutolink" name="autolink-106"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_global_lookup"></a><h3 id="chicken_global_lookup">CHICKEN_global_lookup</h3></a>
+<pre><tt>[C function] void* CHICKEN_global_lookup (char *name)</tt></pre>
+<p>Returns a GC root that holds the global variable with the name <tt>name</tt>. If no such variable exists, <tt>NULL</tt> is returned.</p><a href="Embedding.html#chicken_global_ref">
+<a class="dashingAutolink" name="autolink-107"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_global_ref"></a><h3 id="chicken_global_ref">CHICKEN_global_ref</h3></a>
+<pre><tt>[C function] C_word CHICKEN_global_ref (void *global)</tt></pre>
+<p>Returns the value of the global variable referenced by the GC root <tt>global</tt>.</p><a href="Embedding.html#chicken_global_set">
+<a class="dashingAutolink" name="autolink-108"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN_global_set"></a><h3 id="chicken_global_set">CHICKEN_global_set</h3></a>
+<pre><tt>[C function] void CHICKEN_global_set (void *global, C_word value)</tt></pre>
+<p>Sets the value of the global variable referenced by the GC root <tt>global</tt> to <tt>value</tt>.</p>
+<hr/>
+<p>Previous: <a href="Foreign type specifiers.html" class="internal">Foreign type specifiers</a></p>
+<p>Next: <a href="C interface.html" class="internal">C interface</a></p></div></body></html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken file) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20file)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20file)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20file)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken file).html#module-chicken-file">Module (chicken file)</a>
+<ol>
+<li><a href="Module (chicken file).html#basic-file-operations">Basic file operations</a>
+<ol>
+<li><a href="Module (chicken file).html#create-directory">create-directory</a></li>
+<li><a href="Module (chicken file).html#copy-file">copy-file</a></li>
+<li><a href="Module (chicken file).html#move-file">move-file</a></li>
+<li><a href="Module (chicken file).html#delete-file">delete-file</a></li>
+<li><a href="Module (chicken file).html#delete-file">delete-file*</a></li>
+<li><a href="Module (chicken file).html#delete-directory">delete-directory</a></li>
+<li><a href="Module (chicken file).html#directory">directory</a></li>
+<li><a href="Module (chicken file).html#directory-exists">directory-exists?</a></li>
+<li><a href="Module (chicken file).html#file-exists">file-exists?</a></li>
+<li><a href="Module (chicken file).html#rename-file">rename-file</a></li>
+<li><a href="Module (chicken file).html#file-readable">file-readable?</a></li>
+<li><a href="Module (chicken file).html#file-writable">file-writable?</a></li>
+<li><a href="Module (chicken file).html#file-executable">file-executable?</a></li></ol></li>
+<li><a href="Module (chicken file).html#temporary-files-and-directories">Temporary files and directories</a>
+<ol>
+<li><a href="Module (chicken file).html#create-temporary-file">create-temporary-file</a></li>
+<li><a href="Module (chicken file).html#create-temporary-directory">create-temporary-directory</a></li></ol></li>
+<li><a href="Module (chicken file).html#finding-files">Finding files</a>
+<ol>
+<li><a href="Module (chicken file).html#find-files">find-files</a></li>
+<li><a href="Module (chicken file).html#glob">glob</a></li></ol></li></ol></li></ol></div><a href="Module (chicken file).html#module-chicken-file">
+<a class="dashingAutolink" name="autolink-618"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20file%29"></a><a class="dashingAutolink" name="autolink-636"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20file%29"></a><h2 id="module-chicken-file">Module (chicken file)</h2></a>
+<p>This module provides various generic operations on files and directories.  For more specific operations, see also <a href="Module (chicken file posix).html" class="internal">Module (chicken file posix)</a>.</p>
+<p>All errors related to failing file-operations will signal a condition of kind <tt>(exn i/o file)</tt>.</p><a href="Module (chicken file).html#basic-file-operations">
+<a class="dashingAutolink" name="autolink-615"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Basic%20file%20operations"></a><h3 id="basic-file-operations">Basic file operations</h3></a><a href="Module (chicken file).html#create-directory">
+<h4 id="create-directory">create-directory</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-619"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28create-directory%20NAME%20%23%21optional%20PARENTS%3F%29"></a><tt>(create-directory NAME #!optional PARENTS?)</tt>
+<br/></span>
+<p>Creates a directory with the pathname <tt>NAME</tt>.  If the <tt>PARENTS?</tt> argument is given and not false, any nonexistent parent directories are also created.</p>
+<p>Notice that if <tt>NAME</tt> exists, <tt>create-directory</tt> won&#39;t try to create it and will return <tt>NAME</tt> (i.e., it won&#39;t raise an error when given a <tt>NAME</tt> that already exists).</p><a href="Module (chicken file).html#copy-file">
+<h4 id="copy-file">copy-file</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-620"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28copy-file%20ORIGFILE%20NEWFILE%20%23%21optional%20CLOBBER%20BLOCKSIZE%29"></a><tt>(copy-file ORIGFILE NEWFILE #!optional CLOBBER BLOCKSIZE)</tt>
+<br/></span>
+<p>Copies <tt>ORIGFILE</tt> (a string denoting some filename) to <tt>NEWFILE</tt>, <tt>BLOCKSIZE</tt> bytes at a time.  <tt>BLOCKSIZE</tt> defaults to 1024, and must be a positive integer.  Returns the number of bytes copied on success, or errors on failure.  <tt>CLOBBER</tt> determines the behaviour of <tt>file-copy</tt> when <tt>NEWFILE</tt> is already extant.  When set to <tt>#f</tt> (default), an error is signaled.  When set to any other value, <tt>NEWFILE</tt> is overwritten.  <tt>file-copy</tt> will work across filesystems and devices and is not platform-dependent.</p><a href="Module (chicken file).html#move-file">
+<h4 id="move-file">move-file</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-621"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28move-file%20ORIGFILE%20NEWFILE%20%23%21optional%20CLOBBER%20BLOCKSIZE%29"></a><tt>(move-file ORIGFILE NEWFILE #!optional CLOBBER BLOCKSIZE)</tt>
+<br/></span>
+<p>Moves <tt>ORIGFILE</tt> (a string denoting some filename) to <tt>NEWFILE</tt>, with the same semantics as <tt>copy-file</tt>, above.  <tt>move-file</tt> is safe across filesystems and devices (unlike <tt>rename-file</tt>).  It is possible for an error to be signaled despite partial success if <tt>NEWFILE</tt> could be created and fully written but removing <tt>ORIGFILE</tt> fails.</p>
+<p>If <tt>CLOBBER</tt> is given and not <tt>#f</tt>, <tt>NEWFILE</tt> will be replaced when it already exists, otherwise an error is signaled.</p>
+<p>The <tt>BLOCKSIZE</tt> argument indicates the block size to use when copying the file a block at a time.  It must be a positive integer, and it defaults to 1024.</p><a href="Module (chicken file).html#delete-file">
+<h4 id="delete-file">delete-file</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-622"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28delete-file%20STRING%29"></a><tt>(delete-file STRING)</tt>
+<br/></span>
+<p>Deletes the file with the pathname <tt>STRING</tt>. If the file does not exist, an error is signaled.</p><a href="Module (chicken file).html#delete-file">
+<h4 id="delete-file">delete-file*</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-623"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28delete-file%2A%20STRING%29"></a><tt>(delete-file* STRING)</tt>
+<br/></span>
+<p>If the file with pathname <tt>STRING</tt> exists, it is deleted and <tt>#t</tt> is returned.  If the file does not exist, nothing happens and <tt>#f</tt> is returned.</p><a href="Module (chicken file).html#delete-directory">
+<h4 id="delete-directory">delete-directory</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-624"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28delete-directory%20NAME%20%5BRECURSIVE%5D%29"></a><tt>(delete-directory NAME [RECURSIVE])</tt>
+<br/></span>
+<p>Deletes the directory with the pathname <tt>NAME</tt>. If <tt>RECURSIVE</tt> is not given or false, then the directory has to be empty.</p><a href="Module (chicken file).html#directory">
+<h4 id="directory">directory</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-625"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28directory%20%5BPATHNAME%20%5BSHOW-DOTFILES%3F%5D%5D%29"></a><tt>(directory [PATHNAME [SHOW-DOTFILES?]])</tt>
+<br/></span>
+<p>Returns a list with all files that are contained in the directory with the name <tt>PATHNAME</tt> (which defaults to the value of <tt>(current-directory)</tt>). Files beginning with <tt>.</tt> are included only if <tt>SHOW-DOTFILES?</tt> is given and not <tt>#f</tt>.</p><a href="Module (chicken file).html#directory-exists">
+<h4 id="directory-exists">directory-exists?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-626"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28directory-exists%3F%20STRING%29"></a><tt>(directory-exists? STRING)</tt>
+<br/></span>
+<p>Returns <tt>STRING</tt> if a directory with the given pathname exists, or <tt>#f</tt> otherwise.</p><a href="Module (chicken file).html#file-exists">
+<h4 id="file-exists">file-exists?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-627"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28file-exists%3F%20STRING%29"></a><tt>(file-exists? STRING)</tt>
+<br/></span>
+<p>Returns <tt>STRING</tt> if a file or directory with the given pathname exists, or <tt>#f</tt> otherwise.</p><a href="Module (chicken file).html#rename-file">
+<h4 id="rename-file">rename-file</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-628"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28rename-file%20OLD%20NEW%20%23%21optional%20CLOBBER%29"></a><tt>(rename-file OLD NEW #!optional CLOBBER)</tt>
+<br/></span>
+<p>Renames the file or directory with the pathname <tt>OLD</tt> to <tt>NEW</tt>. If the operation does not succeed, an error is signaled.</p>
+<p>If <tt>CLOBBER</tt> is given and not <tt>#f</tt>, <tt>NEW</tt> will be replaced when it already exists, otherwise an error is signaled.</p><a href="Module (chicken file).html#file-readable">
+<h4 id="file-readable">file-readable?</h4></a><a href="Module (chicken file).html#file-writable">
+<h4 id="file-writable">file-writable?</h4></a><a href="Module (chicken file).html#file-executable">
+<h4 id="file-executable">file-executable?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-629"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28file-readable%3F%20FILENAME%29"></a><tt>(file-readable? FILENAME)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-630"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28file-writable%3F%20FILENAME%29"></a><tt>(file-writable? FILENAME)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-631"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28file-executable%3F%20FILENAME%29"></a><tt>(file-executable? FILENAME)</tt>
+<br/></span>
+<p>These procedures return <tt>#t</tt> if the current user has read, write or execute permissions on the file named <tt>FILENAME</tt>.</p><a href="Module (chicken file).html#temporary-files-and-directories">
+<a class="dashingAutolink" name="autolink-616"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Temporary%20files%20and%20directories"></a><h3 id="temporary-files-and-directories">Temporary files and directories</h3></a><a href="Module (chicken file).html#create-temporary-file">
+<h4 id="create-temporary-file">create-temporary-file</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-632"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28create-temporary-file%20%5BEXTENSION%5D%29"></a><tt>(create-temporary-file [EXTENSION])</tt>
+<br/></span>
+<p>Creates an empty temporary file and returns its pathname. If <tt>EXTENSION</tt> is not given, then <tt>.tmp</tt> is used. If the environment variable <tt>TMPDIR, TEMP</tt> or <tt>TMP</tt> is set, then the pathname names a file in that directory. If none of the environment variables is given the location of the temporary file defaults to <tt>/tmp</tt> if it exists or the current-directory</p><a href="Module (chicken file).html#create-temporary-directory">
+<h4 id="create-temporary-directory">create-temporary-directory</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-633"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28create-temporary-directory%29"></a><tt>(create-temporary-directory)</tt>
+<br/></span>
+<p>Creates an empty temporary directory and returns its pathname. If the environment variable <tt>TMPDIR, TEMP</tt> or <tt>TMP</tt> is set, then the temporary directory is created at that location.</p><a href="Module (chicken file).html#finding-files">
+<a class="dashingAutolink" name="autolink-617"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Finding%20files"></a><h3 id="finding-files">Finding files</h3></a><a href="Module (chicken file).html#find-files">
+<h4 id="find-files">find-files</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-634"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28find-files%20DIRECTORY%20%23%21key%20test%20action%20seed%20limit%20dotfiles%20follow-symlinks%29"></a><tt>(find-files DIRECTORY #!key test action seed limit dotfiles follow-symlinks)</tt>
+<br/></span>
+<p>Recursively traverses the contents of <tt>DIRECTORY</tt> (which should be a string) and invokes the procedure <tt>action</tt> for all files in which the procedure <tt>test</tt> is true.</p>
+<p><tt>test</tt> may be a procedure of one argument or an irregex object, regex string or SRE expression that will be matched with a full pathname using <tt>irregex-match</tt>. <tt>test</tt> defaults to <tt>(constantly #t)</tt>.</p>
+<p><tt>action</tt> should be a procedure of two arguments: the currently encountered file and the result of the previous invocation of <tt>action</tt>, or, if this is the first invocation, the value of <tt>seed</tt>. <tt>action</tt> defaults to <tt>cons</tt>, <tt>seed</tt> defaults to <tt>()</tt>.</p>
+<p><tt>limit</tt> should be a procedure of one argument that is called for each nested directory and which should return true, if that directory is to be traversed recursively. <tt>limit</tt> may also be an exact integer that gives the maximum recursion depth. For example, a depth of <tt>0</tt> means that only files in the top-level, specified directory are to be traversed. In this case, all nested directories are ignored. <tt>limit</tt> may also be <tt>#f</tt> (the default), which is equivalent to <tt>(constantly #t)</tt>.</p>
+<p>If <tt>dotfiles</tt> is given and true, then files starting with a &#34;<tt>.</tt>&#34; character will not be ignored (but note that &#34;<tt>.</tt>&#34; and &#34;<tt>..</tt>&#34;  are always ignored). if <tt>follow-symlinks</tt> is given and true, then the traversal of a symbolic link that points to a directory will recursively traverse the latter. By default, symbolic links are not followed.</p>
+<p>Note that <tt>action</tt> is called with the full pathname of each file, including the directory prefix.</p><a href="Module (chicken file).html#glob">
+<h4 id="glob">glob</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-635"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28glob%20PATTERN1%20...%29"></a><tt>(glob PATTERN1 ...)</tt>
+<br/></span>
+<p>Returns a list of the pathnames of all existing files matching <tt>PATTERN1 ...</tt>, which should be strings containing the usual file-patterns (with <tt>*</tt> matching zero or more characters and <tt>?</tt> matching zero or one character).</p>
+<hr/>
+<p>Previous: <a href="Module (chicken eval).html" class="internal">Module (chicken eval)</a></p>
+<p>Next: <a href="Module (chicken file posix).html" class="internal">Module (chicken file posix)</a></p></div></body></html>

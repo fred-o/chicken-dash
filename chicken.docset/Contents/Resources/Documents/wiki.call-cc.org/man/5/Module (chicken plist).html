@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken plist) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20plist)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20plist)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20plist)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken plist).html#module-chicken-plist">Module (chicken plist)</a>
+<ol>
+<li><a href="Module (chicken plist).html#get">get</a></li>
+<li><a href="Module (chicken plist).html#put">put!</a></li>
+<li><a href="Module (chicken plist).html#remprop">remprop!</a></li>
+<li><a href="Module (chicken plist).html#symbol-plist">symbol-plist</a></li>
+<li><a href="Module (chicken plist).html#get-properties">get-properties</a></li></ol></li></ol></div><a href="Module (chicken plist).html#module-chicken-plist">
+<a class="dashingAutolink" name="autolink-1032"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20plist%29"></a><a class="dashingAutolink" name="autolink-1038"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20plist%29"></a><h2 id="module-chicken-plist">Module (chicken plist)</h2></a>
+<p>As in other Lisp dialects, CHICKEN supports &#34;property lists&#34; associated with symbols.  Properties are accessible via a key that can be any kind of value but which will be compared using <tt>eq?</tt>.</p><a href="Module (chicken plist).html#get">
+<a class="dashingAutolink" name="autolink-1033"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/get"></a><h3 id="get">get</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1039"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28get%20SYMBOL%20PROPERTY%20%5BDEFAULT%5D%29"></a><tt>(get SYMBOL PROPERTY [DEFAULT])</tt>
+<br/></span>
+<p>Returns the value stored under the key <tt>PROPERTY</tt> in the property list of <tt>SYMBOL</tt>. If no such property is stored, returns <tt>DEFAULT</tt>. The <tt>DEFAULT</tt> is optional and defaults to <tt>#f</tt>.</p><a href="Module (chicken plist).html#put">
+<a class="dashingAutolink" name="autolink-1034"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/put%21"></a><h3 id="put">put!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1040"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28put%21%20SYMBOL%20PROPERTY%20VALUE%29"></a><tt>(put! SYMBOL PROPERTY VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1041"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28get%20SYMBOL%20PROPERTY%29%20VALUE%29"></a><tt>(set! (get SYMBOL PROPERTY) VALUE)</tt>
+<br/></span>
+<p>Stores <tt>VALUE</tt> under the key <tt>PROPERTY</tt> in the property list of <tt>SYMBOL</tt> replacing any previously stored value.</p><a href="Module (chicken plist).html#remprop">
+<a class="dashingAutolink" name="autolink-1035"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/remprop%21"></a><h3 id="remprop">remprop!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1042"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28remprop%21%20SYMBOL%20PROPERTY%29"></a><tt>(remprop! SYMBOL PROPERTY)</tt>
+<br/></span>
+<p>Deletes the first property matching the key <tt>PROPERTY</tt> in the property list of <tt>SYMBOL</tt>. Returns <tt>#t</tt> when a deletion performed, and <tt>#f</tt> otherwise.</p><a href="Module (chicken plist).html#symbol-plist">
+<a class="dashingAutolink" name="autolink-1036"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/symbol-plist"></a><h3 id="symbol-plist">symbol-plist</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1043"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28symbol-plist%20SYMBOL%29"></a><tt>(symbol-plist SYMBOL)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1044"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28symbol-plist%20SYMBOL%29%20LST%29"></a><tt>(set! (symbol-plist SYMBOL) LST)</tt>
+<br/></span>
+<p>Returns the property list of <tt>SYMBOL</tt> or sets it.  The property list is a flat list of alternating properties and values.</p>
+<p>This list is not guaranteed to be a fresh copy, so avoid mutating it directly.</p><a href="Module (chicken plist).html#get-properties">
+<a class="dashingAutolink" name="autolink-1037"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/get-properties"></a><h3 id="get-properties">get-properties</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1045"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28get-properties%20SYMBOL%20PROPERTIES%29"></a><tt>(get-properties SYMBOL PROPERTIES)</tt>
+<br/></span>
+<p>Searches the property list of <tt>SYMBOL</tt> for the first property with a key in the list <tt>PROPERTIES</tt>. Returns 3 values: the matching property key, value, and the tail of property list after the matching property. When no match found all values are <tt>#f</tt>.</p>
+<p>This tail of the property list is not guaranteed to be a fresh copy, so avoid mutating it directly.</p>
+<p><tt>PROPERTIES</tt> may also be an atom, in which case it is treated as a list of one element.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken platform).html" class="internal">Module (chicken platform)</a></p>
+<p>Next: <a href="Module (chicken port).html" class="internal">Module (chicken port)</a></p></div></body></html>

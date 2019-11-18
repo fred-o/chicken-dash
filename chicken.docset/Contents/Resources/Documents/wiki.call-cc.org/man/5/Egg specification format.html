@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Format of the egg description file - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Egg%20specification%20format?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Egg%20specification%20format?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Egg%20specification%20format?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Egg specification format.html#format-of-the-egg-description-file">Format of the egg description file</a>
+<ol>
+<li><a href="Egg specification format.html#global-properties">Global properties</a>
+<ol>
+<li><a href="Egg specification format.html#version">version</a></li>
+<li><a href="Egg specification format.html#synopsis">synopsis</a></li>
+<li><a href="Egg specification format.html#author">author</a></li>
+<li><a href="Egg specification format.html#maintainer">maintainer</a></li>
+<li><a href="Egg specification format.html#category">category</a></li>
+<li><a href="Egg specification format.html#license">license</a></li>
+<li><a href="Egg specification format.html#dependencies">dependencies</a></li>
+<li><a href="Egg specification format.html#test-dependencies">test-dependencies</a></li>
+<li><a href="Egg specification format.html#build-dependencies">build-dependencies</a></li>
+<li><a href="Egg specification format.html#foreign-dependencies">foreign-dependencies</a></li>
+<li><a href="Egg specification format.html#platform">platform</a>
+<ol>
+<li><a href="Egg specification format.html#distribution-files">distribution-files</a></li></ol></li>
+<li><a href="Egg specification format.html#components">components</a></li>
+<li><a href="Egg specification format.html#host">host</a></li>
+<li><a href="Egg specification format.html#target">target</a></li>
+<li><a href="Egg specification format.html#component-options">component-options</a></li>
+<li><a href="Egg specification format.html#cond-expand">cond-expand</a></li>
+<li><a href="Egg specification format.html#error">error</a></li></ol></li>
+<li><a href="Egg specification format.html#components">Components</a>
+<ol>
+<li><a href="Egg specification format.html#extension">extension</a></li>
+<li><a href="Egg specification format.html#data">data</a></li>
+<li><a href="Egg specification format.html#generated-source-file">generated-source-file</a></li>
+<li><a href="Egg specification format.html#c-include">c-include</a></li>
+<li><a href="Egg specification format.html#scheme-include">scheme-include</a></li>
+<li><a href="Egg specification format.html#program">program</a></li>
+<li><a href="Egg specification format.html#c-object">c-object</a></li></ol></li>
+<li><a href="Egg specification format.html#component-properties">Component properties</a>
+<ol>
+<li><a href="Egg specification format.html#host">host</a></li>
+<li><a href="Egg specification format.html#target">target</a></li>
+<li><a href="Egg specification format.html#linkage">linkage</a></li>
+<li><a href="Egg specification format.html#types-file">types-file</a></li>
+<li><a href="Egg specification format.html#inline-file">inline-file</a></li>
+<li><a href="Egg specification format.html#custom-build">custom-build</a></li>
+<li><a href="Egg specification format.html#csc-options">csc-options</a></li>
+<li><a href="Egg specification format.html#link-options">link-options</a></li>
+<li><a href="Egg specification format.html#source">source</a></li>
+<li><a href="Egg specification format.html#install-name">install-name</a></li>
+<li><a href="Egg specification format.html#component-dependencies">component-dependencies</a></li>
+<li><a href="Egg specification format.html#source-dependencies">source-dependencies</a></li>
+<li><a href="Egg specification format.html#objects">objects</a></li>
+<li><a href="Egg specification format.html#destination">destination</a></li>
+<li><a href="Egg specification format.html#files">files</a></li>
+<li><a href="Egg specification format.html#modules">modules</a></li>
+<li><a href="Egg specification format.html#cond-expand">cond-expand</a></li>
+<li><a href="Egg specification format.html#error">error</a></li></ol></li></ol></li></ol></div><a href="Egg specification format.html#format-of-the-egg-description-file">
+<a class="dashingAutolink" name="autolink-86"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/Format%20of%20the%20egg%20description%20file"></a><h2 id="format-of-the-egg-description-file">Format of the egg description file</h2></a>
+<p>An egg description is basically an association list holding information about the components of the egg. An egg may contain multiple components: libraries, programs, Scheme or C include files and arbitrary data files. Dependencies between eggs can be specified as can be dependencies between components of an egg.</p>
+<p>A list of valid properties follows.</p><a href="Egg specification format.html#global-properties">
+<a class="dashingAutolink" name="autolink-83"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Global%20properties"></a><h3 id="global-properties">Global properties</h3></a><a href="Egg specification format.html#version">
+<h4 id="version">version</h4></a>
+<pre><tt>[egg property] (version STRING)</tt></pre>
+<p>Specifies version string for this egg. <tt>STRING</tt> should have the format <tt>&lt;MAJOR&gt;.&lt;MINOR&gt;.&lt;PATCHLEVEL&gt;</tt>, where only the <tt>&lt;MAJOR&gt;</tt> part is mandatory.</p>
+<p>Eggs from remote egg servers are automatically versioned - the version is part of the protocol to retrieve the egg and does not have to be specified in the <tt>.egg</tt> file. Eggs installed from local directories (see below) should explicitly specify a version.</p><a href="Egg specification format.html#synopsis">
+<h4 id="synopsis">synopsis</h4></a>
+<pre><tt>[egg property] (synopsis STRING)</tt></pre>
+<p>Gives a short description of this egg.</p><a href="Egg specification format.html#author">
+<h4 id="author">author</h4></a>
+<pre><tt>[egg property] (author STRING)</tt></pre>
+<p>Names the author or authors of the contained code.</p><a href="Egg specification format.html#maintainer">
+<h4 id="maintainer">maintainer</h4></a>
+<pre><tt>[egg property] (maintainer STRING)</tt></pre>
+<p>Names the maintainer of this code, if different from author(s).</p><a href="Egg specification format.html#category">
+<h4 id="category">category</h4></a>
+<pre><tt>[egg property] (category NAME)</tt></pre>
+<p>Gives the category under which this egg should be contained. See <a href="https://wiki.call-cc.org/chicken-projects/egg-index-5.html" class="external">the egg index</a> for a list of currently used categories.</p><a href="Egg specification format.html#license">
+<h4 id="license">license</h4></a>
+<pre><tt>[egg property] (license STRING)</tt></pre>
+<p>Names the license under which this code is available.</p><a href="Egg specification format.html#dependencies">
+<h4 id="dependencies">dependencies</h4></a>
+<pre><tt>[egg property] (dependencies EGG ...)</tt></pre>
+<p>Lists eggs that this egg depends on, and which should be built and installed if they do not already exist in the repository. <tt>EGG</tt> should be whether a symbol or a list of the form <tt>EGGNAME VERSION</tt>, where the former means to install the newest available egg with this name and the latter specifies a specific version or higher.</p><a href="Egg specification format.html#test-dependencies">
+<h4 id="test-dependencies">test-dependencies</h4></a>
+<pre><tt>[egg property] (test-dependencies EGG ...)</tt></pre>
+<p>Lists eggs that are required for this egg to run the tests (if tests exist.) This only has an effect if the <tt>-test</tt> option has been given to <tt>chicken-install</tt>.</p><a href="Egg specification format.html#build-dependencies">
+<h4 id="build-dependencies">build-dependencies</h4></a>
+<pre><tt>[egg property] (build-dependencies EGG ...)</tt></pre>
+<p>Lists eggs that are build-time dependencies for this egg, i.e. there are required to build, but not to run the contained code. Currently this is treated identical to <tt>dependencies</tt>.</p><a href="Egg specification format.html#foreign-dependencies">
+<h4 id="foreign-dependencies">foreign-dependencies</h4></a>
+<pre><tt>[egg property] (foreign-dependencies NAME ...)</tt></pre>
+<p>Lists external dependencies like native code libraries or system-specific packages and is currently only used for documentation purposes.</p><a href="Egg specification format.html#platform">
+<h4 id="platform">platform</h4></a>
+<pre><tt>[egg property] (platform PLATFORM)</tt></pre>
+<p>Specifies for which platform this egg is intended. <tt>PLATFORM</tt> should be a symbol naming the target platform (<tt>windows</tt>, <tt>linux</tt> or <tt>unix</tt>) or a boolean combination of platform values, allowed are <tt>(not PLATFORM)</tt>, <tt>(or PLATFORM ...)</tt> and <tt>(and PLATFORM ...)</tt>. If the expression can not be satisfied, then installation of this egg will abort.</p><a href="Egg specification format.html#distribution-files">
+<h5 id="distribution-files">distribution-files</h5></a>
+<pre><tt>[egg property] (distribution-files FILE ...)</tt></pre>
+<p>List of files required for the installation of the egg.  This form is not handled by chicken-install, but by henrietta-cache to determine what to cache. If the repository contains additional files that are unneeded for the egg to be installed, you can list all the required files in this clause to reduce the amount of data cached by egg servers.</p><a href="Egg specification format.html#components">
+<h4 id="components">components</h4></a>
+<pre><tt>[egg property] (components COMPONENT ...)</tt></pre>
+<p>Lists components (extensions, programs, include- or data files) that this extension installs. See below for information on how to specify component-specific information.</p><a href="Egg specification format.html#host">
+<h4 id="host">host</h4></a>
+<pre><tt>[egg property] (host PROP ...)</tt></pre>
+<p>Recursively process <tt>PROP ...</tt>, but only for the host (build) platform, in case this is a &#34;cross-chicken&#34;, a CHICKEN installation intended for cross compilation.</p><a href="Egg specification format.html#target">
+<h4 id="target">target</h4></a>
+<pre><tt>[egg property] (target PROP ...)</tt></pre>
+<p>Recursively process <tt>PROP ...</tt>, but only for the target platform, in case this is a &#34;cross-chicken&#34;, a CHICKEN installation intended for cross compilation.</p><a href="Egg specification format.html#component-options">
+<h4 id="component-options">component-options</h4></a>
+<pre><tt>[egg property] (component-options OPTIONSPEC ...)</tt></pre>
+<p>Specifies global options for all programs and extensions compiled for this egg. <tt>OPTIONSPEC</tt> may be <tt>csc-options</tt>, <tt>link-options</tt> or <tt>linkage</tt> specifications.</p><a href="Egg specification format.html#cond-expand">
+<h4 id="cond-expand">cond-expand</h4></a>
+<pre><tt>[egg property] (cond-expand CLAUSE ...)</tt></pre>
+<p>Conditionally expand egg specification forms, depending on system features. Each <tt>CLAUSE</tt> should be of the form <tt>(TEST PROPERTY)</tt> where <tt>TEST</tt> is a feature identifier or a conditional form, in the same syntax as used in the <tt>cond-expand</tt> syntactic form.</p>
+<p>In addition to normal system-wide feature identifiers, feature identifiers given via the <tt>-feature</tt> option to <tt>chicken-install</tt> are visible in the tests. Also, the features <tt>target</tt>, <tt>host</tt>, <tt>dynamic</tt> and <tt>static</tt> are visible, depending on surrounding egg specification forms for constraining mode and linkage.</p><a href="Egg specification format.html#error">
+<h4 id="error">error</h4></a>
+<pre><tt>[egg property] (error STRING ARG ...)</tt></pre>
+<p>Signal an error and abort processing. Mostly useful inside <tt>cond-expand</tt> forms.</p><a href="Egg specification format.html#components">
+<a class="dashingAutolink" name="autolink-84"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Components"></a><h3 id="components">Components</h3></a><a href="Egg specification format.html#extension">
+<h4 id="extension">extension</h4></a>
+<pre><tt>[egg property] (extension NAME PROP ...)</tt></pre>
+<p>Specifies an extension library component. The properties <tt>PROP...</tt> are processed recursively and apply only to this component.</p><a href="Egg specification format.html#data">
+<h4 id="data">data</h4></a>
+<pre><tt>[egg property] (data NAME PROP ...)</tt></pre>
+<p>Specifies one or more arbitrary data files.</p><a href="Egg specification format.html#generated-source-file">
+<h4 id="generated-source-file">generated-source-file</h4></a>
+<pre><tt>[egg property] (generated-source-file NAME PROP ...)</tt></pre>
+<p>Specifies a file that is generated during the process of building the egg.</p><a href="Egg specification format.html#c-include">
+<h4 id="c-include">c-include</h4></a>
+<pre><tt>[egg property] (c-include NAME PROP ...)</tt></pre>
+<p>Specifies one or more C include files.</p><a href="Egg specification format.html#scheme-include">
+<h4 id="scheme-include">scheme-include</h4></a>
+<pre><tt>[egg property] (scheme-include NAME PROP ...)</tt></pre>
+<p>Specifies one or more Scheme include files.</p><a href="Egg specification format.html#program">
+<h4 id="program">program</h4></a>
+<pre><tt>[egg property] (program NAME PROP ...)</tt></pre>
+<p>Specifies an executable program.</p><a href="Egg specification format.html#c-object">
+<h4 id="c-object">c-object</h4></a>
+<pre><tt>[egg property] (c-object NAME PROP ...)</tt></pre>
+<p>Specifies a compiled C/C++ object file. Usually this component type is required if you want to link a separately compiled C/C++ module with your extension or program. C-objects are compiled like Scheme source files with the <tt>csc</tt> tool to ensure the same C compiler options and toolchain is used as for regular Scheme files compiled to C. If you want to pass compiler-specific options to the build of the C object, use the <tt>csc-options</tt> property and precede C compiler options with <tt>-C</tt>.</p><a href="Egg specification format.html#component-properties">
+<a class="dashingAutolink" name="autolink-85"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Component%20properties"></a><h3 id="component-properties">Component properties</h3></a><a href="Egg specification format.html#host">
+<h4 id="host">host</h4></a>
+<pre><tt>[egg property] (host PROP ...)</tt></pre>
+<p>Process <tt>PROP ...</tt> recursively for the current component, but apply the properties only to the host (build) part, when using a CHICKEN installation intended for cross-compilation.</p><a href="Egg specification format.html#target">
+<h4 id="target">target</h4></a>
+<pre><tt>[egg property] (target PROP ...)</tt></pre>
+<p>Process <tt>PROP ...</tt> recursively for the current component, but apply the properties only to the target part, when using a CHICKEN installation intended for cross-compilation.</p><a href="Egg specification format.html#linkage">
+<h4 id="linkage">linkage</h4></a>
+<pre><tt>[egg property] (linkage LINKAGE)</tt></pre>
+<p>Define whether the component should be linked dynamically or statically. <tt>LINKAGE</tt> can be <tt>static</tt> or <tt>dynamic</tt>. This property only makes sense for extension libraries.</p><a href="Egg specification format.html#types-file">
+<h4 id="types-file">types-file</h4></a>
+<pre><tt>[egg property] (types-file [NAME])</tt></pre>
+<p>Specifies that a &#34;type-database&#34; file should be generated and installed for this component. This property is only used for extension libraries. The name is optional and defaults to the name of the extensions (with the proper extension).</p>
+<p>If <tt>NAME</tt> is a list of the form <tt>(predefined [NAME])</tt>, then no types file is created during compilation and an existing types file for this extension is assumed and installed.</p><a href="Egg specification format.html#inline-file">
+<h4 id="inline-file">inline-file</h4></a>
+<pre><tt>[egg property] (inline-file [NAME])</tt></pre>
+<p>Specifies that an &#34;inline&#34; file should be generated and installed for this component. This property is only used for extension libraries. The name is optional and defaults to the name of the extensions (with the proper extension).</p><a href="Egg specification format.html#custom-build">
+<h4 id="custom-build">custom-build</h4></a>
+<pre><tt>[egg property] (custom-build STRING)</tt></pre>
+<p>Specifies a custom build operation that should be executed instead of the default build operations. This property is mandatory for components of type <tt>generated-source-file</tt>. <tt>STRING</tt> should be the name of a shell command (e.g., a script) and thus may be platform sensitive.  The path to the file is prepended implicitly, so you should <b>not</b> prefix it with <tt>./</tt>.  On Windows, a file with the <tt>.bat</tt> extension will be picked before a plain file with no extension.</p>
+<p>The script will be made executable on UNIX systems, if necessary, and will be invoked like the <tt>csc</tt> program and is executed with the location of the CHICKEN binaries in the <tt>PATH</tt>. Also, the following environment variables are set in the execution environment of the script:</p>
+<ul>
+<li><tt>CHICKEN_CC</tt>: name of the C compiler used for building CHICKEN</li>
+<li><tt>CHICKEN_CXX</tt>: name of the C++ compiler set during the build of CHICKEN</li>
+<li><tt>CHICKEN_CSC</tt>: path to <tt>csc</tt></li>
+<li><tt>CHICKEN_CSI</tt>: path to <tt>csi</tt></li></ul><a href="Egg specification format.html#csc-options">
+<h4 id="csc-options">csc-options</h4></a>
+<pre><tt>[egg property] (csc-options OPTION ...)</tt></pre>
+<p>Specifies additional compiler options for <tt>csc</tt> that should be used when building this component. If this property is not given, the default options are used, which are <tt>-O2 -d1</tt> for extensions and programs and <tt>-O2 -d0</tt> for import libraries.</p>
+<p>Note that the options are quoted when passed to csc during the compilation of the extension, so multiple options should be specified as <tt>(csc-options &#34;OPT1&#34; &#34;OPT2&#34; ...)</tt> instead of <tt>(csc-options &#34;OPT1 OPT2&#34;)</tt> (the latter would be a single option containing a whitespace character).</p><a href="Egg specification format.html#link-options">
+<h4 id="link-options">link-options</h4></a>
+<pre><tt>[egg property] (link-options OPTION ...)</tt></pre>
+<p>Specifies additional link options for <tt>csc</tt> that should be used when building this component.</p>
+<p>Note that the options are quoted when passed to csc during the compilation of the extension, so multiple options should be specified as <tt>(link-options &#34;OPT1&#34; &#34;OPT2&#34; ...)</tt> instead of <tt>(link-options &#34;OPT1 OPT2&#34;)</tt> (the latter would be a single option containing a whitespace character).</p>
+<p>Note that in order to pass linker options to the underlying C-compiler, these must be prefixed with <tt>-L</tt>, eg. <tt>(link-options &#34;-L&#34; &#34;-lpng&#34;)</tt>.</p><a href="Egg specification format.html#source">
+<h4 id="source">source</h4></a>
+<pre><tt>[egg property] (source NAME)</tt></pre>
+<p>Specifies an alternative source file, in case it has a name distinct from the component name. By default the source file for a component is named after the component, with the <tt>.scm</tt> extension added.</p><a href="Egg specification format.html#install-name">
+<h4 id="install-name">install-name</h4></a>
+<pre><tt>[egg property] (install-name NAME)</tt></pre>
+<p>Specifies an alternative installation name of the component, if it differs from the actual component name. This property is most useful if an egg installs an extension and a program of the same name, but needs to distinguish the components during build time.</p><a href="Egg specification format.html#component-dependencies">
+<h4 id="component-dependencies">component-dependencies</h4></a>
+<pre><tt>[egg property] (component-dependencies NAME ...)</tt></pre>
+<p>Specifies dependencies to other components. <tt>NAME ...</tt> must be the names of extension, program, scheme-include- or generated source file components that should be built before the current component.</p><a href="Egg specification format.html#source-dependencies">
+<h4 id="source-dependencies">source-dependencies</h4></a>
+<pre><tt>[egg property] (source-dependencies NAME ...)</tt></pre>
+<p>Specifies dependencies to additional source files. <tt>NAME ...</tt> must denote filenames of which the program or extension depends. A program or extension implicitly depends on its source file and and on the egg-specification file.</p><a href="Egg specification format.html#objects">
+<h4 id="objects">objects</h4></a>
+<pre><tt>[egg property] (objects NAME ...)</tt></pre>
+<p>Specifies that the components of type <tt>c-object</tt> should be linked to this component and that the object components are dependencies.</p><a href="Egg specification format.html#destination">
+<h4 id="destination">destination</h4></a>
+<pre><tt>[egg property] (destination NAME)</tt></pre>
+<p>Specifies an alternative installation destination for the built component and only applies to components of type <tt>data</tt>, <tt>c-include</tt> and <tt>scheme-include</tt>. This property should only be used in extreme cases, as it is recommended to use the default installation locations, which are:</p>
+<ul>
+<li>for C include files: <tt>&lt;PREFIX&gt;/include/chicken/</tt></li>
+<li>for Scheme include files: <tt>&lt;PREFIX&gt;/share/chicken/</tt></li>
+<li>for data files: <tt>&lt;PREFIX&gt;/share/chicken/</tt></li></ul><a href="Egg specification format.html#files">
+<h4 id="files">files</h4></a>
+<pre><tt>[egg property] (files NAME ...)</tt></pre>
+<p>Specifies source files for this component and only applies to components of type <tt>data</tt>, <tt>c-include</tt> and <tt>scheme-include</tt>. Both files and directories may be given and parent directories are created as needed.</p><a href="Egg specification format.html#modules">
+<h4 id="modules">modules</h4></a>
+<pre><tt>[egg property] (modules NAME ...)</tt></pre>
+<p>Specifies modules that the component (usually an extension) contains. <tt>chicken-install</tt> will compile and install all import libraries for the given modules. If this property is not given, then it is assumed that the extension has a single module of the same name as the component.</p><a href="Egg specification format.html#cond-expand">
+<h4 id="cond-expand">cond-expand</h4></a>
+<pre><tt>[egg property] (cond-expand CLAUSE ...)</tt></pre>
+<p>Similar to the toplevel <tt>cond-expand</tt> clause and may appear inside component specifications.</p><a href="Egg specification format.html#error">
+<h4 id="error">error</h4></a>
+<pre><tt>[egg property] (error STRING ARG ...)</tt></pre>
+<p>Similar to the toplevel <tt>error</tt> form, may appear inside component specifications.</p>
+<hr/>
+<p>Previous: <a href="Extension tools.html" class="internal">Extension tools</a></p>
+<p>Next: <a href="Units and linking model.html" class="internal">Units and linking model</a></p></div></body></html>

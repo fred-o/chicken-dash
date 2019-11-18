@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken eval) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20eval)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20eval)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20eval)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken eval).html#module-chicken-eval">Module (chicken eval)</a>
+<ol>
+<li><a href="Module (chicken eval).html#custom-eval-handlers">Custom eval handlers</a>
+<ol>
+<li><a href="Module (chicken eval).html#eval-handler">eval-handler</a></li></ol></li>
+<li><a href="Module (chicken eval).html#using-modules-as-evaluation-environments">Using modules as evaluation environments</a>
+<ol>
+<li><a href="Module (chicken eval).html#module-environment">module-environment</a></li></ol></li></ol></li></ol></div><a href="Module (chicken eval).html#module-chicken-eval">
+<a class="dashingAutolink" name="autolink-512"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20eval%29"></a><a class="dashingAutolink" name="autolink-515"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20eval%29"></a><h2 id="module-chicken-eval">Module (chicken eval)</h2></a>
+<p>This module provides a handful of hooks that allow more fine-grained control over how the standard procedure <tt>eval</tt> behaves.</p><a href="Module (chicken eval).html#custom-eval-handlers">
+<a class="dashingAutolink" name="autolink-513"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Custom%20eval%20handlers"></a><h3 id="custom-eval-handlers">Custom eval handlers</h3></a><a href="Module (chicken eval).html#eval-handler">
+<h4 id="eval-handler">eval-handler</h4></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-511"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/%28eval-handler%29"></a><tt>(eval-handler)</tt>
+<br/></span>
+<p>A procedure of one or two arguments. When <tt>eval</tt> is invoked, it calls the value of this parameter with the same arguments. The default behavior is to evaluate the argument expression and to ignore the second parameter.</p><a href="Module (chicken eval).html#using-modules-as-evaluation-environments">
+<a class="dashingAutolink" name="autolink-514"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Using%20modules%20as%20evaluation%20environments"></a><h3 id="using-modules-as-evaluation-environments">Using modules as evaluation environments</h3></a><a href="Module (chicken eval).html#module-environment">
+<h4 id="module-environment">module-environment</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-516"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28module-environment%20MODULENAME%29"></a><tt>(module-environment MODULENAME)</tt>
+<br/></span>
+<p>Locates the module with the name <tt>MODULENAME</tt> and returns an environment that can be passed as the second argument to <tt>eval</tt>. The evaluated expressions have only access to the bindings that are visible inside the module. Note that the environment is not mutable.</p>
+<p>If the module is not registered in the current process, <tt>module-environment</tt> will try to locate meta-information about the module by loading any existing import library with the name <tt>MODULENAME.import.[scm|so]</tt>, if possible.</p>
+<p>In compiled modules, only exported bindings will be visible to interactively entered code. In interpreted modules all bindings are visible.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken errno).html" class="internal">Module (chicken errno)</a></p>
+<p>Next: <a href="Module (chicken file).html" class="internal">Module (chicken file)</a></p></div></body></html>

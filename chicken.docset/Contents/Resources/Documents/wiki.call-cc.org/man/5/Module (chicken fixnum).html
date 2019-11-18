@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken fixnum) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20fixnum)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20fixnum)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20fixnum)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken fixnum).html#module-chicken-fixnum">Module (chicken fixnum)</a>
+<ol>
+<li><a href="Module (chicken fixnum).html#arithmetic-fixnum-operations">Arithmetic fixnum operations</a></li>
+<li><a href="Module (chicken fixnum).html#overflow-aware-fixnum-operations">Overflow-aware fixnum operations</a></li>
+<li><a href="Module (chicken fixnum).html#fixnum-comparison-and-predicates">Fixnum comparison and predicates</a></li>
+<li><a href="Module (chicken fixnum).html#fixnum-limits">Fixnum limits</a></li></ol></li></ol></div><a href="Module (chicken fixnum).html#module-chicken-fixnum">
+<a class="dashingAutolink" name="autolink-641"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20fixnum%29"></a><a class="dashingAutolink" name="autolink-646"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20fixnum%29"></a><h2 id="module-chicken-fixnum">Module (chicken fixnum)</h2></a>
+<p>Because CHICKEN supports a full numeric tower, operations can sometimes incur a substantial overhead to simply detect the type of numbers you&#39;re passing in.  When you know you&#39;re definitely dealing only with fixnums, you can choose to use fixnum-specific operations to avoid this overhead.</p>
+<p>This is purely a performance hack.  You might want to consider adding <a href="Types.html" class="internal">type annotations</a> instead, this often gives the same performance boost without having to rewrite all numeric operators in your code.</p><a href="Module (chicken fixnum).html#arithmetic-fixnum-operations">
+<a class="dashingAutolink" name="autolink-642"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Arithmetic%20fixnum%20operations"></a><h3 id="arithmetic-fixnum-operations">Arithmetic fixnum operations</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-647"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%2B%20N1%20N2%29"></a><tt>(fx+ N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-648"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx-%20N1%20N2%29"></a><tt>(fx- N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-649"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%2A%20N1%20N2%29"></a><tt>(fx* N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-650"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%2F%20N1%20N2%29"></a><tt>(fx/ N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-651"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxmod%20N1%20N2%29"></a><tt>(fxmod N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-652"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxrem%20N1%20N2%29"></a><tt>(fxrem N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-653"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxneg%20N%29"></a><tt>(fxneg N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-654"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxmin%20N1%20N2%29"></a><tt>(fxmin N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-655"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxmax%20N1%20N2%29"></a><tt>(fxmax N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-656"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxand%20N1%20N2%29"></a><tt>(fxand N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-657"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxior%20N1%20N2%29"></a><tt>(fxior N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-658"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxxor%20N1%20N2%29"></a><tt>(fxxor N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-659"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxnot%20N%29"></a><tt>(fxnot N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-660"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxshl%20N1%20N2%29"></a><tt>(fxshl N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-661"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxshr%20N1%20N2%29"></a><tt>(fxshr N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-662"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxgcd%20N1%20N2%29"></a><tt>(fxgcd N1 N2)</tt>
+<br/></span>
+<p><tt>fx+</tt> and friends are arithmetic fixnum operations.  These procedures do not check their arguments, so non-fixnum parameters will result in incorrect results. <tt>fxneg</tt> negates its argument.</p>
+<p>On division by zero, <tt>fx/</tt>, <tt>fxmod</tt> and <tt>fxrem</tt> signal a condition of kind <tt>(exn arithmetic)</tt>.</p>
+<p><tt>fxshl</tt> and <tt>fxshr</tt> perform arithmetic shift left and right, respectively.</p><a href="Module (chicken fixnum).html#overflow-aware-fixnum-operations">
+<a class="dashingAutolink" name="autolink-643"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Overflow-aware%20fixnum%20operations"></a><h3 id="overflow-aware-fixnum-operations">Overflow-aware fixnum operations</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-663"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%2B%3F%20N1%20N2%29"></a><tt>(fx+? N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-664"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx-%3F%20N1%20N2%29"></a><tt>(fx-? N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-665"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%2A%3F%20N1%20N2%29"></a><tt>(fx*? N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-666"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%2F%3F%20N1%20N2%29"></a><tt>(fx/? N1 N2)</tt>
+<br/></span>
+<p>These procedures behave similarly to their standard counterparts with the exception that <tt>#f</tt> is returned if an argument is not a fixnum or the result of the operation overflows.</p>
+<p>Chaining of such procedures is well-defined and causes the overflow error to be propagated.</p><a href="Module (chicken fixnum).html#fixnum-comparison-and-predicates">
+<a class="dashingAutolink" name="autolink-644"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Fixnum%20comparison%20and%20predicates"></a><h3 id="fixnum-comparison-and-predicates">Fixnum comparison and predicates</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-667"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxodd%3F%20N%29"></a><tt>(fxodd? N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-668"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fxeven%3F%20N%29"></a><tt>(fxeven? N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-669"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%3D%20N1%20N2%29"></a><tt>(fx= N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-670"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%3E%20N1%20N2%29"></a><tt>(fx&gt; N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-671"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%3C%20N1%20N2%29"></a><tt>(fx&lt; N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-672"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%3E%3D%20N1%20N2%29"></a><tt>(fx&gt;= N1 N2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-673"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fx%3C%3D%20N1%20N2%29"></a><tt>(fx&lt;= N1 N2)</tt>
+<br/></span>
+<p>Comparison of fixnums and predicates on them.</p><a href="Module (chicken fixnum).html#fixnum-limits">
+<a class="dashingAutolink" name="autolink-645"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Fixnum%20limits"></a><h3 id="fixnum-limits">Fixnum limits</h3></a><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-637"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/most-positive-fixnum"></a><tt>most-positive-fixnum</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-638"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/most-negative-fixnum"></a><tt>most-negative-fixnum</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-639"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/fixnum-bits"></a><tt>fixnum-bits</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-640"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/fixnum-precision"></a><tt>fixnum-precision</tt>
+<br/></span>
+<p>Platform-specific fixnum limits.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken file posix).html" class="internal">Module (chicken file posix)</a></p>
+<p>Next: <a href="Module (chicken flonum).html" class="internal">Module (chicken flonum)</a></p></div></body></html>

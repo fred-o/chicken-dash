@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken tcp) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20tcp)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20tcp)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20tcp)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken tcp).html#module-chicken-tcp">Module (chicken tcp)</a>
+<ol>
+<li><a href="Module (chicken tcp).html#tcp-listen">tcp-listen</a></li>
+<li><a href="Module (chicken tcp).html#tcp-listener">tcp-listener?</a></li>
+<li><a href="Module (chicken tcp).html#tcp-close">tcp-close</a></li>
+<li><a href="Module (chicken tcp).html#tcp-accept">tcp-accept</a></li>
+<li><a href="Module (chicken tcp).html#tcp-accept-ready">tcp-accept-ready?</a></li>
+<li><a href="Module (chicken tcp).html#tcp-listener-port">tcp-listener-port</a></li>
+<li><a href="Module (chicken tcp).html#tcp-listener-fileno">tcp-listener-fileno</a></li>
+<li><a href="Module (chicken tcp).html#tcp-connect">tcp-connect</a></li>
+<li><a href="Module (chicken tcp).html#tcp-addresses">tcp-addresses</a></li>
+<li><a href="Module (chicken tcp).html#tcp-port-numbers">tcp-port-numbers</a></li>
+<li><a href="Module (chicken tcp).html#tcp-abandon-port">tcp-abandon-port</a></li>
+<li><a href="Module (chicken tcp).html#tcp-buffer-size">tcp-buffer-size</a></li>
+<li><a href="Module (chicken tcp).html#tcp-read-timeout">tcp-read-timeout</a></li>
+<li><a href="Module (chicken tcp).html#tcp-write-timeout">tcp-write-timeout</a></li>
+<li><a href="Module (chicken tcp).html#tcp-connect-timeout">tcp-connect-timeout</a></li>
+<li><a href="Module (chicken tcp).html#tcp-accept-timeout">tcp-accept-timeout</a></li>
+<li><a href="Module (chicken tcp).html#example">Example</a></li></ol></li></ol></div><a href="Module (chicken tcp).html#module-chicken-tcp">
+<a class="dashingAutolink" name="autolink-1314"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20tcp%29"></a><a class="dashingAutolink" name="autolink-1332"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20tcp%29"></a><h2 id="module-chicken-tcp">Module (chicken tcp)</h2></a>
+<p>This module provides basic facilities for communicating over TCP sockets.</p>
+<p>All errors related to failing network operations will raise a condition of kind <tt>(exn i/o net)</tt>.</p><a href="Module (chicken tcp).html#tcp-listen">
+<a class="dashingAutolink" name="autolink-1315"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-listen"></a><h3 id="tcp-listen">tcp-listen</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1303"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-listen%20TCPPORT%20%5BBACKLOG%20%5BHOST%5D%5D%29"></a><tt>(tcp-listen TCPPORT [BACKLOG [HOST]])</tt>
+<br/></span>
+<p>Creates and returns a TCP listener object that listens for connections on <tt>TCPPORT</tt>, which should be an exact integer. <tt>BACKLOG</tt> specifies the number of maximally pending connections (and defaults to 100). If the optional argument <tt>HOST</tt> is given and not <tt>#f</tt>, then only incoming connections for the given host (or IP) are accepted.</p><a href="Module (chicken tcp).html#tcp-listener">
+<a class="dashingAutolink" name="autolink-1316"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-listener%3F"></a><h3 id="tcp-listener">tcp-listener?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1304"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-listener%3F%20X%29"></a><tt>(tcp-listener? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a TCP listener object, or <tt>#f</tt> otherwise.</p><a href="Module (chicken tcp).html#tcp-close">
+<a class="dashingAutolink" name="autolink-1317"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-close"></a><h3 id="tcp-close">tcp-close</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1305"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-close%20LISTENER%29"></a><tt>(tcp-close LISTENER)</tt>
+<br/></span>
+<p>Reclaims any resources associated with <tt>LISTENER</tt>.</p><a href="Module (chicken tcp).html#tcp-accept">
+<a class="dashingAutolink" name="autolink-1318"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-accept"></a><h3 id="tcp-accept">tcp-accept</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1306"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-accept%20LISTENER%29"></a><tt>(tcp-accept LISTENER)</tt>
+<br/></span>
+<p>Waits until a connection is established on the port on which <tt>LISTENER</tt> is listening and returns two values: an input- and output-port that can be used to communicate with the remote process. The current value of <tt>tcp-accept-timeout</tt> is used to determine the maximal number of milliseconds (if any) to wait until a connection is established. When a client connects any read- and write-operations on the returned ports will use the current values (at the time of the connection) of <tt>tcp-read-timeout</tt> and <tt>tcp-write-timeout</tt>, respectively, to determine the maximal number of milliseconds to wait for input/output before a timeout error is signalled.</p>
+<p>Note: this operation and any I/O on the ports returned will not block other running threads.</p><a href="Module (chicken tcp).html#tcp-accept-ready">
+<a class="dashingAutolink" name="autolink-1319"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-accept-ready%3F"></a><h3 id="tcp-accept-ready">tcp-accept-ready?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1307"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-accept-ready%3F%20LISTENER%29"></a><tt>(tcp-accept-ready? LISTENER)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if there are any connections pending on <tt>LISTENER</tt>, or <tt>#f</tt> otherwise.</p><a href="Module (chicken tcp).html#tcp-listener-port">
+<a class="dashingAutolink" name="autolink-1320"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-listener-port"></a><h3 id="tcp-listener-port">tcp-listener-port</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1308"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-listener-port%20LISTENER%29"></a><tt>(tcp-listener-port LISTENER)</tt>
+<br/></span>
+<p>Returns the port number assigned to <tt>LISTENER</tt> (If you pass <tt>0</tt> to <tt>tcp-listen</tt>, then the system will choose a port-number for you).</p><a href="Module (chicken tcp).html#tcp-listener-fileno">
+<a class="dashingAutolink" name="autolink-1321"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-listener-fileno"></a><h3 id="tcp-listener-fileno">tcp-listener-fileno</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1309"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-listener-fileno%20LISTENER%29"></a><tt>(tcp-listener-fileno LISTENER)</tt>
+<br/></span>
+<p>Returns the file-descriptor associated with <tt>LISTENER</tt>.</p><a href="Module (chicken tcp).html#tcp-connect">
+<a class="dashingAutolink" name="autolink-1322"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-connect"></a><h3 id="tcp-connect">tcp-connect</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1310"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-connect%20HOSTNAME%20%5BTCPPORT%5D%29"></a><tt>(tcp-connect HOSTNAME [TCPPORT])</tt>
+<br/></span>
+<p>Establishes a client-side TCP connection to the machine with the name <tt>HOSTNAME</tt> (a string) at <tt>TCPPORT</tt> (an exact integer) and returns two values: an input- and output-port for communicating with the remote process. The current value of <tt>tcp-connect-timeout</tt> is used to determine the maximal number of milliseconds (if any) to wait until the connection is established. When the connection takes place any read- and write-operations on the returned ports will use the current values (at the time of the call to <tt>tcp-connect</tt>) of <tt>tcp-read-timeout</tt> and <tt>tcp-write-timeout</tt>, respectively, to determine the maximal number of milliseconds to wait for input/output before a timeout error is signalled.</p>
+<p>If the <tt>TCPPORT</tt> is omitted, the port is parsed from the <tt>HOSTNAME</tt> string.  The format expected is <tt>HOSTNAME:PORT</tt>.  The <tt>PORT</tt> can either be a string representation of an integer or a service name which is translated to an integer using the POSIX function <a href="http://www.opengroup.org/onlinepubs/009695399/functions/getservbyname.html" class="external"><tt>getservbyname</tt></a>.</p>
+<p>Note: any I/O on the ports returned will not block other running threads.</p><a href="Module (chicken tcp).html#tcp-addresses">
+<a class="dashingAutolink" name="autolink-1323"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-addresses"></a><h3 id="tcp-addresses">tcp-addresses</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1311"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-addresses%20PORT%29"></a><tt>(tcp-addresses PORT)</tt>
+<br/></span>
+<p>Returns two values for the input- or output-port <tt>PORT</tt> (which should be a port returned by either <tt>tcp-accept</tt> or <tt>tcp-connect</tt>): the IP address of the local and the remote machine that are connected over the socket associated with <tt>PORT</tt>. The returned addresses are strings in <tt>XXX.XXX.XXX.XXX</tt> notation.</p><a href="Module (chicken tcp).html#tcp-port-numbers">
+<a class="dashingAutolink" name="autolink-1324"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-port-numbers"></a><h3 id="tcp-port-numbers">tcp-port-numbers</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1312"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-port-numbers%20PORT%29"></a><tt>(tcp-port-numbers PORT)</tt>
+<br/></span>
+<p>Returns two values for the input- or output-port <tt>PORT</tt> (which should be a port returned by either <tt>tcp-accept</tt> or <tt>tcp-connect</tt>): the TCP port numbers of the local and the remote machine that are connected over the socket associated with <tt>PORT</tt>.</p><a href="Module (chicken tcp).html#tcp-abandon-port">
+<a class="dashingAutolink" name="autolink-1325"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-abandon-port"></a><h3 id="tcp-abandon-port">tcp-abandon-port</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1313"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tcp-abandon-port%20PORT%29"></a><tt>(tcp-abandon-port PORT)</tt>
+<br/></span>
+<p>Marks the socket port <tt>PORT</tt> as abandoned. This is mainly useful to close down a port without breaking the connection.</p><a href="Module (chicken tcp).html#tcp-buffer-size">
+<a class="dashingAutolink" name="autolink-1326"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-buffer-size"></a><h3 id="tcp-buffer-size">tcp-buffer-size</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1333"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/tcp-buffer-size"></a><tt>tcp-buffer-size</tt>
+<br/></span>
+<p>Sets the size of the output buffer. By default no output-buffering for TCP output is done, but to improve performance by minimizing the number of TCP packets, buffering may be turned on by setting this parameter to an exact integer greater zero. A buffer size of zero or <tt>#f</tt> turns buffering off. The setting of this parameter takes effect at the time when the I/O ports for a particular socket are created, i.e. when <tt>tcp-connect</tt> or <tt>tcp-accept</tt> is called.</p>
+<p>Note that since output is not immediately written to the associated socket, you may need to call <tt>flush-output</tt>, once you want the output to be transmitted. Closing the output port will flush automatically.</p><a href="Module (chicken tcp).html#tcp-read-timeout">
+<a class="dashingAutolink" name="autolink-1327"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-read-timeout"></a><h3 id="tcp-read-timeout">tcp-read-timeout</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1334"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/tcp-read-timeout"></a><tt>tcp-read-timeout</tt>
+<br/></span>
+<p>Determines the timeout for TCP read operations in milliseconds. A timeout of <tt>#f</tt> disables timeout checking. The default read timeout is 60000, i.e. 1 minute. If timeout occurs while reading, a condition object of kinds <tt>(exn i/o net timeout)</tt> is thrown.</p><a href="Module (chicken tcp).html#tcp-write-timeout">
+<a class="dashingAutolink" name="autolink-1328"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-write-timeout"></a><h3 id="tcp-write-timeout">tcp-write-timeout</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1335"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/tcp-write-timeout"></a><tt>tcp-write-timeout</tt>
+<br/></span>
+<p>Determines the timeout for TCP write operations in milliseconds. A timeout of <tt>#f</tt> disables timeout checking. The default write timeout is 60000, i.e. 1 minute. If timeout occurs while writing, a condition object of kinds <tt>(exn i/o net timeout)</tt> is thrown.</p><a href="Module (chicken tcp).html#tcp-connect-timeout">
+<a class="dashingAutolink" name="autolink-1329"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-connect-timeout"></a><h3 id="tcp-connect-timeout">tcp-connect-timeout</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1336"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/tcp-connect-timeout"></a><tt>tcp-connect-timeout</tt>
+<br/></span>
+<p>Determines the timeout for <tt>tcp-connect</tt> operations in milliseconds. A timeout of <tt>#f</tt> disables timeout checking and is the default. If timeout occurs while trying to connect, a condition object of kinds <tt>(exn i/o net timeout)</tt> is thrown.</p><a href="Module (chicken tcp).html#tcp-accept-timeout">
+<a class="dashingAutolink" name="autolink-1330"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/tcp-accept-timeout"></a><h3 id="tcp-accept-timeout">tcp-accept-timeout</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1337"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/tcp-accept-timeout"></a><tt>tcp-accept-timeout</tt>
+<br/></span>
+<p>Determines the timeout for <tt>tcp-accept</tt> operations in milliseconds. A timeout of <tt>#f</tt> disables timeout checking and is the default. If timeout occurs while waiting for connections, a condition object of kinds <tt>(exn i/o net timeout)</tt> is thrown.</p><a href="Module (chicken tcp).html#example">
+<a class="dashingAutolink" name="autolink-1331"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Example"></a><h3 id="example">Example</h3></a>
+<p>A very simple example follows. Say we have the two files <tt>client.scm</tt> and <tt>server.scm</tt>:</p>
+<pre><tt class="highlight scheme-language"> <span class="comment">; client.scm
+</span> <span class="paren1">(<span class="default">declare <span class="paren2">(<span class="default">uses tcp</span>)</span></span>)</span>
+ <span class="paren1">(<span class="default"><i><span class="symbol">define-values</span></i> <span class="paren2">(<span class="default">i o</span>)</span> <span class="paren2">(<span class="default">tcp-connect <span class="string">&#34;localhost&#34;</span> 4242</span>)</span></span>)</span>
+ <span class="paren1">(<span class="default">write-line <span class="string">&#34;Good Bye!&#34;</span> o</span>)</span>
+ <span class="paren1">(<span class="default">print <span class="paren2">(<span class="default">read-line i</span>)</span></span>)</span></tt></pre>
+<pre><tt class="highlight scheme-language"> <span class="comment">; server.scm
+</span> <span class="paren1">(<span class="default">declare <span class="paren2">(<span class="default">uses tcp</span>)</span></span>)</span>
+ <span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> l <span class="paren2">(<span class="default">tcp-listen 4242</span>)</span></span>)</span>
+ <span class="paren1">(<span class="default"><i><span class="symbol">define-values</span></i> <span class="paren2">(<span class="default">i o</span>)</span> <span class="paren2">(<span class="default">tcp-accept l</span>)</span></span>)</span>
+ <span class="paren1">(<span class="default">write-line <span class="string">&#34;Hello!&#34;</span> o</span>)</span>
+ <span class="paren1">(<span class="default">print <span class="paren2">(<span class="default">read-line i</span>)</span></span>)</span>
+ <span class="paren1">(<span class="default">close-input-port i</span>)</span>
+ <span class="paren1">(<span class="default">close-output-port o</span>)</span></tt></pre>
+<pre><tt>% csc server.scm
+% csc client.scm
+% ./server &amp;
+% ./client
+Good Bye!
+Hello!</tt></pre>
+<hr/>
+<p>Previous: <a href="Module (chicken syntax).html" class="internal">Module (chicken syntax)</a></p>
+<p>Next: <a href="Module (chicken time).html" class="internal">Module (chicken time)</a></p></div></body></html>

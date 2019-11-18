@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Foreign type specifiers - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Foreign%20type%20specifiers?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Foreign%20type%20specifiers?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Foreign%20type%20specifiers?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Foreign type specifiers.html#foreign-type-specifiers">Foreign type specifiers</a>
+<ol>
+<li><a href="Foreign type specifiers.html#void">Void</a></li>
+<li><a href="Foreign type specifiers.html#boolean">Boolean</a></li>
+<li><a href="Foreign type specifiers.html#characters">Characters</a></li>
+<li><a href="Foreign type specifiers.html#integers">Integers</a></li>
+<li><a href="Foreign type specifiers.html#floating-point">Floating-point</a></li>
+<li><a href="Foreign type specifiers.html#strings">Strings</a></li>
+<li><a href="Foreign type specifiers.html#bytevectors">Bytevectors</a></li>
+<li><a href="Foreign type specifiers.html#pointers">Pointers</a></li>
+<li><a href="Foreign type specifiers.html#scheme-objects">Scheme objects</a></li>
+<li><a href="Foreign type specifiers.html#user-defined-c-types">User-defined C types</a></li>
+<li><a href="Foreign type specifiers.html#c-types">C++ types</a></li>
+<li><a href="Foreign type specifiers.html#type-qualifiers">Type qualifiers</a></li>
+<li><a href="Foreign type specifiers.html#map-of-foreign-types-to-c-types">Map of foreign types to C types</a></li></ol></li></ol></div><a href="Foreign type specifiers.html#foreign-type-specifiers">
+<h2 id="foreign-type-specifiers">Foreign type specifiers</h2></a>
+<p>Here is a list of valid foreign type specifiers for use in <a href="Accessing external objects.html" class="internal">accessing external objects</a>.</p><a href="Foreign type specifiers.html#void">
+<a class="dashingAutolink" name="autolink-237"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Void"></a><h3 id="void">Void</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-160"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/void"></a><tt>void</tt>
+<br/></span>
+<p>Specifies an undefined return value.  Not allowed as argument type.</p><a href="Foreign type specifiers.html#boolean">
+<a class="dashingAutolink" name="autolink-238"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Boolean"></a><h3 id="boolean">Boolean</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-161"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/bool"></a><tt>bool</tt>
+<br/></span>
+<p>As argument: any value (<tt>#f</tt> is false (zero), anything else is true (non-zero).</p>
+<p>As result: anything different from 0 and the <tt>NULL</tt> pointer is <tt>#t</tt>.</p>
+<p>This type maps to <tt>int</tt> in both C and C++.</p><a href="Foreign type specifiers.html#characters">
+<a class="dashingAutolink" name="autolink-239"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Characters"></a><h3 id="characters">Characters</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-162"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/char"></a><tt>char</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-163"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-char"></a><tt>unsigned-char</tt>
+<br/></span>
+<p>A signed or unsigned character.</p>
+<p>As an argument, the input Scheme character is cast to C <tt>char</tt> or <tt>unsigned char</tt>, resulting in an 8-bit value.  A Scheme character with an integer value outside 0-127 (signed) or 0-255 (unsigned) will be silently truncated to fit; in other words, don&#39;t feed it UTF-8 data.</p>
+<p>As a return type, accepts any valid Unicode code point; the return type is treated as a C int, and converted to a Scheme character.</p><a href="Foreign type specifiers.html#integers">
+<a class="dashingAutolink" name="autolink-240"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Integers"></a><h3 id="integers">Integers</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-164"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/byte"></a><tt>byte</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-165"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-byte"></a><tt>unsigned-byte</tt>
+<br/></span>
+<p>An 8-bit integer value in range -128 - 127 (byte) or 0 - 255 (unsigned byte).  Values are cast to and from C <tt>char</tt> or <tt>unsigned char</tt> type, so values outside this 8-bit range will be unceremoniously truncated.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-166"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/short"></a><tt>short</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-167"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-short"></a><tt>unsigned-short</tt>
+<br/></span>
+<p>A short integer number in 16-bit range.  Maps to C <tt>short</tt> or <tt>unsigned short</tt>.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-168"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/int"></a><tt>int</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-169"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-int"></a><tt>unsigned-int</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-170"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/int32"></a><tt>int32</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-171"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-int32"></a><tt>unsigned-int32</tt>
+<br/></span>
+<p>An integer number in fixnum range (-1073741824 to 1073741823, i.e. 31 bit signed).  <tt>unsigned-int</tt> further restricts this range to 30 bit unsigned (0 to 1073741823).  <tt>int</tt> maps to C type <tt>int</tt> and <tt>int32</tt> maps to <tt>int32_t</tt>.</p>
+<p>As an argument type, these expect a fixnum value, and as a return type they return a fixnum.  Values outside the ranges prescribed above are silently truncated; you should use e.g. <tt>integer</tt> if you need the full 32-bit range.  Note: <tt>int32</tt> is not recognized as an argument type prior to CHICKEN 4.7.2.</p>
+<p>Notes for 64-bit architectures:</p>
+<ul>
+<li>C&#39;s <tt>int</tt> is 32 bits on most 64-bit systems (<a href="http://en.wikipedia.org/wiki/64-bit#Specific_C-language_data_models" class="external">LP64</a>), so <tt>int</tt> and <tt>int32</tt> are functionally (if not semantically) equivalent.</li>
+<li>The fixnum type is larger than 32 bits and consequently the entire signed or unsigned 32-bit range is available for this type on 64-bit systems.  However, for compatibility with 32-bit systems it is probably unwise to rely on this.  If you need a 32-bit range, you should use (unsigned) <tt>integer</tt> or <tt>integer32</tt>.</li></ul><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-172"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/integer"></a><tt>integer</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-173"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-integer"></a><tt>unsigned-integer</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-174"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/integer32"></a><tt>integer32</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-175"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-integer32"></a><tt>unsigned-integer32</tt>
+<br/></span>
+<p>A fixnum or integral flonum, mapping to <tt>int</tt> or <tt>int32_t</tt> or their unsigned variants.  When outside of fixnum range the value will overflow into a flonum.</p>
+<p>C&#39;s <tt>int</tt> is 32 bits on most 64-bit systems (<a href="http://en.wikipedia.org/wiki/64-bit#Specific_C-language_data_models" class="external">LP64</a>), so <tt>integer</tt> and <tt>integer32</tt> are functionally (if not semantically) equivalent.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-176"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/integer64"></a><tt>integer64</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-177"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-integer64"></a><tt>unsigned-integer64</tt>
+<br/></span>
+<p>A fixnum or integral flonum, mapping to <tt>int64_t</tt> or <tt>uint64_t</tt>. When outside of fixnum range the value will overflow into a flonum.</p>
+<p>On a 32-bit system, the effective precision of this type is 52 bits plus the sign bit, as it is stored in a <tt>double</tt> flonum.  (In other words, numbers between 2^52 and 2^64-1 can be represented but there are gaps in the sequence; the same goes for their negative counterparts.) On a 64-bit system the range is 62 bits plus the sign bit, the maximum range of a fixnum.  (Numbers between 2^62 and 2^64-1 have gaps.)</p>
+<p><tt>unsigned-integer64</tt> is not valid as a return type until CHICKEN 4.6.4.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-178"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/long"></a><tt>long</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-179"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-long"></a><tt>unsigned-long</tt>
+<br/></span>
+<p>Either a fixnum or a flonum in the range of an (unsigned) machine <i>long</i>. Similar to <tt>integer32</tt> on 32-bit systems or <tt>integer64</tt> on 64-bit.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-180"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/size_t"></a><tt>size_t</tt>
+<br/></span>
+<p>A direct mapping to C&#39;s <tt>size_t</tt>.</p><a href="Foreign type specifiers.html#floating-point">
+<a class="dashingAutolink" name="autolink-241"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Floating-point"></a><h3 id="floating-point">Floating-point</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-181"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/float"></a><tt>float</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-182"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/double"></a><tt>double</tt>
+<br/></span>
+<p>A floating-point number. If an exact integer is passed as an argument, then it is automatically converted to a float.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-183"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/number"></a><tt>number</tt>
+<br/></span>
+<p>A floating-point number. Similar to <tt>double</tt>, but when used as a result type, then either an exact integer or a floating-point number is returned, depending on whether the result fits into an exact integer or not.</p><a href="Foreign type specifiers.html#strings">
+<a class="dashingAutolink" name="autolink-242"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Strings"></a><h3 id="strings">Strings</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-184"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/c-string"></a><tt>c-string</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-185"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-c-string"></a><tt>nonnull-c-string</tt>
+<br/></span>
+<p>A zero-terminated C string. The argument value <tt>#f</tt> is allowed and is passed as a <tt>NULL</tt> pointer; similarly, a NULL pointer is returned as <tt>#f</tt>.  Note that the string contents are copied into (automatically managed) temporary storage with a zero byte appended when passed as an argument. Also, a return value of this type is copied into garbage collected memory using <tt>strcpy(3)</tt>.</p>
+<p>For the <tt>nonnull-</tt> variant, passing <tt>#f</tt> will raise an exception, and returning a NULL pointer will result in undefined behavior (e.g. a segfault).</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-186"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/c-string%2A"></a><tt>c-string*</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-187"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-c-string%2A"></a><tt>nonnull-c-string*</tt>
+<br/></span>
+<p>Similar to <tt>c-string</tt> and <tt>nonnull-c-string</tt>, but if used as a result type, the pointer returned by the foreign code will be freed (using the C library&#39;s <tt>free(3)</tt>) after copying. This type specifier is not valid as a result type for callbacks defined with <tt>define-external</tt>.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-188"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-c-string"></a><tt>unsigned-c-string</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-189"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-unsigned-c-string"></a><tt>nonnull-unsigned-c-string</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-190"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/unsigned-c-string%2A"></a><tt>unsigned-c-string*</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-191"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-unsigned-c-string%2A"></a><tt>nonnull-unsigned-c-string*</tt>
+<br/></span>
+<p>Same as <tt>c-string</tt>, <tt>nonnull-c-string</tt>, etc. but mapping to C&#39;s <tt>unsigned char *</tt> type.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-192"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/c-string-list"></a><tt>c-string-list</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-193"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/c-string-list%2A"></a><tt>c-string-list*</tt>
+<br/></span>
+<p>Takes a pointer to an array of C strings terminated by a <tt>NULL</tt> pointer and returns a list of strings.  The starred version <tt>c-string-list*</tt> also releases the storage of each string and the pointer array afterward using <tt>free(1)</tt>.</p>
+<p>Only valid as a result type, and can only be used with non-callback functions.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-194"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/symbol"></a><tt>symbol</tt>
+<br/></span>
+<p>A symbol, which will be passed to foreign code as a zero-terminated string.</p>
+<p>When declared as the result of foreign code, the result should be a string and a symbol with the same name will be interned in the symbol table (and returned to the caller).  Attempting to return a NULL string will raise an exception.</p><a href="Foreign type specifiers.html#bytevectors">
+<a class="dashingAutolink" name="autolink-243"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Bytevectors"></a><h3 id="bytevectors">Bytevectors</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-195"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/blob"></a><tt>blob</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-196"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-blob"></a><tt>nonnull-blob</tt>
+<br/></span>
+<p>A blob object, passed as a pointer to its contents.  Permitted only as argument type, not return type.</p>
+<p>Arguments of type <tt>blob</tt> may optionally be <tt>#f</tt>, which is passed as a NULL pointer.  For the <tt>nonnull-</tt> variant, passing a <tt>#f</tt> value will raise an exception.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-197"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/u8vector"></a><tt>u8vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-198"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/u16vector"></a><tt>u16vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-199"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/u32vector"></a><tt>u32vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-200"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/u64vector"></a><tt>u64vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-201"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/s8vector"></a><tt>s8vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-202"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/s16vector"></a><tt>s16vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-203"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/s32vector"></a><tt>s32vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-204"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/s64vector"></a><tt>s64vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-205"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/f32vector"></a><tt>f32vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-206"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/f64vector"></a><tt>f64vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-207"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-u8vector"></a><tt>nonnull-u8vector </tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-208"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-u16vector"></a><tt>nonnull-u16vector </tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-209"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-u32vector"></a><tt>nonnull-u32vector </tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-210"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-u64vector"></a><tt>nonnull-u64vector </tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-211"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-s8vector"></a><tt>nonnull-s8vector </tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-212"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-s16vector"></a><tt>nonnull-s16vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-213"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-s32vector"></a><tt>nonnull-s32vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-214"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-s64vector"></a><tt>nonnull-s64vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-215"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-f32vector"></a><tt>nonnull-f32vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-216"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-f64vector"></a><tt>nonnull-f64vector</tt>
+<br/></span>
+<p>A <a href="Module srfi-4.html" class="internal">SRFI-4</a> number-vector object, passed as a pointer to its contents. These are allowed only as argument types, not as return types.</p>
+<p>The value <tt>#f</tt> is also allowed and is passed to C as a NULL pointer. For the <tt>nonnull-</tt> variants, passing <tt>#f</tt> will raise an exception.</p><a href="Foreign type specifiers.html#pointers">
+<a class="dashingAutolink" name="autolink-244"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Pointers"></a><h3 id="pointers">Pointers</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-217"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/c-pointer"></a><tt>c-pointer</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-218"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28c-pointer%20TYPE%29"></a><tt>(c-pointer TYPE)</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-219"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-c-pointer"></a><tt>nonnull-c-pointer</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-220"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28nonnull-c-pointer%20TYPE%29"></a><tt>(nonnull-c-pointer TYPE)</tt>
+<br/></span>
+<p>An operating-system pointer or a locative.  <tt>c-pointer</tt> is untyped, whereas <tt>(c-pointer TYPE)</tt> points to an object of foreign type TYPE.</p>
+<p>The value <tt>#f</tt> is allowed and is passed to C as a <tt>NULL</tt> pointer; similarly, NULL is returned as <tt>#f</tt>.  For the two <tt>nonnull-</tt> variants, passing <tt>#f</tt> will raise an exception, and returning NULL will result in a null <tt>pointer</tt> object.</p>
+<p>(Note: It is still possible to deliberately pass a null pointer through a <tt>nonnull-c-pointer</tt> by manually creating a null pointer object, e.g. via <tt>(address-&gt;pointer 0)</tt>.)</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-221"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/pointer-vector"></a><tt>pointer-vector</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-222"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-pointer-vector"></a><tt>nonnull-pointer-vector</tt>
+<br/></span>
+<p>A vector of foreign pointer objects; see <a href="http://wiki.call-cc.org/man/5/unit-lolevel#pointer-vectors" class="internal">Pointer vectors</a>. Permitted only as an argument type, not as return type.  This type was introduced in CHICKEN 4.6.3.</p>
+<p>A pointer vector contains a C array of void pointers, and the argument is passed as a <tt>void **</tt> pointer to these contents.  Just as for bytevector types, you must somehow communicate the length of this array to the callee; there is no sentinel node or NULL terminator.</p>
+<p><tt>#f</tt> is allowed and passed as a <tt>NULL</tt> pointer.  For the <tt>nonnull-</tt> variant, passing a <tt>#f</tt> value will raise an exception.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-223"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28ref%20TYPE%29"></a><tt>(ref TYPE)</tt>
+<br/></span>
+<p>A C++ reference type. Reference types are handled the same way as pointers inside Scheme code.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-224"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28function%20RESULTTYPE%20%28ARGUMENTTYPE1%20...%20%5B...%5D%29%20%5BCALLCONV%5D%29"></a><tt>(function RESULTTYPE (ARGUMENTTYPE1 ... [...]) [CALLCONV])</tt>
+<br/></span>
+<p>A function pointer. <tt>CALLCONV</tt> specifies an optional calling convention and should be a string. The meaning of this string is entirely platform dependent. The value <tt>#f</tt> is also allowed and is passed as a <tt>NULL</tt> pointer.</p><a href="Foreign type specifiers.html#scheme-objects">
+<a class="dashingAutolink" name="autolink-245"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Scheme%20objects"></a><h3 id="scheme-objects">Scheme objects</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-225"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/scheme-object"></a><tt>scheme-object</tt>
+<br/></span>
+<p>An arbitrary, raw Scheme data object (immediate or non-immediate).  A <tt>scheme-object</tt> is passed or returned as a <tt>C_word</tt>, the internal CHICKEN type for objects.  Typically, this consists of an object header and tag bits.  It is up to you to build or take apart such objects using the core library routines in <tt>chicken.h</tt> and <tt>runtime.c</tt>.</p>
+<p>More information on object structure can be found in <a href="Data representation.html" class="internal">Data representation</a>.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-226"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/scheme-pointer"></a><tt>scheme-pointer</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-227"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28scheme-pointer%20TYPE%29"></a><tt>(scheme-pointer TYPE)</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-228"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/nonnull-scheme-pointer"></a><tt>nonnull-scheme-pointer</tt>
+<br/></span><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-229"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28nonnull-scheme-pointer%20TYPE%29"></a><tt>(nonnull-scheme-pointer TYPE)</tt>
+<br/></span>
+<p>An untyped pointer to the <i>contents</i> of a non-immediate Scheme object; for example, the raw byte contents of a string. Only allowed as an argument type, not a return type.</p>
+<p>The optional element type <tt>TYPE</tt> may be used to specify what C type should be used in the generated code. This avoids the need to cast the argument.</p>
+<p>The value <tt>#f</tt> is also allowed and is passed as a <tt>NULL</tt> pointer. For the <tt>nonnull-</tt> variant, passing <tt>#f</tt> will raise an exception.</p>
+<p>Don&#39;t confuse this type with <tt>(c-pointer ...)</tt> which means something different (a machine-pointer object).</p>
+<p><tt>scheme-pointer</tt> is typically used to get a pointer to the raw byte content of strings and blobs.  But if you pass in a SRFI-4 vector, you will get a pointer to a blob object header (<i>not</i> the blob&#39;s contents), which is almost certainly wrong.  Instead, convert to a blob beforehand, or use a SRFI-4 specific type.</p><a href="Foreign type specifiers.html#user-defined-c-types">
+<a class="dashingAutolink" name="autolink-246"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/User-defined%20C%20types"></a><h3 id="user-defined-c-types">User-defined C types</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-230"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28struct%20NAME%29"></a><tt>(struct NAME)</tt>
+<br/></span>
+<p>A struct of the name <tt>NAME</tt>, which should be a string.</p>
+<p>Structs cannot be directly passed as arguments to foreign functions, nor can they be result values.  However, pointers to structs are allowed.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-231"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28union%20NAME%29"></a><tt>(union NAME)</tt>
+<br/></span>
+<p>A union of the name <tt>NAME</tt>, which should be a string.</p>
+<p>Unions cannot be directly passed as arguments to foreign functions, nor can they be result values. However, pointers to unions are allowed.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-232"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28enum%20NAME%29"></a><tt>(enum NAME)</tt>
+<br/></span>
+<p>An enumeration type. Handled internally as an <tt>integer</tt>.</p><a href="Foreign type specifiers.html#c-types">
+<a class="dashingAutolink" name="autolink-247"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/C%2B%2B%20types"></a><h3 id="c-types">C++ types</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-233"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28instance%20CNAME%20SCHEMECLASS%29"></a><tt>(instance CNAME SCHEMECLASS)</tt>
+<br/></span>
+<p>A pointer to a C++ class instance wrapped into a Scheme object instance. <tt>CNAME</tt> should designate the name of the C++ class, and <tt>SCHEMECLASS</tt> should be the class that wraps the instance pointer.</p>
+<p>To use this, an extension will be required that provides an object-creation- and access-interface compatible to <a href="http://wiki.call-cc.org/eggref/4/coops" class="internal">coops</a> or <a href="http://wiki.call-cc.org/eggref/4/tinyclos" class="internal">tinyclos</a>. Specifically, it should provide the following operations:</p>
+<pre><tt> (make SCHEMECLASS &#39;this POINTER)
+ (slot-ref INSTANCE &#39;this)</tt></pre><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-234"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28instance-ref%20CNAME%20SCHEMECLASS%29"></a><tt>(instance-ref CNAME SCHEMECLASS)</tt>
+<br/></span>
+<p>A reference to a C++ class instance.</p><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-235"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28template%20TYPE%20ARGTYPE%20...%29"></a><tt>(template TYPE ARGTYPE ...)</tt>
+<br/></span>
+<p>A C++ template type. For example <tt>vector&lt;int&gt;</tt> would be specified as <tt>(template &#34;vector&#34; int)</tt>.</p>
+<p>Template types cannot be directly passed as arguments or returned as results. However, pointers to template types are allowed.</p><a href="Foreign type specifiers.html#type-qualifiers">
+<a class="dashingAutolink" name="autolink-248"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Type%20qualifiers"></a><h3 id="type-qualifiers">Type qualifiers</h3></a><span class="definition type"><em>[type]</em> <a class="dashingAutolink" name="autolink-236"></a><a class="dashAnchor" name="//apple_ref/cpp/Type/%28const%20TYPE%29"></a><tt>(const TYPE)</tt>
+<br/></span>
+<p>The foreign type <tt>TYPE</tt> with an additional <tt>const</tt> qualifier.</p><a href="Foreign type specifiers.html#map-of-foreign-types-to-c-types">
+<a class="dashingAutolink" name="autolink-249"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Map%20of%20foreign%20types%20to%20C%20types"></a><h3 id="map-of-foreign-types-to-c-types">Map of foreign types to C types</h3></a>
+<table>
+<tbody><tr>
+<th>Foreign type</th>
+<th>C type</th></tr>
+
+<tr>
+<td><tt>bool</tt></td>
+<td><tt>int</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]char</tt></td>
+<td><tt>[unsigned] char</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]byte</tt></td>
+<td><tt>[unsigned] char</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]short</tt></td>
+<td><tt>[unsigned] short</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]int</tt></td>
+<td><tt>[unsigned] int</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]int32</tt></td>
+<td><tt>[unsigned] int32_t</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]integer</tt></td>
+<td><tt>[unsigned] int</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]integer32</tt></td>
+<td><tt>[unsigned] int32_t</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]integer64</tt></td>
+<td><tt>[unsigned] int64_t</tt></td></tr>
+
+<tr>
+<td><tt>[unsigned-]long</tt></td>
+<td><tt>[unsigned] long</tt></td></tr>
+
+<tr>
+<td><tt>size_t</tt></td>
+<td><tt>size_t</tt></td></tr>
+
+<tr>
+<td><tt>float</tt></td>
+<td><tt>float</tt></td></tr>
+
+<tr>
+<td><tt>double</tt></td>
+<td><tt>double</tt></td></tr>
+
+<tr>
+<td><tt>number</tt></td>
+<td><tt>double</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]c-pointer</tt></td>
+<td><tt>void *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]pointer-vector</tt></td>
+<td><tt>void **</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]blob</tt></td>
+<td><tt>unsigned char *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]u8vector</tt></td>
+<td><tt>unsigned char *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]s8vector</tt></td>
+<td><tt>char *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]u16vector</tt></td>
+<td><tt>unsigned short *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]s16vector</tt></td>
+<td><tt>short *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]u32vector</tt></td>
+<td><tt>uint32_t *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]s32vector</tt></td>
+<td><tt>int32_t *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]u64vector</tt></td>
+<td><tt>uint64_t *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]s64vector</tt></td>
+<td><tt>int64_t *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]f32vector</tt></td>
+<td><tt>float *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]f64vector</tt></td>
+<td><tt>double *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]c-string</tt></td>
+<td><tt>char *</tt></td></tr>
+
+<tr>
+<td><tt>[nonnull-]unsigned-c-string</tt></td>
+<td><tt>unsigned char *</tt></td></tr>
+
+<tr>
+<td><tt>c-string-list</tt></td>
+<td><tt>char **</tt></td></tr>
+
+<tr>
+<td><tt>symbol</tt></td>
+<td><tt>char *</tt></td></tr>
+
+<tr>
+<td><tt>void</tt></td>
+<td><tt>void</tt></td></tr>
+
+<tr>
+<td><tt>([nonnull-]c-pointer TYPE)</tt></td>
+<td><tt>TYPE *</tt></td></tr>
+
+<tr>
+<td><tt>([nonnull-]scheme-pointer TYPE)</tt></td>
+<td><tt>TYPE *</tt></td></tr>
+
+<tr>
+<td><tt>(enum NAME)</tt></td>
+<td><tt>enum NAME</tt></td></tr>
+
+<tr>
+<td><tt>(struct NAME)</tt></td>
+<td><tt>struct NAME</tt></td></tr>
+
+<tr>
+<td><tt>(ref TYPE)</tt></td>
+<td><tt>TYPE &amp;</tt></td></tr>
+
+<tr>
+<td><tt>(template T1 T2 ...)</tt></td>
+<td><tt>T1&lt;T2, ...&gt;</tt></td></tr>
+
+<tr>
+<td><tt>(union NAME)</tt></td>
+<td><tt>union NAME</tt></td></tr>
+
+<tr>
+<td><tt>(function RTYPE (ATYPE ...) [CALLCONV])</tt></td>
+<td><tt>[CALLCONV] RTYPE (*)(ATYPE, ...)</tt></td></tr>
+
+<tr>
+<td><tt>(instance CNAME SNAME)</tt></td>
+<td><tt>CNAME *</tt></td></tr>
+
+<tr>
+<td><tt>(instance-ref CNAME SNAME)</tt></td>
+<td><tt>CNAME &amp;</tt></td></tr></tbody></table>
+<hr/>
+<p>Previous: <a href="Accessing external objects.html" class="internal">Accessing external objects</a></p>
+<p>Next: <a href="Embedding.html" class="internal">Embedding</a></p></div></body></html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken format) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20format)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20format)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20format)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken format).html#module-chicken-format">Module (chicken format)</a>
+<ol>
+<li><a href="Module (chicken format).html#the-printf-family-of-procedures">The printf family of procedures</a>
+<ol>
+<li><a href="Module (chicken format).html#printf">printf</a></li>
+<li><a href="Module (chicken format).html#fprintf">fprintf</a></li>
+<li><a href="Module (chicken format).html#sprintf">sprintf</a></li></ol></li>
+<li><a href="Module (chicken format).html#format">format</a></li></ol></li></ol></div><a href="Module (chicken format).html#module-chicken-format">
+<a class="dashingAutolink" name="autolink-759"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20format%29"></a><a class="dashingAutolink" name="autolink-762"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20format%29"></a><h2 id="module-chicken-format">Module (chicken format)</h2></a>
+<p>This module provides procedures for formatting output to ports and strings.</p><a href="Module (chicken format).html#the-printf-family-of-procedures">
+<a class="dashingAutolink" name="autolink-760"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/The%20printf%20family%20of%20procedures"></a><h3 id="the-printf-family-of-procedures">The printf family of procedures</h3></a><a href="Module (chicken format).html#printf">
+<h4 id="printf">printf</h4></a><a href="Module (chicken format).html#fprintf">
+<h4 id="fprintf">fprintf</h4></a><a href="Module (chicken format).html#sprintf">
+<h4 id="sprintf">sprintf</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-763"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28fprintf%20PORT%20FORMATSTRING%20%5BARG...%5D%29"></a><tt>(fprintf PORT FORMATSTRING [ARG...])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-764"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28printf%20FORMATSTRING%20%5BARG...%5D%29"></a><tt>(printf FORMATSTRING [ARG...])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-765"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28sprintf%20FORMATSTRING%20%5BARG...%5D%29"></a><tt>(sprintf FORMATSTRING [ARG...])</tt>
+<br/></span>
+<p>Simple formatted output to a given port (<tt>fprintf</tt>), the value of <tt>(current-output-port)</tt> (<tt>printf</tt>), or a string (<tt>sprintf</tt>).  The <tt>FORMATSTRING</tt> can contain any sequence of characters.  There must be at least as many <tt>ARG</tt> arguments given as there are format directives that require an argument in <tt>FORMATSTRING</tt>.  Extra <tt>ARG</tt> arguments are ignored.  The character `~&#39; prefixes special formatting directives:</p>
+<table>
+<tbody><tr>
+<td>~%</td>
+<td>
+write newline character
+</td></tr>
+<tr>
+<td> ~N</td>
+<td>
+the same as <tt>~%</tt>
+</td></tr>
+<tr>
+<td> ~S</td>
+<td>
+write the next argument
+</td></tr>
+<tr>
+<td> ~A</td>
+<td>
+display the next argument
+</td></tr>
+<tr>
+<td> ~\n</td>
+<td>
+skip all whitespace in the format-string until the next non-whitespace character
+</td></tr>
+<tr>
+<td> ~B</td>
+<td>
+write the next argument as a binary number
+</td></tr>
+<tr>
+<td> ~O</td>
+<td>
+write the next argument as an octal number
+</td></tr>
+<tr>
+<td> ~X</td>
+<td>
+write the next argument as a hexadecimal number
+</td></tr>
+<tr>
+<td> ~C</td>
+<td>
+write the next argument as a character
+</td></tr>
+<tr>
+<td> ~~</td>
+<td>
+display `~&#39;
+</td></tr>
+<tr>
+<td> ~!</td>
+<td>
+flush all pending output
+</td></tr>
+<tr>
+<td> ~?</td>
+<td>
+invoke formatted output routine recursively with the next two arguments as format-string and list of parameters
+</td></tr></tbody></table><a href="Module (chicken format).html#format">
+<a class="dashingAutolink" name="autolink-761"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/format"></a><h3 id="format">format</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-766"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28format%20%5BDESTINATION%5D%20FORMATSTRING%20%5BARG...%5D%29"></a><tt>(format [DESTINATION] FORMATSTRING [ARG...])</tt>
+<br/></span>
+<p>The parameters <tt>FORMATSTRING</tt> and <tt>ARG...</tt> are as for <tt>printf</tt>.</p>
+<p>The optional <tt>DESTINATION</tt>, when supplied, performs:</p>
+<dl>
+<dt><tt>#f</tt></dt>
+<dd><tt>sprintf</tt></dd>
+<dt><tt>#t</tt></dt>
+<dd><tt>printf</tt></dd>
+<dt><tt>output-port</tt></dt>
+<dd><tt>fprintf</tt></dd>
+<dt></dt>
+<dd><tt>sprintf</tt></dd></dl>
+<hr/>
+<p>Previous: <a href="Module (chicken foreign).html" class="internal">Module (chicken foreign)</a></p>
+<p>Next: <a href="Module (chicken gc).html" class="internal">Module (chicken gc)</a></p></div></body></html>

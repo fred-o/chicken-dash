@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken locative) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20locative)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20locative)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20locative)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken locative).html#module-chicken-locative">Module (chicken locative)</a>
+<ol>
+<li><a href="Module (chicken locative).html#make-locative">make-locative</a></li>
+<li><a href="Module (chicken locative).html#make-weak-locative">make-weak-locative</a></li>
+<li><a href="Module (chicken locative).html#locative">locative?</a></li>
+<li><a href="Module (chicken locative).html#locative-ref">locative-ref</a></li>
+<li><a href="Module (chicken locative).html#locative-set">locative-set!</a></li>
+<li><a href="Module (chicken locative).html#locative-object">locative-&gt;object</a></li></ol></li></ol></div><a href="Module (chicken locative).html#module-chicken-locative">
+<a class="dashingAutolink" name="autolink-870"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20locative%29"></a><a class="dashingAutolink" name="autolink-878"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20locative%29"></a><h2 id="module-chicken-locative">Module (chicken locative)</h2></a>
+<p>A <i>locative</i> is an object that points to an element of a containing object, much like a <i>pointer</i> in low-level, imperative programming languages like <i>C</i>. The element can be accessed and changed indirectly, by performing access or change operations on the locative. The container object can be computed by calling the <tt>locative-&gt;object</tt> procedure.</p>
+<p>Locatives may be passed to foreign procedures that expect pointer arguments.</p>
+<p>The following procedures are provided by the <tt>(chicken locative)</tt> module.</p><a href="Module (chicken locative).html#make-locative">
+<a class="dashingAutolink" name="autolink-879"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/make-locative"></a><h3 id="make-locative">make-locative</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-871"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-locative%20OBJ%20%5BINDEX%5D%29"></a><tt>(make-locative OBJ [INDEX])</tt>
+<br/></span>
+<p>Creates a locative that refers to the element of the non-immediate object <tt>OBJ</tt> at position <tt>INDEX</tt>. <tt>OBJ</tt> may be a vector, pair, string, blob, SRFI-4 number-vector, or record structure. <tt>INDEX</tt> should be a fixnum. <tt>INDEX</tt> defaults to 0.</p><a href="Module (chicken locative).html#make-weak-locative">
+<a class="dashingAutolink" name="autolink-880"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/make-weak-locative"></a><h3 id="make-weak-locative">make-weak-locative</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-872"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-weak-locative%20OBJ%20%5BINDEX%5D%29"></a><tt>(make-weak-locative OBJ [INDEX])</tt>
+<br/></span>
+<p>Creates a <i>weak</i> locative. Even though the locative refers to an element of a container object, the container object will still be reclaimed by garbage collection if no other references to it exist.</p><a href="Module (chicken locative).html#locative">
+<a class="dashingAutolink" name="autolink-881"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/locative%3F"></a><h3 id="locative">locative?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-873"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28locative%3F%20X%29"></a><tt>(locative? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a locative, or <tt>#f</tt> otherwise.</p><a href="Module (chicken locative).html#locative-ref">
+<a class="dashingAutolink" name="autolink-882"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/locative-ref"></a><h3 id="locative-ref">locative-ref</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-874"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28locative-ref%20LOC%29"></a><tt>(locative-ref LOC)</tt>
+<br/></span>
+<p>Returns the element to which the locative <tt>LOC</tt> refers. If the containing object has been reclaimed by garbage collection, an error is signalled.</p>
+<pre><tt>(locative-ref (make-locative &#34;abc&#34; 1)) ==&gt; #\b</tt></pre><a href="Module (chicken locative).html#locative-set">
+<a class="dashingAutolink" name="autolink-883"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/locative-set%21"></a><h3 id="locative-set">locative-set!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-875"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28locative-set%21%20LOC%20X%29"></a><tt>(locative-set! LOC X)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-876"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28locative-ref%20LOC%29%20X%29"></a><tt>(set! (locative-ref LOC) X)</tt>
+<br/></span>
+<p>Changes the element to which the locative <tt>LOC</tt> refers to <tt>X</tt>. If the containing object has been reclaimed by garbage collection, an error is signalled.</p><a href="Module (chicken locative).html#locative-object">
+<a class="dashingAutolink" name="autolink-884"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/locative-%3Eobject"></a><h3 id="locative-object">locative-&gt;object</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-877"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28locative-%3Eobject%20LOC%29"></a><tt>(locative-&gt;object LOC)</tt>
+<br/></span>
+<p>Returns the object that contains the element referred to by <tt>LOC</tt> or <tt>#f</tt> if the container has been reclaimed by garbage collection.</p>
+<pre><tt>(locative-&gt;object (make-locative &#34;abc&#34; 1)) ==&gt; &#34;abc&#34;</tt></pre>
+<hr/>
+<p>Previous: <a href="Module (chicken load).html" class="internal">Module (chicken load)</a></p>
+<p>Next: <a href="Module (chicken memory).html" class="internal">Module (chicken memory)</a></p></div></body></html>

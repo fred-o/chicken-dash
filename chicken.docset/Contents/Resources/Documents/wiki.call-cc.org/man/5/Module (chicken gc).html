@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken gc) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20gc)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20gc)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20gc)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken gc).html#module-chicken-gc">Module (chicken gc)</a>
+<ol>
+<li><a href="Module (chicken gc).html#gc">gc</a></li>
+<li><a href="Module (chicken gc).html#current-gc-milliseconds">current-gc-milliseconds</a></li>
+<li><a href="Module (chicken gc).html#memory-statistics">memory-statistics</a></li>
+<li><a href="Module (chicken gc).html#set-finalizer">set-finalizer!</a></li>
+<li><a href="Module (chicken gc).html#force-finalizers">force-finalizers</a></li>
+<li><a href="Module (chicken gc).html#set-gc-report">set-gc-report!</a></li></ol></li></ol></div><a href="Module (chicken gc).html#module-chicken-gc">
+<a class="dashingAutolink" name="autolink-774"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20gc%29"></a><a class="dashingAutolink" name="autolink-780"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20gc%29"></a><h2 id="module-chicken-gc">Module (chicken gc)</h2></a>
+<p>This module provides some control over the garbage collector.</p><a href="Module (chicken gc).html#gc">
+<a class="dashingAutolink" name="autolink-768"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/gc"></a><h3 id="gc">gc</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-775"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28gc%20%5BFLAG%5D%29"></a><tt>(gc [FLAG])</tt>
+<br/></span>
+<p>Invokes a garbage-collection and returns the number of free bytes in the heap. The flag specifies whether a minor (<tt>#f</tt>) or major (<tt>#t</tt>) GC is to be triggered. If no argument is given, <tt>#t</tt> is assumed. An explicit <tt>#t</tt> argument will cause all pending finalizers to be executed.</p><a href="Module (chicken gc).html#current-gc-milliseconds">
+<a class="dashingAutolink" name="autolink-769"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/current-gc-milliseconds"></a><h3 id="current-gc-milliseconds">current-gc-milliseconds</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-776"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-gc-milliseconds%29"></a><tt>(current-gc-milliseconds)</tt>
+<br/></span>
+<p>Returns the number of milliseconds spent in major garbage collections since the last call of <tt>current-gc-milliseconds</tt> and returns an exact integer.</p><a href="Module (chicken gc).html#memory-statistics">
+<a class="dashingAutolink" name="autolink-770"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/memory-statistics"></a><h3 id="memory-statistics">memory-statistics</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-777"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28memory-statistics%29"></a><tt>(memory-statistics)</tt>
+<br/></span>
+<p>Performs a major garbage collection and returns a three element vector containing the total heap size in bytes, the number of bytes currently used and the size of the nursery (the first heap generation). Note that the actual heap is actually twice the size given in the heap size, because CHICKEN uses a copying semi-space collector.</p><a href="Module (chicken gc).html#set-finalizer">
+<a class="dashingAutolink" name="autolink-771"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/set-finalizer%21"></a><h3 id="set-finalizer">set-finalizer!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-778"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-finalizer%21%20X%20PROC%29"></a><tt>(set-finalizer! X PROC)</tt>
+<br/></span>
+<p>Registers a procedure of one argument <tt>PROC</tt>, that will be called as soon as the non-immediate data object <tt>X</tt> is about to be garbage-collected (with that object as its argument). Note that the finalizer will <b>not</b> be called while interrupts are disabled. This procedure returns <tt>X</tt>.</p>
+<p>Finalizers are invoked asynchronously, in the thread that happens to be currently running. Finalizers for data that has become garbage are called on normal program exit. Finalizers are not run on abnormal program exit. A normal program exit does not run finalizers that are still reachable from global data.</p>
+<p>Multiple finalizers can be registered for the same object. The order in which the finalizers run is undefined. Execution of finalizers may be nested.</p><a href="Module (chicken gc).html#force-finalizers">
+<a class="dashingAutolink" name="autolink-772"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/force-finalizers"></a><h3 id="force-finalizers">force-finalizers</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-767"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/%28force-finalizers%29"></a><tt>(force-finalizers)</tt>
+<br/></span>
+<p>If true, force and execute all pending finalizers before exiting the program (either explicitly by <tt>exit</tt> or implicitly when the last toplevel expression has been executed). Default is <tt>#t</tt>.</p><a href="Module (chicken gc).html#set-gc-report">
+<a class="dashingAutolink" name="autolink-773"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/set-gc-report%21"></a><h3 id="set-gc-report">set-gc-report!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-779"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-gc-report%21%20FLAG%29"></a><tt>(set-gc-report! FLAG)</tt>
+<br/></span>
+<p>Print statistics after every GC, depending on <tt>FLAG</tt>. A value of <tt>#t</tt> shows statistics after every major GC. A true value different from <tt>#t</tt> shows statistics after every minor GC. <tt>#f</tt> switches statistics off.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken format).html" class="internal">Module (chicken format)</a></p>
+<p>Next: <a href="Module (chicken io).html" class="internal">Module (chicken io)</a></p></div></body></html>

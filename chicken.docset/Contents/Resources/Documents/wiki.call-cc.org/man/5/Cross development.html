@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Cross Development - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Cross%20development?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Cross%20development?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Cross%20development?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Cross development.html#cross-development">Cross Development</a>
+<ol>
+<li><a href="Cross development.html#preparations">Preparations</a>
+<ol>
+<li><a href="Cross development.html#building-the-target-libraries">Building the target libraries</a></li>
+<li><a href="Cross development.html#building-the-cross-chicken">Building the &#34;cross chicken&#34;</a></li></ol></li>
+<li><a href="Cross development.html#using-it">Using it</a>
+<ol>
+<li><a href="Cross development.html#compiling-simple-programs">Compiling simple programs</a></li>
+<li><a href="Cross development.html#compiling-extensions">Compiling extensions</a></li></ol></li>
+<li><a href="Cross development.html#target-only-extensions">&#34;Target-only&#34; extensions</a></li>
+<li><a href="Cross development.html#final-notes">Final notes</a></li></ol></li></ol></div><a href="Cross development.html#cross-development">
+<a class="dashingAutolink" name="autolink-21"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/Cross%20Development"></a><h2 id="cross-development">Cross Development</h2></a>
+<p>Since CHICKEN generates C code, it is relatively easy to create programs and libraries for a different architecture than the one the compiler is executing on, a process commonly called <i>cross compiling</i>. Basically you can simply compile Scheme code to C and then invoke your target-specific cross compiler.  To automate the process of invoking the correct C compiler with the correct settings and to simplify the use of extensions, CHICKEN can be built in a special &#34;cross-compilation&#34; mode.</p>
+<p>Note: in the following text we refer to the &#34;target&#34; as being the platform on which the software is intended to run in the end. We use the term &#34;host&#34; as the system that builds this software. Others use a different nomenclature or switch the meaning of the words.</p><a href="Cross development.html#preparations">
+<a class="dashingAutolink" name="autolink-17"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Preparations"></a><h3 id="preparations">Preparations</h3></a>
+<p>Make sure you have a cross-toolchain in your <tt>PATH</tt>. In this example, a Linux system is used to generate binaries for an ARM based embedded system.</p><a href="Cross development.html#building-the-target-libraries">
+<h4 id="building-the-target-libraries">Building the target libraries</h4></a>
+<p>First you need a version of the runtime system (<tt>libchicken</tt>), compiled for the target system. Obtain and unpack a tarball of the CHICKEN sources, or check out the code from the official code repository, then build the libraries and necessary development files:</p>
+<pre><tt>make ARCH= \
+    PREFIX=/usr \
+    PLATFORM=linux \
+    HOSTSYSTEM=arm-none-linux-gnueabi \
+    DESTDIR=$HOME/target \
+    TARGET_FEATURES=&#34;-no-feature x86 -feature arm&#34; \
+    install</tt></pre>
+<p>This will build CHICKEN and install it in <tt>~/target</tt>, which we use as a temporary place to store the target files. A few things to note:</p>
+<ul>
+<li><tt>ARCH</tt> is empty, since we don&#39;t want the build process to detect the architecture (since the target-architecture is likely to be different).  If you know the right string to represent target architecture (see <tt>C_PLATFORM_TYPE</tt> in <tt>chicken.h</tt> for the supported options), you can set <tt>ARCH</tt> with that value.</li>
+<li><tt>PREFIX</tt> gives the prefix <i>on the target system</i>, under which the libraries will finally be installed. In this case it will be <tt>/usr/lib</tt>.</li>
+<li><tt>PLATFORM</tt> determines the target platform. It must be one of the officially supported platforms CHICKEN runs on.</li>
+<li><tt>HOSTSYSTEM</tt> is an identifier for the target system and will be used as the name prefix of the cross C compiler (in this case <tt>arm-none-linux-gnueabi-gcc</tt>). If your cross compiler does not follow this convention, pass <tt>C_COMPILER</tt> and <tt>LIBRARIAN</tt> to the <tt>make(1)</tt> invocation, with the names of the C compiler and <tt>ar(1)</tt> tool, respectively.</li>
+<li><tt>DESTDIR</tt> holds the directory where the compiled library files will temporarily be installed into.</li>
+<li><tt>TARGET_FEATURES</tt> contains extra options to be passed to the target-specific Scheme translator; in this case we disable and enable features so that code like the following will do the right thing when cross-compiled:</li></ul>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">cond-expand
+  <span class="paren2">(<span class="default">x86 &lt;do this ...&gt;</span>)</span>
+  ...</span>)</span></tt></pre>
+<ul>
+<li>If you obtained the sources from a source-code repository and not from an official release tarball, you will need a <tt>chicken</tt> executable to compile the Scheme sources of the runtime system. In this case pass yet another variable to the <tt>make(1)</tt> invocation: <tt>CHICKEN=&lt;where the &#34;chicken&#34; executable is&gt;</tt>.</li>
+<li>You can also put all those variables into a file, say <tt>config.mk</tt> and run <tt>make CONFIG=config.mk</tt>.</li></ul>
+<p>You should now have these files on <tt>~/target</tt>:</p>
+<pre><tt>|-- bin
+|   |-- chicken
+|   |-- chicken-bug
+|   |-- chicken-install
+|   |-- chicken-profile
+|   |-- chicken-status
+|   |-- chicken-uninstall
+|   |-- csc
+|   `-- csi
+|-- include
+|   |-- chicken-config.h
+|   `-- chicken.h
+|-- lib
+|   |-- chicken
+|   |   `-- 9
+|   |       :
+|   |
+|   |-- libchicken.a
+|   |-- libchicken.so -&gt; libchicken.so.9
+|   `-- libchicken.so.9
+`-- share
+    |-- chicken
+    |   |-- doc
+    :   ;   :
+    |   |
+    |   `-- setup.defaults
+    `-- man
+        `-- man1
+            :</tt></pre>
+<p>You should now transfer <tt>libchicken.so</tt> to the target system, and place it in <tt>/usr</tt>.</p><a href="Cross development.html#building-the-cross-chicken">
+<h4 id="building-the-cross-chicken">Building the &#34;cross chicken&#34;</h4></a>
+<p>Next, we will build another chicken, one that uses the cross C compiler to generate target-specific code that uses the target-specific runtime library we have just built.</p>
+<p>Again, unpack a CHICKEN release tarball or a source tree and run <tt>make(1)</tt> once again:</p>
+<pre><tt>make PLATFORM=linux \
+    PREFIX=$HOME/cross-chicken \
+    TARGETSYSTEM=arm-none-linux-gnueabi \
+    PROGRAM_PREFIX=arm- \
+    TARGET_PREFIX=$HOME/target/usr \
+    TARGET_RUN_PREFIX=/usr \
+    install</tt></pre>
+<ul>
+<li><tt>PREFIX</tt> gives the place where the &#34;cross chicken&#34; should be installed into. It is recommended not to install into a standard location (like <tt>/usr/local</tt> or <tt>$HOME</tt>) - some files will conflict with a normal CHICKEN installation.</li>
+<li><tt>TARGETSYSTEM</tt> gives the name-prefix of the cross C compiler.</li>
+<li><tt>PROGRAM_PREFIX</tt> determines the name-prefix of the CHICKEN tools to be created.</li>
+<li><tt>TARGET_PREFIX</tt> specifies where the target-specific files (libraries and headers) are located. This is the location where we installed the runtime system into.</li>
+<li><tt>TARGET_RUN_PREFIX</tt> holds the PREFIX that will be effective at runtime (so <tt>libchicken.so</tt> will be found in <tt>$TARGET_RUN_PREFIX/lib</tt>).</li>
+<li>Make sure to use the same version of the CHICKEN sources for the target and the cross build.</li>
+<li>If you build the cross chicken from repository sources, the same note about the <tt>CHICKEN</tt> variable applies as given above.</li></ul>
+<p>In <tt>~/cross-chicken</tt>, you should find the following:</p>
+<pre><tt>|-- bin
+|   |-- arm-chicken
+|   |-- arm-chicken-install
+|   |-- arm-chicken-profile
+|   |-- arm-chicken-status
+|   |-- arm-chicken-uninstall
+|   |-- arm-csc
+|   `-- arm-csi
+|-- include
+|   |-- chicken-config.h
+|   `-- chicken.h
+|-- lib
+|   |-- chicken
+|   |   `-- 9
+|   |       :
+|   |
+|   |-- libchicken.a
+|   |-- libchicken.so -&gt; libchicken.so.9
+|   `-- libchicken.so.9
+`-- share
+    |-- chicken
+    |   |-- doc
+    :   ;   :
+    |   |
+    |   `-- setup.defaults
+    `-- man
+        `-- man1
+            :</tt></pre>
+<p>To make sure that the right C compiler is used, we ask <tt>arm-csc</tt> to show the name of the cross C compiler:</p>
+<pre><tt> % ~/cross-chicken/arm-csc -cc-name
+ arm-none-linux-gnueabi-gcc</tt></pre>
+<p>Looks good.</p><a href="Cross development.html#using-it">
+<a class="dashingAutolink" name="autolink-18"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Using%20it"></a><h3 id="using-it">Using it</h3></a><a href="Cross development.html#compiling-simple-programs">
+<h4 id="compiling-simple-programs">Compiling simple programs</h4></a>
+<pre><tt> % ~/cross-chicken/arm-csc -v hello.scm
+ /home/felix/cross-chicken/arm-cross-chicken/bin/arm-chicken hello.scm -output-file hello.c -quiet
+ arm-none-linux-gnueabi-gcc hello.c -o hello.o -c -fno-strict-aliasing -DHAVE_CHICKEN_CONFIG_H -g -Wall \
+   -Wno-unused -I /home/felix/cross-chicken/arm-chicken/include
+ rm hello.c
+ arm-none-linux-gnueabi-gcc hello.o -o hello -L/home/felix/cross-chicken/arm-chicken/lib  -Wl,-R/usr/lib -lm \
+   -ldl -lchicken
+ rm hello.o</tt></pre>
+<p>Is it an ARM binary?</p>
+<pre><tt> % file hello
+ hello: ELF 32-bit LSB executable, ARM, version 1 (SYSV), for GNU/Linux 2.6.16, dynamically linked (uses shared libs), not stripped</tt></pre>
+<p>Yes, looks good.</p><a href="Cross development.html#compiling-extensions">
+<h4 id="compiling-extensions">Compiling extensions</h4></a>
+<p>By default, the tools that CHICKEN provides to install, list and uninstall extensions will operate on both the host and the target repository. So running <tt>arm-chicken-install</tt> will compile and install the extension for the host system and for the cross-target. To selectively install, uninstall or list extensions for either the host or the target system use the <tt>-host</tt> and <tt>-target</tt> options for the tools.</p><a href="Cross development.html#target-only-extensions">
+<a class="dashingAutolink" name="autolink-19"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/%22Target-only%22%20extensions"></a><h3 id="target-only-extensions">&#34;Target-only&#34; extensions</h3></a>
+<p>Sometimes an extension will only be compilable for the target platform (for example libraries that use system-dependent features). In this case you will have to work around the problem that the host-compiler still may need compile-time information from the target-only extension, like the import library of modules. One option is to copy the import-library source file into the repository of the host compiler:</p>
+<pre><tt># optionally, you can compile the import library:
+# ~/cross-chicken/arm-csc -O3 -d0 -s target-only-extension.import.scm
+cp target-only-extension.import.scm ~/cross-chicken/lib/chicken/9</tt></pre><a href="Cross development.html#final-notes">
+<a class="dashingAutolink" name="autolink-20"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Final%20notes"></a><h3 id="final-notes">Final notes</h3></a>
+<p>Cross-development is a very tricky process - it often involves countless manual steps and it is very easy to forget an important detail or mix up target and host systems. Also, full 100% platform neutrality is hard to achieve. CHICKEN tries very hard to make this transparent, but at the price of considerable complexity in the code that manages extensions.</p>
+<hr/>
+<p>Previous: <a href="Deployment.html" class="internal">Deployment</a></p>
+<p>Next: <a href="Bugs and limitations.html" class="internal">Bugs and limitations</a></p></div></body></html>

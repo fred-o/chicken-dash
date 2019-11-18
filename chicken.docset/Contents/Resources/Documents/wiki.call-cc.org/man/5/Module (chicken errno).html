@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken errno) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20errno)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20errno)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20errno)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken errno).html#module-chicken-errno">Module (chicken errno)</a>
+<ol>
+<li><a href="Module (chicken errno).html#errno">errno</a></li>
+<li><a href="Module (chicken errno).html#errno-constants">errno constants</a></li></ol></li></ol></div><a href="Module (chicken errno).html#module-chicken-errno">
+<a class="dashingAutolink" name="autolink-483"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20errno%29"></a><a class="dashingAutolink" name="autolink-486"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20errno%29"></a><h2 id="module-chicken-errno">Module (chicken errno)</h2></a>
+<p>This module provides access to the standard C <tt>errno</tt> value.</p>
+<p>Be careful, if you&#39;re using threads, <tt>errno</tt> might be clobbered as soon as another thread calls a C function.  To prevent this from happening, you can add <tt>(declare (disable-interrupts))</tt> at the top of your file, or use the <tt>-disable-interrupts</tt> compiler option to avoid any context switches while a procedure in this file is running.</p><a href="Module (chicken errno).html#errno">
+<a class="dashingAutolink" name="autolink-484"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/errno"></a><h3 id="errno">errno</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-487"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28errno%29"></a><tt>(errno)</tt>
+<br/></span>
+<p>Returns the error code of the last system call.</p><a href="Module (chicken errno).html#errno-constants">
+<a class="dashingAutolink" name="autolink-485"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/errno%20constants"></a><h3 id="errno-constants">errno constants</h3></a><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-488"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fperm"></a><tt>errno/perm</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-489"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fnoent"></a><tt>errno/noent</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-490"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fsrch"></a><tt>errno/srch</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-491"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fintr"></a><tt>errno/intr</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-492"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fio"></a><tt>errno/io</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-493"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fnoexec"></a><tt>errno/noexec</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-494"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fbadf"></a><tt>errno/badf</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-495"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fchild"></a><tt>errno/child</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-496"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fnomem"></a><tt>errno/nomem</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-497"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Facces"></a><tt>errno/acces</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-498"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Ffault"></a><tt>errno/fault</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-499"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fbusy"></a><tt>errno/busy</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-500"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fnotdir"></a><tt>errno/notdir</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-501"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fisdir"></a><tt>errno/isdir</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-502"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Finval"></a><tt>errno/inval</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-503"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fmfile"></a><tt>errno/mfile</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-504"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fnospc"></a><tt>errno/nospc</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-505"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fspipe"></a><tt>errno/spipe</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-506"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fpipe"></a><tt>errno/pipe</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-507"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fagain"></a><tt>errno/again</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-508"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Frofs"></a><tt>errno/rofs</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-509"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fexist"></a><tt>errno/exist</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-510"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/errno%2Fwouldblock"></a><tt>errno/wouldblock</tt>
+<br/></span>
+<p>These variables contain error codes as returned by <tt>errno</tt>.</p>
+<p><i>NOTE</i>: On Windows, <tt>EWOULDBLOCK</tt> does not exist.  For consistency, <tt>errno/wouldblock</tt> does exist, but it is defined as zero.</p>
+<p>This does mean that in case there is no error, it looks like the <tt>errno/wouldblock</tt> error is returned.  But you have to check the return code of a system call before accessing <tt>errno</tt> anyway, so this should typically never happen.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken continuation).html" class="internal">Module (chicken continuation)</a></p>
+<p>Next: <a href="Module (chicken eval).html" class="internal">Module (chicken eval)</a></p></div></body></html>

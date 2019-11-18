@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken process signal) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process%20signal)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process%20signal)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process%20signal)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken process signal).html#module-chicken-process-signal">Module (chicken process signal)</a>
+<ol>
+<li><a href="Module (chicken process signal).html#set-alarm">set-alarm!</a></li>
+<li><a href="Module (chicken process signal).html#signal-handler">signal-handler</a></li>
+<li><a href="Module (chicken process signal).html#set-signal-handler">set-signal-handler!</a></li>
+<li><a href="Module (chicken process signal).html#set-signal-mask">set-signal-mask!</a></li>
+<li><a href="Module (chicken process signal).html#signal-mask">signal-mask</a></li>
+<li><a href="Module (chicken process signal).html#signal-masked">signal-masked?</a></li>
+<li><a href="Module (chicken process signal).html#signal-mask">signal-mask!</a></li>
+<li><a href="Module (chicken process signal).html#signal-unmask">signal-unmask!</a></li>
+<li><a href="Module (chicken process signal).html#signal-codes">Signal codes</a></li></ol></li></ol></div><a href="Module (chicken process signal).html#module-chicken-process-signal">
+<a class="dashingAutolink" name="autolink-1114"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20process%20signal%29"></a><a class="dashingAutolink" name="autolink-1124"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20process%20signal%29"></a><h2 id="module-chicken-process-signal">Module (chicken process signal)</h2></a>
+<p>This module offers procedures for dealing with POSIX process signals.</p>
+<p>Please note that signals are very POSIX-specific.  Windows only supports rudimentary in-process signals for dealing with user interrupts, segmentation violations, floating-point exceptions and the like.  Inter-process signals are not supported.  Therefore, most of the procedures here are not available on native Windows builds.  If that&#39;s the case, the description contains a note.</p><a href="Module (chicken process signal).html#set-alarm">
+<a class="dashingAutolink" name="autolink-1115"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/set-alarm%21"></a><h3 id="set-alarm">set-alarm!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1125"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-alarm%21%20SECONDS%29"></a><tt>(set-alarm! SECONDS)</tt>
+<br/></span>
+<p>Sets an internal timer to raise the <tt>signal/alrm</tt> after <tt>SECONDS</tt> are elapsed.  You can use the <tt>set-signal-handler!</tt> procedure to write a handler for this signal.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process signal).html#signal-handler">
+<a class="dashingAutolink" name="autolink-1116"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/signal-handler"></a><h3 id="signal-handler">signal-handler</h3></a><a href="Module (chicken process signal).html#set-signal-handler">
+<a class="dashingAutolink" name="autolink-1117"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/set-signal-handler%21"></a><h3 id="set-signal-handler">set-signal-handler!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1126"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28signal-handler%20SIGNUM%29"></a><tt>(signal-handler SIGNUM)</tt>
+<br/></span>
+<p>Returns the signal handler for the code <tt>SIGNUM</tt> or <tt>#f</tt>.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1127"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-signal-handler%21%20SIGNUM%20PROC%29"></a><tt>(set-signal-handler! SIGNUM PROC)</tt>
+<br/></span>
+<p>Establishes the procedure of one argument <tt>PROC</tt> as the handler for the signal with the code <tt>SIGNUM</tt>. <tt>PROC</tt> is called with the signal number as its sole argument. If the argument <tt>PROC</tt> is <tt>#f</tt> then any signal handler will be removed, and the corresponding signal set to <tt>SIG_IGN</tt>.</p>
+<p>Notes</p>
+<ul>
+<li>it is unspecified in which thread of execution the signal handler will be invoked.</li>
+<li>when signals arrive in quick succession (specifically, before the handler for a signal has been started), then signals will be queued (up to a certain limit); the order in which the queued signals will be handled is not specified</li>
+<li><tt>(set! (signal-handler SIG) PROC)</tt> can be used as an alternative to <tt>(set-signal-handler! SIG PROC)</tt></li>
+<li>Any signal handlers for the signals <tt>signal/segv</tt>, <tt>signal/bus</tt>, <tt>signal/fpe</tt> and <tt>signal/ill</tt> will be ignored and these signals will always trigger an exception, unless the executable was started with the <tt>-:S</tt> runtime option. This feature is only available on platforms that support the <tt>sigprocmask(3)</tt> POSIX API function.</li></ul><a href="Module (chicken process signal).html#set-signal-mask">
+<a class="dashingAutolink" name="autolink-1118"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/set-signal-mask%21"></a><h3 id="set-signal-mask">set-signal-mask!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1128"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-signal-mask%21%20SIGLIST%29"></a><tt>(set-signal-mask! SIGLIST)</tt>
+<br/></span>
+<p>Sets the signal mask of the current process to block all signals given in the list <tt>SIGLIST</tt>.  Signals masked in that way will not be delivered to the current process.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process signal).html#signal-mask">
+<a class="dashingAutolink" name="autolink-1119"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/signal-mask"></a><h3 id="signal-mask">signal-mask</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1129"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28signal-mask%29"></a><tt>(signal-mask)</tt>
+<br/></span>
+<p>Returns the signal mask of the current process.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process signal).html#signal-masked">
+<a class="dashingAutolink" name="autolink-1120"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/signal-masked%3F"></a><h3 id="signal-masked">signal-masked?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1130"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28signal-masked%3F%20SIGNUM%29"></a><tt>(signal-masked? SIGNUM)</tt>
+<br/></span>
+<p>Returns whether the signal for the code <tt>SIGNUM</tt> is currently masked.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process signal).html#signal-mask">
+<a class="dashingAutolink" name="autolink-1121"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/signal-mask%21"></a><h3 id="signal-mask">signal-mask!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1131"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28signal-mask%21%20SIGNUM%29"></a><tt>(signal-mask! SIGNUM)</tt>
+<br/></span>
+<p>Masks (blocks) the signal for the code <tt>SIGNUM</tt>.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process signal).html#signal-unmask">
+<a class="dashingAutolink" name="autolink-1122"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/signal-unmask%21"></a><h3 id="signal-unmask">signal-unmask!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1132"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28signal-unmask%21%20SIGNUM%29"></a><tt>(signal-unmask! SIGNUM)</tt>
+<br/></span>
+<p>Unmasks (unblocks) the signal for the code <tt>SIGNUM</tt>.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process signal).html#signal-codes">
+<a class="dashingAutolink" name="autolink-1123"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Signal%20codes"></a><h3 id="signal-codes">Signal codes</h3></a><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1086"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fterm"></a><tt>signal/term</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1087"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fkill"></a><tt>signal/kill</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1088"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fint"></a><tt>signal/int</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1089"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fhup"></a><tt>signal/hup</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1090"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Ffpe"></a><tt>signal/fpe</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1091"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fill"></a><tt>signal/ill</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1092"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fsegv"></a><tt>signal/segv</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1093"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fabrt"></a><tt>signal/abrt</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1094"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Ftrap"></a><tt>signal/trap</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1095"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fquit"></a><tt>signal/quit</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1096"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Falrm"></a><tt>signal/alrm</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1097"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fvtalrm"></a><tt>signal/vtalrm</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1098"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fprof"></a><tt>signal/prof</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1099"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fio"></a><tt>signal/io</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1100"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Furg"></a><tt>signal/urg</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1101"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fchld"></a><tt>signal/chld</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1102"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fcont"></a><tt>signal/cont</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1103"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fstop"></a><tt>signal/stop</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1104"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Ftstp"></a><tt>signal/tstp</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1105"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fpipe"></a><tt>signal/pipe</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1106"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fxcpu"></a><tt>signal/xcpu</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1107"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fxfsz"></a><tt>signal/xfsz</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1108"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fusr1"></a><tt>signal/usr1</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1109"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fusr2"></a><tt>signal/usr2</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1110"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fbus"></a><tt>signal/bus</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1111"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fwinch"></a><tt>signal/winch</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1112"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signal%2Fbreak"></a><tt>signal/break</tt>
+<br/></span><span class="definition constant"><em>[constant]</em> <a class="dashingAutolink" name="autolink-1113"></a><a class="dashAnchor" name="//apple_ref/cpp/Constant/signals-list"></a><tt>signals-list</tt>
+<br/></span>
+<p>These variables contain signal codes for use with <tt>process-signal</tt>, <tt>set-signal-handler!</tt>, <tt>signal-handler</tt>, <tt>signal-masked?</tt>, <tt>signal-mask!</tt>, or <tt>signal-unmask!</tt>.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), only <tt>signal/term</tt>, <tt>signal/int</tt>, <tt>signal/fpe</tt>, <tt>signal/ill</tt>, <tt>signal/segv</tt>, <tt>signal/abrt</tt>, <tt>signal/break</tt> have an actual value.  The others are all defined as zero, because those signals don&#39;t exist on Windows.</p>
+<p><b>NOTE</b>: On UNIX builds and cygwin, <tt>signal/break</tt> is defined as zero because it only exists on Windows.</p>
+<p>To get a list of signals that are known to exist on the current platform, you can check <tt>signals-list</tt> which is a list of integers (signal numbers).</p>
+<hr/>
+<p>Previous: <a href="Module (chicken process).html" class="internal">Module (chicken process)</a></p>
+<p>Next: <a href="Module (chicken process-context).html" class="internal">Module (chicken process-context)</a></p></div></body></html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken continuation) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20continuation)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20continuation)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20continuation)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken continuation).html#module-chicken-continuation">Module (chicken continuation)</a>
+<ol>
+<li><a href="Module (chicken continuation).html#continuations-api">Continuations API</a>
+<ol>
+<li><a href="Module (chicken continuation).html#continuation-capture">continuation-capture</a></li>
+<li><a href="Module (chicken continuation).html#continuation">continuation?</a></li>
+<li><a href="Module (chicken continuation).html#continuation-graft">continuation-graft</a></li>
+<li><a href="Module (chicken continuation).html#continuation-return">continuation-return</a></li></ol></li></ol></li></ol></div><a href="Module (chicken continuation).html#module-chicken-continuation">
+<a class="dashingAutolink" name="autolink-468"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20continuation%29"></a><a class="dashingAutolink" name="autolink-470"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20continuation%29"></a><h2 id="module-chicken-continuation">Module (chicken continuation)</h2></a>
+<p>This module provides a more powerful interface for continuations than that provided by <tt>call/cc</tt>.</p>
+<p>More information about this continuation API can be found in the paper <a href="http://www.iro.umontreal.ca/~feeley/papers/FeeleySW01.pdf" class="external">A Better API for First-Class Continuations</a> by Marc Feeley.</p><a href="Module (chicken continuation).html#continuations-api">
+<a class="dashingAutolink" name="autolink-469"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Continuations%20API"></a><h3 id="continuations-api">Continuations API</h3></a><a href="Module (chicken continuation).html#continuation-capture">
+<h4 id="continuation-capture">continuation-capture</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-471"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28continuation-capture%20PROCEDURE%29"></a><tt>(continuation-capture PROCEDURE)</tt>
+<br/></span>
+<p>Creates a continuation object representing the current continuation and tail-calls <tt>PROCEDURE</tt> with this continuation as the single argument.</p><a href="Module (chicken continuation).html#continuation">
+<h4 id="continuation">continuation?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-472"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28continuation%3F%20X%29"></a><tt>(continuation? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a continuation object, or <tt>#f</tt> otherwise. Please note that this applies only to continuations created by the Continuation API, but not by call/cc, i.e.: <tt>(call-with-current-continuation continuation?)</tt> returns <tt>#f</tt>, whereas <tt>(continuation-capture continuation?)</tt> returns <tt>#t</tt>.</p><a href="Module (chicken continuation).html#continuation-graft">
+<h4 id="continuation-graft">continuation-graft</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-473"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28continuation-graft%20CONT%20THUNK%29"></a><tt>(continuation-graft CONT THUNK)</tt>
+<br/></span>
+<p>Calls the procedure <tt>THUNK</tt> with no arguments and the implicit continuation <tt>CONT</tt>.</p><a href="Module (chicken continuation).html#continuation-return">
+<h4 id="continuation-return">continuation-return</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-474"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28continuation-return%20CONT%20VALUE%20...%29"></a><tt>(continuation-return CONT VALUE ...)</tt>
+<br/></span>
+<p>Returns the value(s) to the continuation <tt>CONT</tt>. <tt>continuation-return</tt> could be implemented like this:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren2">(<span class="default">continuation-return k . vals</span>)</span>
+  <span class="paren2">(<span class="default">continuation-graft
+    k
+    <span class="paren3">(<span class="default"><i><span class="symbol">lambda</span></i> <span class="paren4">(<span class="default"></span>)</span> <span class="paren4">(<span class="default">apply values vals</span>)</span></span>)</span></span>)</span></span>)</span></tt></pre>
+<hr/>
+<p>Previous: <a href="Module (chicken condition).html" class="internal">Module (chicken condition)</a></p>
+<p>Next: <a href="Module (chicken csi).html" class="internal">Module (chicken csi)</a></p></div></body></html>

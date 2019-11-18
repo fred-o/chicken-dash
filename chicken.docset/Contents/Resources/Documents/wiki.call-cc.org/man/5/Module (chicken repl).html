@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken repl) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20repl)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20repl)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20repl)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken repl).html#module-chicken-repl">Module (chicken repl)</a>
+<ol>
+<li><a href="Module (chicken repl).html#repl">repl</a></li>
+<li><a href="Module (chicken repl).html#repl-prompt">repl-prompt</a></li>
+<li><a href="Module (chicken repl).html#quit">quit</a></li>
+<li><a href="Module (chicken repl).html#reset">reset</a></li>
+<li><a href="Module (chicken repl).html#reset-handler">reset-handler</a></li></ol></li></ol></div><a href="Module (chicken repl).html#module-chicken-repl">
+<a class="dashingAutolink" name="autolink-1227"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20repl%29"></a><a class="dashingAutolink" name="autolink-1231"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20repl%29"></a><h2 id="module-chicken-repl">Module (chicken repl)</h2></a>
+<p>This module provides procedures you can use to create your own Read-Eval-Print Loop (REPL).</p><a href="Module (chicken repl).html#repl">
+<a class="dashingAutolink" name="autolink-1232"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/repl"></a><h3 id="repl">repl</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1228"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28repl%20%5BEVALUATOR%5D%29"></a><tt>(repl [EVALUATOR])</tt>
+<br/></span>
+<p>Start a new read-eval-print loop. Sets the <tt>reset-handler</tt> so that any invocation of <tt>reset</tt> restarts the read-eval-print loop. Also changes the current exception-handler to display a message, write any arguments to the value of <tt>(current-error-port)</tt> and reset.</p>
+<p>If <tt>EVALUATOR</tt> is given, it should be a procedure of one argument that is used in place of <tt>eval</tt> to evaluate each entered expression.</p>
+<p>You can use <tt>quit</tt> to terminate the current read-eval-print loop.</p><a href="Module (chicken repl).html#repl-prompt">
+<a class="dashingAutolink" name="autolink-1233"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/repl-prompt"></a><h3 id="repl-prompt">repl-prompt</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1237"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/%28repl-prompt%29"></a><tt>(repl-prompt)</tt>
+<br/></span>
+<p>A procedure that should evaluate to a string that will be printed before reading interactive input from the user in a read-eval-print loop. Defaults to <tt>(lambda () &#34;#;N&gt; &#34;)</tt>.</p><a href="Module (chicken repl).html#quit">
+<a class="dashingAutolink" name="autolink-1234"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/quit"></a><h3 id="quit">quit</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1229"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28quit%20%5BRESULT%5D%29"></a><tt>(quit [RESULT])</tt>
+<br/></span>
+<p>In the interpreter <tt>quit</tt> exits the currently active read-eval-print loop.  In compiled code, it is equivalent to calling <tt>exit</tt>. See also the <tt>repl</tt> procedure.</p><a href="Module (chicken repl).html#reset">
+<a class="dashingAutolink" name="autolink-1235"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/reset"></a><h3 id="reset">reset</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1230"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28reset%29"></a><tt>(reset)</tt>
+<br/></span>
+<p>Reset program (Invokes <tt>reset-handler</tt>).</p><a href="Module (chicken repl).html#reset-handler">
+<a class="dashingAutolink" name="autolink-1236"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/reset-handler"></a><h3 id="reset-handler">reset-handler</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-1238"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/%28reset-handler%29"></a><tt>(reset-handler)</tt>
+<br/></span>
+<p>A procedure of zero arguments that is called via <tt>reset</tt>. The default behavior in compiled code is to invoke the value of <tt>(exit-handler)</tt>. The default behavior in the interpreter is to abort the current computation and to restart the read-eval-print loop.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken read-syntax).html" class="internal">Module (chicken read-syntax)</a></p>
+<p>Next: <a href="Module (chicken sort).html" class="internal">Module (chicken sort)</a></p></div></body></html>

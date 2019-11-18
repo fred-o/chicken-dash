@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken memory) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20memory)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20memory)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20memory)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken memory).html#module-chicken-memory">Module (chicken memory)</a>
+<ol>
+<li><a href="Module (chicken memory).html#foreign-pointers">Foreign pointers</a>
+<ol>
+<li><a href="Module (chicken memory).html#address-pointer">address-&gt;pointer</a></li>
+<li><a href="Module (chicken memory).html#allocate">allocate</a></li>
+<li><a href="Module (chicken memory).html#free">free</a></li>
+<li><a href="Module (chicken memory).html#object-pointer">object-&gt;pointer</a></li>
+<li><a href="Module (chicken memory).html#pointer-object">pointer-&gt;object</a></li>
+<li><a href="Module (chicken memory).html#pointer">pointer?</a></li>
+<li><a href="Module (chicken memory).html#pointer-like">pointer-like?</a></li>
+<li><a href="Module (chicken memory).html#pointer">pointer=?</a></li>
+<li><a href="Module (chicken memory).html#pointer-address">pointer-&gt;address</a></li>
+<li><a href="Module (chicken memory).html#pointer">pointer+</a></li>
+<li><a href="Module (chicken memory).html#align-to-word">align-to-word</a></li></ol></li>
+<li><a href="Module (chicken memory).html#srfi-4-foreign-pointers">SRFI-4 Foreign pointers</a>
+<ol>
+<li><a href="Module (chicken memory).html#pointer-u8-ref">pointer-u8-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-s8-ref">pointer-s8-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-u16-ref">pointer-u16-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-s16-ref">pointer-s16-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-u32-ref">pointer-u32-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-s32-ref">pointer-s32-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-u64-ref">pointer-u64-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-s64-ref">pointer-s64-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-f32-ref">pointer-f32-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-f64-ref">pointer-f64-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-u8-set">pointer-u8-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-s8-set">pointer-s8-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-u16-set">pointer-u16-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-s16-set">pointer-s16-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-u32-set">pointer-u32-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-s32-set">pointer-s32-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-u64-set">pointer-u64-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-s64-set">pointer-s64-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-f32-set">pointer-f32-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-f64-set">pointer-f64-set!</a></li></ol></li>
+<li><a href="Module (chicken memory).html#tagged-pointers">Tagged pointers</a>
+<ol>
+<li><a href="Module (chicken memory).html#tag-pointer">tag-pointer</a></li>
+<li><a href="Module (chicken memory).html#tagged-pointer">tagged-pointer?</a></li>
+<li><a href="Module (chicken memory).html#pointer-tag">pointer-tag</a></li></ol></li>
+<li><a href="Module (chicken memory).html#pointer-vectors">Pointer vectors</a>
+<ol>
+<li><a href="Module (chicken memory).html#make-pointer-vector-">make-pointer-vector </a></li>
+<li><a href="Module (chicken memory).html#pointer-vector">pointer-vector?</a></li>
+<li><a href="Module (chicken memory).html#pointer-vector">pointer-vector</a></li>
+<li><a href="Module (chicken memory).html#pointer-vector-length">pointer-vector-length</a></li>
+<li><a href="Module (chicken memory).html#pointer-vector-ref">pointer-vector-ref</a></li>
+<li><a href="Module (chicken memory).html#pointer-vector-set">pointer-vector-set!</a></li>
+<li><a href="Module (chicken memory).html#pointer-vector-fill">pointer-vector-fill!</a></li></ol></li>
+<li><a href="Module (chicken memory).html#moving-memory">Moving memory</a>
+<ol>
+<li><a href="Module (chicken memory).html#move-memory">move-memory!</a></li></ol></li></ol></li></ol></div><a href="Module (chicken memory).html#module-chicken-memory">
+<a class="dashingAutolink" name="autolink-912"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20memory%29"></a><a class="dashingAutolink" name="autolink-965"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20memory%29"></a><h2 id="module-chicken-memory">Module (chicken memory)</h2></a>
+<p>The procedures from this module operate directly on memory, at a very low level.  This makes them unsafe, unlike most other Scheme procedures.  <b>Use at your own risk.</b></p><a href="Module (chicken memory).html#foreign-pointers">
+<a class="dashingAutolink" name="autolink-966"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Foreign%20pointers"></a><h3 id="foreign-pointers">Foreign pointers</h3></a>
+<p>The abstract class of <i>pointer</i> is divided into 2 categories:</p>
+<dl>
+<dt><i>pointer object</i></dt>
+<dd>is a regular or <a href="Module (chicken memory).html#tagged-pointers" class="internal">tagged</a> foreign pointer object.</dd>
+<dt><i>pointer-like object</i></dt>
+<dd>is a closure, port, <a href="Module (chicken locative).html" class="internal">locative</a>, or a pointer object.</dd></dl>
+<p>Note that Locatives, while technically pointers, are not considered a <i>pointer object</i>, but a <i>pointer-like object</i>. The distinction is artificial.</p><a href="Module (chicken memory).html#address-pointer">
+<h4 id="address-pointer">address-&gt;pointer</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-913"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28address-%3Epointer%20ADDRESS%29"></a><tt>(address-&gt;pointer ADDRESS)</tt>
+<br/></span>
+<p>Creates a new foreign pointer object initialized to point to the address given in the integer <tt>ADDRESS</tt>.</p><a href="Module (chicken memory).html#allocate">
+<h4 id="allocate">allocate</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-914"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28allocate%20BYTES%29"></a><tt>(allocate BYTES)</tt>
+<br/></span>
+<p>Returns a foreign pointer object to a freshly allocated region of static memory.</p>
+<p>This procedure could be defined as follows:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> allocate <span class="paren2">(<span class="default">foreign-lambda c-pointer <span class="string">&#34;malloc&#34;</span> integer</span>)</span></span>)</span></tt></pre><a href="Module (chicken memory).html#free">
+<h4 id="free">free</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-915"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28free%20POINTER%29"></a><tt>(free POINTER)</tt>
+<br/></span>
+<p>Frees the memory pointed to by <tt>POINTER</tt>.</p>
+<p>This procedure could be defined as follows:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> free <span class="paren2">(<span class="default">foreign-lambda void <span class="string">&#34;free&#34;</span> c-pointer</span>)</span></span>)</span></tt></pre><a href="Module (chicken memory).html#object-pointer">
+<h4 id="object-pointer">object-&gt;pointer</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-916"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28object-%3Epointer%20X%29"></a><tt>(object-&gt;pointer X)</tt>
+<br/></span>
+<p>Returns a foreign pointer object pointing to the Scheme object X, which should be a non-immediate object. (&#34;foreign&#34; here is a bit of a misnomer.)</p>
+<p>Note that data in the garbage collected heap moves during garbage collection.</p><a href="Module (chicken memory).html#pointer-object">
+<h4 id="pointer-object">pointer-&gt;object</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-917"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-%3Eobject%20POINTER%29"></a><tt>(pointer-&gt;object POINTER)</tt>
+<br/></span>
+<p>Returns the Scheme object pointed to by the pointer object <tt>POINTER</tt>.</p>
+<p>Whether the <tt>POINTER</tt> actually points to a Scheme object is not guaranteed. Use at your own risk.</p><a href="Module (chicken memory).html#pointer">
+<h4 id="pointer">pointer?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-918"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer%3F%20X%29"></a><tt>(pointer? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a pointer object, or <tt>#f</tt> otherwise.</p><a href="Module (chicken memory).html#pointer-like">
+<h4 id="pointer-like">pointer-like?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-919"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-like%3F%20X%29"></a><tt>(pointer-like? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a pointer-like object, or <tt>#f</tt> otherwise.</p><a href="Module (chicken memory).html#pointer">
+<h4 id="pointer">pointer=?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-920"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer%3D%3F%20POINTER%2A1%20POINTER%2A2%29"></a><tt>(pointer=? POINTER*1 POINTER*2)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if the pointer-like objects <tt>POINTER*1</tt> and <tt>POINTER*2</tt> point to the same address, or <tt>#f</tt> otherwise.</p><a href="Module (chicken memory).html#pointer-address">
+<h4 id="pointer-address">pointer-&gt;address</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-921"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-%3Eaddress%20POINTER%2A%29"></a><tt>(pointer-&gt;address POINTER*)</tt>
+<br/></span>
+<p>Returns the address, to which the pointer-like object <tt>POINTER*</tt> points.</p><a href="Module (chicken memory).html#pointer">
+<h4 id="pointer">pointer+</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-922"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer%2B%20POINTER%2A%20N%29"></a><tt>(pointer+ POINTER* N)</tt>
+<br/></span>
+<p>Returns a new foreign pointer object representing the pointer-like object <tt>POINTER*</tt> address value increased by the byte-offset <tt>N</tt>.</p>
+<p>Use of anything other than a pointer object as an argument is questionable.</p><a href="Module (chicken memory).html#align-to-word">
+<h4 id="align-to-word">align-to-word</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-923"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28align-to-word%20POINTER%2A-OR-INT%29"></a><tt>(align-to-word POINTER*-OR-INT)</tt>
+<br/></span>
+<p>Accepts either a pointer-like object or an integer as the argument and returns a new foreign pointer or integer aligned to the native word size of the host platform.</p>
+<p>Use of anything other than an integer or pointer object as an argument is questionable.</p><a href="Module (chicken memory).html#srfi-4-foreign-pointers">
+<a class="dashingAutolink" name="autolink-967"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/SRFI-4%20Foreign%20pointers"></a><h3 id="srfi-4-foreign-pointers">SRFI-4 Foreign pointers</h3></a>
+<p>These procedures actually accept a pointer-like object as the <tt>POINTER</tt> argument. However, as usual, use of anything other than a pointer object is questionable.</p><a href="Module (chicken memory).html#pointer-u8-ref">
+<h4 id="pointer-u8-ref">pointer-u8-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-924"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-u8-ref%20POINTER%29"></a><tt>(pointer-u8-ref POINTER)</tt>
+<br/></span>
+<p>Returns the unsigned byte at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-s8-ref">
+<h4 id="pointer-s8-ref">pointer-s8-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-925"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-s8-ref%20POINTER%29"></a><tt>(pointer-s8-ref POINTER)</tt>
+<br/></span>
+<p>Returns the signed byte at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-u16-ref">
+<h4 id="pointer-u16-ref">pointer-u16-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-926"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-u16-ref%20POINTER%29"></a><tt>(pointer-u16-ref POINTER)</tt>
+<br/></span>
+<p>Returns the unsigned 16-bit integer at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-s16-ref">
+<h4 id="pointer-s16-ref">pointer-s16-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-927"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-s16-ref%20POINTER%29"></a><tt>(pointer-s16-ref POINTER)</tt>
+<br/></span>
+<p>Returns the signed 16-bit integer at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-u32-ref">
+<h4 id="pointer-u32-ref">pointer-u32-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-928"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-u32-ref%20POINTER%29"></a><tt>(pointer-u32-ref POINTER)</tt>
+<br/></span>
+<p>Returns the unsigned 32-bit integer at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-s32-ref">
+<h4 id="pointer-s32-ref">pointer-s32-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-929"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-s32-ref%20POINTER%29"></a><tt>(pointer-s32-ref POINTER)</tt>
+<br/></span>
+<p>Returns the signed 32-bit integer at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-u64-ref">
+<h4 id="pointer-u64-ref">pointer-u64-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-930"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-u64-ref%20POINTER%29"></a><tt>(pointer-u64-ref POINTER)</tt>
+<br/></span>
+<p>Returns the unsigned 64-bit integer at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-s64-ref">
+<h4 id="pointer-s64-ref">pointer-s64-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-931"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-s64-ref%20POINTER%29"></a><tt>(pointer-s64-ref POINTER)</tt>
+<br/></span>
+<p>Returns the signed 64-bit integer at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-f32-ref">
+<h4 id="pointer-f32-ref">pointer-f32-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-932"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-f32-ref%20POINTER%29"></a><tt>(pointer-f32-ref POINTER)</tt>
+<br/></span>
+<p>Returns the 32-bit float at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-f64-ref">
+<h4 id="pointer-f64-ref">pointer-f64-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-933"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-f64-ref%20POINTER%29"></a><tt>(pointer-f64-ref POINTER)</tt>
+<br/></span>
+<p>Returns the 64-bit double at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-u8-set">
+<h4 id="pointer-u8-set">pointer-u8-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-934"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-u8-set%21%20POINTER%20N%29"></a><tt>(pointer-u8-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-935"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-u8-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-u8-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the unsigned byte <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-s8-set">
+<h4 id="pointer-s8-set">pointer-s8-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-936"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-s8-set%21%20POINTER%20N%29"></a><tt>(pointer-s8-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-937"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-s8-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-s8-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the signed byte <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-u16-set">
+<h4 id="pointer-u16-set">pointer-u16-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-938"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-u16-set%21%20POINTER%20N%29"></a><tt>(pointer-u16-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-939"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-u16-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-u16-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the unsigned 16-bit integer <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-s16-set">
+<h4 id="pointer-s16-set">pointer-s16-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-940"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-s16-set%21%20POINTER%20N%29"></a><tt>(pointer-s16-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-941"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-s16-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-s16-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the signed 16-bit integer <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-u32-set">
+<h4 id="pointer-u32-set">pointer-u32-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-942"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-u32-set%21%20POINTER%20N%29"></a><tt>(pointer-u32-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-943"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-u32-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-u32-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the unsigned 32-bit integer <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-s32-set">
+<h4 id="pointer-s32-set">pointer-s32-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-944"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-s32-set%21%20POINTER%20N%29"></a><tt>(pointer-s32-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-945"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-s32-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-s32-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the 32-bit integer <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-u64-set">
+<h4 id="pointer-u64-set">pointer-u64-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-946"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-u64-set%21%20POINTER%20N%29"></a><tt>(pointer-u64-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-947"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-u64-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-u64-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the unsigned 64-bit integer <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-s64-set">
+<h4 id="pointer-s64-set">pointer-s64-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-948"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-s64-set%21%20POINTER%20N%29"></a><tt>(pointer-s64-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-949"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-s64-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-s64-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the 64-bit integer <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-f32-set">
+<h4 id="pointer-f32-set">pointer-f32-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-950"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-f32-set%21%20POINTER%20N%29"></a><tt>(pointer-f32-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-951"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-f32-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-f32-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the 32-bit floating-point number <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#pointer-f64-set">
+<h4 id="pointer-f64-set">pointer-f64-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-952"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-f64-set%21%20POINTER%20N%29"></a><tt>(pointer-f64-set! POINTER N)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-953"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28pointer-f64-ref%20POINTER%29%20N%29"></a><tt>(set! (pointer-f64-ref POINTER) N)</tt>
+<br/></span>
+<p>Stores the 64-bit floating-point number <tt>N</tt> at the address designated by <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#tagged-pointers">
+<a class="dashingAutolink" name="autolink-968"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Tagged%20pointers"></a><h3 id="tagged-pointers">Tagged pointers</h3></a>
+<p><i>Tagged</i> pointers are foreign pointer objects with an extra tag object.</p><a href="Module (chicken memory).html#tag-pointer">
+<h4 id="tag-pointer">tag-pointer</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-954"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tag-pointer%20POINTER%2A%20TAG%29"></a><tt>(tag-pointer POINTER* TAG)</tt>
+<br/></span>
+<p>Creates a new tagged foreign pointer object from the pointer-like object <tt>POINTER*</tt> with the tag <tt>TAG</tt>, which may an arbitrary Scheme object.</p>
+<p>Use of anything other than a pointer object is questionable.</p><a href="Module (chicken memory).html#tagged-pointer">
+<h4 id="tagged-pointer">tagged-pointer?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-955"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28tagged-pointer%3F%20X%20%5BTAG%5D%29"></a><tt>(tagged-pointer? X [TAG])</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a tagged foreign pointer object, or <tt>#f</tt> otherwise.</p>
+<p>Further, returns <tt>#t</tt> when <tt>X</tt> has the optional tag <tt>TAG</tt> (using an <tt>equal?</tt> comparison), or <tt>#f</tt> otherwise.</p><a href="Module (chicken memory).html#pointer-tag">
+<h4 id="pointer-tag">pointer-tag</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-956"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-tag%20POINTER%2A%29"></a><tt>(pointer-tag POINTER*)</tt>
+<br/></span>
+<p>If <tt>POINTER</tt> is a tagged foreign pointer object, its tag is returned. If <tt>POINTER*</tt> is any other kind of pointer-like object <tt>#f</tt> is returned. Otherwise an error is signalled.</p><a href="Module (chicken memory).html#pointer-vectors">
+<a class="dashingAutolink" name="autolink-969"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Pointer%20vectors"></a><h3 id="pointer-vectors">Pointer vectors</h3></a>
+<p><i>Pointer vectors</i> are specialized and space-efficient vectors for foreign pointer objects. All procedures defined below that accept a pointer object allow <tt>#f</tt> as an alternative representation of the <tt>NULL</tt>-pointer.</p><a href="Module (chicken memory).html#make-pointer-vector-">
+<h4 id="make-pointer-vector-">make-pointer-vector </h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-957"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-pointer-vector%20LENGTH%20%5BINIT%5D%29"></a><tt>(make-pointer-vector LENGTH [INIT])</tt>
+<br/></span>
+<p>Creates a pointer-vector of the given length and optionally initializes each element to <tt>INIT</tt>, which should be a pointer or <tt>#f</tt>, which represents the <tt>NULL</tt> pointer.</p><a href="Module (chicken memory).html#pointer-vector">
+<h4 id="pointer-vector">pointer-vector?</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-958"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-vector%3F%20X%29"></a><tt>(pointer-vector? X)</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if <tt>X</tt> is a pointer-vector or <tt>#f</tt> otherwise.</p><a href="Module (chicken memory).html#pointer-vector">
+<h4 id="pointer-vector">pointer-vector</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-959"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-vector%20POINTER%20...%29"></a><tt>(pointer-vector POINTER ...)</tt>
+<br/></span>
+<p>Returns a pointer-vector from the given pointer arguments.</p><a href="Module (chicken memory).html#pointer-vector-length">
+<h4 id="pointer-vector-length">pointer-vector-length</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-960"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-vector-length%20POINTERVECTOR%29"></a><tt>(pointer-vector-length POINTERVECTOR)</tt>
+<br/></span>
+<p>Returns the length of the given pointer-vector.</p><a href="Module (chicken memory).html#pointer-vector-ref">
+<h4 id="pointer-vector-ref">pointer-vector-ref</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-961"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-vector-ref%20POINTERVECTOR%20INDEX%29"></a><tt>(pointer-vector-ref POINTERVECTOR INDEX)</tt>
+<br/></span>
+<p>Returns the pointer at <tt>INDEX</tt> in the given pointer-vector or <tt>#f</tt> if the element is a <tt>NULL</tt>- pointer.</p><a href="Module (chicken memory).html#pointer-vector-set">
+<h4 id="pointer-vector-set">pointer-vector-set!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-962"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-vector-set%21%20POINTERVECTOR%20INDEX%20POINTER%29"></a><tt>(pointer-vector-set! POINTERVECTOR INDEX POINTER)</tt>
+<br/></span>
+<p>Sets the element at the position <tt>INDEX</tt> in the given pointer-vector to <tt>POINTER</tt>. The alternative syntax</p>
+<pre><tt> (set! (pointer-vector-ref POINTERVECTOR INDEX) POINTER)</tt></pre>
+<p>is also allowed.</p><a href="Module (chicken memory).html#pointer-vector-fill">
+<h4 id="pointer-vector-fill">pointer-vector-fill!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-963"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28pointer-vector-fill%21%20POINTERVECTOR%20POINTER%29"></a><tt>(pointer-vector-fill! POINTERVECTOR POINTER)</tt>
+<br/></span>
+<p>Set every element in the <tt>POINTERVECTOR</tt> to <tt>POINTER</tt>.</p><a href="Module (chicken memory).html#moving-memory">
+<a class="dashingAutolink" name="autolink-970"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Moving%20memory"></a><h3 id="moving-memory">Moving memory</h3></a><a href="Module (chicken memory).html#move-memory">
+<h4 id="move-memory">move-memory!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-964"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28move-memory%21%20FROM%20TO%20%5BBYTES%20%5BFROM-OFFSET%20%5BTO-OFFSET%5D%5D%5D%29"></a><tt>(move-memory! FROM TO [BYTES [FROM-OFFSET [TO-OFFSET]]])</tt>
+<br/></span>
+<p>Copies <tt>BYTES</tt> bytes of memory from <tt>FROM</tt> to <tt>TO</tt>. <tt>FROM</tt> and <tt>TO</tt> may be strings, blobs, <a href="Module srfi-4.html" class="internal">SRFI-4 number-vectors</a>, memory mapped files, foreign pointers (as obtained from a call to <tt>foreign-lambda</tt>, for example), tagged-pointers or locatives. if <tt>BYTES</tt> is not given and the size of the source or destination operand is known then the maximal number of bytes will be copied. Moving memory to the storage returned by locatives will cause havoc, if the locative refers to containers of non-immediate data, like vectors or pairs.</p>
+<p>The additional fourth and fifth argument specify starting offsets (in bytes) for the source and destination arguments.</p>
+<p>Signals an error if any of the above constraints is violated.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken locative).html" class="internal">Module (chicken locative)</a></p>
+<p>Next: <a href="Module (chicken memory representation).html" class="internal">Module (chicken memory representation)</a></p></div></body></html>

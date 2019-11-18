@@ -1,0 +1,1036 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>C interface - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/C%20interface?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/C%20interface?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/C%20interface?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="C interface.html#c-interface">C interface</a>
+<ol>
+<li><a href="C interface.html#temporary-stack">Temporary stack</a>
+<ol>
+<li><a href="C interface.html#c_save">C_save</a></li>
+<li><a href="C interface.html#c_restore">C_restore</a></li></ol></li>
+<li><a href="C interface.html#typevalue-predicates">Type/value predicates</a>
+<ol>
+<li><a href="C interface.html#c-predicates">C predicates</a>
+<ol>
+<li><a href="C interface.html#c_truep">C_truep</a></li>
+<li><a href="C interface.html#c_immediatep">C_immediatep</a></li>
+<li><a href="C interface.html#c_fitsinfixnump">C_fitsinfixnump</a></li>
+<li><a href="C interface.html#c_ufitsinfixnump">C_ufitsinfixnump</a></li></ol></li>
+<li><a href="C interface.html#scheme-predicates">Scheme predicates</a>
+<ol>
+<li><a href="C interface.html#c_zero_length_p">C_zero_length_p</a></li>
+<li><a href="C interface.html#c_unboundvaluep">C_unboundvaluep</a></li>
+<li><a href="C interface.html#c_boundp">C_boundp</a></li>
+<li><a href="C interface.html#c_blockp">C_blockp</a></li>
+<li><a href="C interface.html#c_immp">C_immp</a></li>
+<li><a href="C interface.html#c_forwardedp">C_forwardedp</a></li>
+<li><a href="C interface.html#c_flonump">C_flonump</a></li>
+<li><a href="C interface.html#c_stringp">C_stringp</a></li>
+<li><a href="C interface.html#c_symbolp">C_symbolp</a></li>
+<li><a href="C interface.html#c_pairp">C_pairp</a></li>
+<li><a href="C interface.html#c_closurep">C_closurep</a></li>
+<li><a href="C interface.html#c_vectorp">C_vectorp</a></li>
+<li><a href="C interface.html#c_bytevectorp">C_bytevectorp</a></li>
+<li><a href="C interface.html#c_portp">C_portp</a></li>
+<li><a href="C interface.html#c_structurep">C_structurep</a></li>
+<li><a href="C interface.html#c_locativep">C_locativep</a></li>
+<li><a href="C interface.html#c_charp">C_charp</a></li>
+<li><a href="C interface.html#c_booleanp">C_booleanp</a></li>
+<li><a href="C interface.html#c_eofp">C_eofp</a></li>
+<li><a href="C interface.html#c_undefinedp">C_undefinedp</a></li>
+<li><a href="C interface.html#c_fixnump">C_fixnump</a></li>
+<li><a href="C interface.html#c_nfixnump">C_nfixnump</a></li>
+<li><a href="C interface.html#c_bignump">C_bignump</a></li>
+<li><a href="C interface.html#c_i_numberp">C_i_numberp</a></li>
+<li><a href="C interface.html#c_i_bignump">C_i_bignump</a></li>
+<li><a href="C interface.html#c_i_cplxnump">C_i_cplxnump</a></li>
+<li><a href="C interface.html#c_i_ratnump">C_i_ratnump</a></li>
+<li><a href="C interface.html#c_i_flonump">C_i_flonump</a></li>
+<li><a href="C interface.html#c_i_exact_integerp">C_i_exact_integerp</a></li>
+<li><a href="C interface.html#c_pointerp">C_pointerp</a></li>
+<li><a href="C interface.html#c_taggedpointerp">C_taggedpointerp</a></li>
+<li><a href="C interface.html#c_anypointerp">C_anypointerp</a></li>
+<li><a href="C interface.html#c_lambdainfop">C_lambdainfop</a></li>
+<li><a href="C interface.html#c_byteblockp">C_byteblockp</a></li>
+<li><a href="C interface.html#c_specialp">C_specialp</a></li>
+<li><a href="C interface.html#c_nullp">C_nullp</a></li>
+<li><a href="C interface.html#c_anyp">C_anyp</a></li></ol></li></ol></li>
+<li><a href="C interface.html#constructors">Constructors</a>
+<ol>
+<li><a href="C interface.html#constructors-for-immediate-scheme-objects">Constructors for immediate Scheme objects</a>
+<ol>
+<li><a href="C interface.html#c_fix">C_fix</a></li>
+<li><a href="C interface.html#c_make_character">C_make_character</a></li>
+<li><a href="C interface.html#c_mk_bool">C_mk_bool</a></li>
+<li><a href="C interface.html#c_mk_nbool">C_mk_nbool</a></li>
+<li><a href="C interface.html#c_scheme_end_of_list">C_SCHEME_END_OF_LIST</a></li>
+<li><a href="C interface.html#c_scheme_end_of_file">C_SCHEME_END_OF_FILE</a></li>
+<li><a href="C interface.html#c_scheme_false">C_SCHEME_FALSE</a></li>
+<li><a href="C interface.html#c_scheme_true">C_SCHEME_TRUE</a></li></ol></li>
+<li><a href="C interface.html#constructors-for-non-immediate-scheme-objects">Constructors for non-immediate Scheme objects</a>
+<ol>
+<li><a href="C interface.html#c_string">C_string</a></li>
+<li><a href="C interface.html#c_string2">C_string2</a></li>
+<li><a href="C interface.html#c_intern">C_intern</a></li>
+<li><a href="C interface.html#c_intern2">C_intern2</a></li>
+<li><a href="C interface.html#c_intern3">C_intern3</a></li>
+<li><a href="C interface.html#c_pair">C_pair</a></li>
+<li><a href="C interface.html#c_flonum">C_flonum</a></li>
+<li><a href="C interface.html#c_int_to_num">C_int_to_num</a></li>
+<li><a href="C interface.html#c_mpointer">C_mpointer</a></li>
+<li><a href="C interface.html#c_vector">C_vector</a></li>
+<li><a href="C interface.html#c_structure">C_structure</a></li>
+<li><a href="C interface.html#c_list">C_list</a></li>
+<li><a href="C interface.html#c_closure">C_closure</a></li></ol></li>
+<li><a href="C interface.html#memory-allocation">Memory allocation</a>
+<ol>
+<li><a href="C interface.html#c_alloc">C_alloc</a></li>
+<li><a href="C interface.html#c_sizeof_list">C_SIZEOF_LIST</a></li>
+<li><a href="C interface.html#c_sizeof_string">C_SIZEOF_STRING</a></li>
+<li><a href="C interface.html#c_sizeof_vector">C_SIZEOF_VECTOR</a></li>
+<li><a href="C interface.html#c_sizeof_closure">C_SIZEOF_CLOSURE</a></li>
+<li><a href="C interface.html#c_sizeof_struct">C_SIZEOF_STRUCT</a></li>
+<li><a href="C interface.html#c_sizeof_bignum">C_SIZEOF_BIGNUM</a></li>
+<li><a href="C interface.html#c_sizeof_fix_bignum">C_SIZEOF_FIX_BIGNUM</a></li>
+<li><a href="C interface.html#c_sizeof_interned_symbol">C_SIZEOF_INTERNED_SYMBOL</a></li>
+<li><a href="C interface.html#c_sizeof_pair">C_SIZEOF_PAIR</a></li>
+<li><a href="C interface.html#c_sizeof_flonum">C_SIZEOF_FLONUM</a></li>
+<li><a href="C interface.html#c_sizeof_pointer">C_SIZEOF_POINTER</a></li>
+<li><a href="C interface.html#c_sizeof_locative">C_SIZEOF_LOCATIVE</a></li>
+<li><a href="C interface.html#c_sizeof_tagged_pointer">C_SIZEOF_TAGGED_POINTER</a></li></ol></li></ol></li>
+<li><a href="C interface.html#accessors">Accessors</a>
+<ol>
+<li><a href="C interface.html#c_character_code">C_character_code</a></li>
+<li><a href="C interface.html#c_unfix">C_unfix</a></li>
+<li><a href="C interface.html#c_flonum_magnitude">C_flonum_magnitude</a></li>
+<li><a href="C interface.html#c_c_string">C_c_string</a></li>
+<li><a href="C interface.html#c_num_to_int">C_num_to_int</a></li>
+<li><a href="C interface.html#c_pointer_address">C_pointer_address</a></li>
+<li><a href="C interface.html#c_header_size">C_header_size</a></li>
+<li><a href="C interface.html#c_header_bits">C_header_bits</a></li>
+<li><a href="C interface.html#c_block_item">C_block_item</a></li>
+<li><a href="C interface.html#c_u_i_car">C_u_i_car</a></li>
+<li><a href="C interface.html#c_u_i_cdr">C_u_i_cdr</a></li>
+<li><a href="C interface.html#c_port_file">C_port_file</a></li>
+<li><a href="C interface.html#c_data_pointer">C_data_pointer</a></li></ol></li>
+<li><a href="C interface.html#c_make_header">C_make_header</a></li>
+<li><a href="C interface.html#c_mutate">C_mutate</a></li>
+<li><a href="C interface.html#c_symbol_value">C_symbol_value</a></li>
+<li><a href="C interface.html#gc-interface">GC interface</a>
+<ol>
+<li><a href="C interface.html#c_gc_protect">C_gc_protect</a></li>
+<li><a href="C interface.html#c_gc_unprotect">C_gc_unprotect</a></li>
+<li><a href="C interface.html#c_pre_gc_hook">C_pre_gc_hook</a></li>
+<li><a href="C interface.html#c_post_gc_hook">C_post_gc_hook</a></li></ol></li>
+<li><a href="C interface.html#type-specific-macros-and-functions">Type-specific macros and functions</a>
+<ol>
+<li><a href="C interface.html#vectors">Vectors</a>
+<ol>
+<li><a href="C interface.html#c_vemptyp">C_vemptyp</a></li>
+<li><a href="C interface.html#c_notvemptyp">C_notvemptyp</a></li></ol></li>
+<li><a href="C interface.html#numbers">Numbers</a>
+<ol>
+<li><a href="C interface.html#c_u_i_exactp">C_u_i_exactp</a></li>
+<li><a href="C interface.html#c_u_i_inexactp">C_u_i_inexactp</a></li>
+<li><a href="C interface.html#c_i_finitep">C_i_finitep</a></li></ol></li>
+<li><a href="C interface.html#bignums">Bignums</a>
+<ol>
+<li><a href="C interface.html#c_bignum_negativep">C_bignum_negativep</a></li>
+<li><a href="C interface.html#c_bignum_digits">C_bignum_digits</a></li>
+<li><a href="C interface.html#c_bignum_size">C_bignum_size</a></li>
+<li><a href="C interface.html#c_u_i_bignum_size">C_u_i_bignum_size</a></li>
+<li><a href="C interface.html#c_i_bignum_cmp">C_i_bignum_cmp</a></li></ol></li>
+<li><a href="C interface.html#fixnums">Fixnums</a>
+<ol>
+<li><a href="C interface.html#c_i_fixnumevenp">C_i_fixnumevenp</a></li>
+<li><a href="C interface.html#c_i_fixnumoddp">C_i_fixnumoddp</a></li>
+<li><a href="C interface.html#c_fixnum_times">C_fixnum_times</a></li>
+<li><a href="C interface.html#c_a_i_fixnum_times">C_a_i_fixnum_times</a></li>
+<li><a href="C interface.html#c_fixnum_plus">C_fixnum_plus</a></li>
+<li><a href="C interface.html#c_u_fixnum_plus">C_u_fixnum_plus</a></li>
+<li><a href="C interface.html#c_a_i_fixnum_plus">C_a_i_fixnum_plus</a></li>
+<li><a href="C interface.html#c_fixnum_difference">C_fixnum_difference</a></li>
+<li><a href="C interface.html#c_u_fixnum_difference">C_u_fixnum_difference</a></li>
+<li><a href="C interface.html#c_a_i_fixnum_difference">C_a_i_fixnum_difference</a></li>
+<li><a href="C interface.html#c_fixnum_divide">C_fixnum_divide</a></li>
+<li><a href="C interface.html#c_u_fixnum_divide">C_u_fixnum_divide</a></li>
+<li><a href="C interface.html#c_fixnum_modulo">C_fixnum_modulo</a></li>
+<li><a href="C interface.html#c_u_fixnum_modulo">C_u_fixnum_modulo</a></li>
+<li><a href="C interface.html#c_a_i_fixnum_quotient_checked">C_a_i_fixnum_quotient_checked</a></li>
+<li><a href="C interface.html#c_i_fixnum_remainder_checked">C_i_fixnum_remainder_checked</a></li>
+<li><a href="C interface.html#c_fixnum_and">C_fixnum_and</a></li>
+<li><a href="C interface.html#c_u_fixnum_and">C_u_fixnum_and</a></li>
+<li><a href="C interface.html#c_fixnum_or">C_fixnum_or</a></li>
+<li><a href="C interface.html#c_u_fixnum_or">C_u_fixnum_or</a></li>
+<li><a href="C interface.html#c_fixnum_xor">C_fixnum_xor</a></li>
+<li><a href="C interface.html#c_fixnum_not">C_fixnum_not</a></li>
+<li><a href="C interface.html#c_fixnum_shift_left">C_fixnum_shift_left</a></li>
+<li><a href="C interface.html#c_fixnum_shift_right">C_fixnum_shift_right</a></li>
+<li><a href="C interface.html#c_fixnum_negate">C_fixnum_negate</a></li>
+<li><a href="C interface.html#c_a_i_fixnum_negate">C_a_i_fixnum_negate</a></li>
+<li><a href="C interface.html#c_fixnum_greaterp">C_fixnum_greaterp</a></li>
+<li><a href="C interface.html#c_fixnum_greater_or_equal_p">C_fixnum_greater_or_equal_p</a></li>
+<li><a href="C interface.html#c_fixnum_lessp">C_fixnum_lessp</a></li>
+<li><a href="C interface.html#c_fixnum_less_or_equal_p">C_fixnum_less_or_equal_p</a></li>
+<li><a href="C interface.html#c_i_fixnum_positivep">C_i_fixnum_positivep</a></li>
+<li><a href="C interface.html#c_i_fixnum_negativep">C_i_fixnum_negativep</a></li>
+<li><a href="C interface.html#c_fixnum_increase">C_fixnum_increase</a></li>
+<li><a href="C interface.html#c_u_fixnum_increase">C_u_fixnum_increase</a></li>
+<li><a href="C interface.html#c_fixnum_decrease">C_fixnum_decrease</a></li>
+<li><a href="C interface.html#c_u_fixnum_decrease">C_u_fixnum_decrease</a></li>
+<li><a href="C interface.html#c_fixnum_abs">C_fixnum_abs</a></li>
+<li><a href="C interface.html#c_i_fixnum_min">C_i_fixnum_min</a></li>
+<li><a href="C interface.html#c_i_fixnum_max">C_i_fixnum_max</a></li>
+<li><a href="C interface.html#c_i_fixnum_gcd">C_i_fixnum_gcd</a></li>
+<li><a href="C interface.html#c_i_fixnum_length">C_i_fixnum_length</a></li></ol></li>
+<li><a href="C interface.html#flonums">Flonums</a>
+<ol>
+<li><a href="C interface.html#c_flonum_equalp">C_flonum_equalp</a></li>
+<li><a href="C interface.html#c_flonum_greaterp">C_flonum_greaterp</a></li>
+<li><a href="C interface.html#c_flonum_greater_or_equal_p">C_flonum_greater_or_equal_p</a></li>
+<li><a href="C interface.html#c_flonum_lessp">C_flonum_lessp</a></li>
+<li><a href="C interface.html#c_flonum_less_or_equal_p">C_flonum_less_or_equal_p</a></li>
+<li><a href="C interface.html#c_a_i_flonum_plus">C_a_i_flonum_plus</a></li>
+<li><a href="C interface.html#c_a_i_flonum_difference">C_a_i_flonum_difference</a></li>
+<li><a href="C interface.html#c_a_i_flonum_times">C_a_i_flonum_times</a></li>
+<li><a href="C interface.html#c_a_i_flonum_quotient">C_a_i_flonum_quotient</a></li>
+<li><a href="C interface.html#c_a_i_flonum_actual_quotient_checked">C_a_i_flonum_actual_quotient_checked</a></li>
+<li><a href="C interface.html#c_a_i_flonum_gcd">C_a_i_flonum_gcd</a></li>
+<li><a href="C interface.html#c_a_i_flonum_negate">C_a_i_flonum_negate</a></li>
+<li><a href="C interface.html#c_a_i_flonum_truncate">C_a_i_flonum_truncate</a></li>
+<li><a href="C interface.html#c_a_i_flonum_ceiling">C_a_i_flonum_ceiling</a></li>
+<li><a href="C interface.html#c_a_i_flonum_floor">C_a_i_flonum_floor</a></li>
+<li><a href="C interface.html#c_a_i_flonum_round">C_a_i_flonum_round</a></li>
+<li><a href="C interface.html#c_a_i_flonum_round_proper">C_a_i_flonum_round_proper</a></li>
+<li><a href="C interface.html#c_a_i_flonum_sin">C_a_i_flonum_sin</a></li>
+<li><a href="C interface.html#c_a_i_flonum_cos">C_a_i_flonum_cos</a></li>
+<li><a href="C interface.html#c_a_i_flonum_tan">C_a_i_flonum_tan</a></li>
+<li><a href="C interface.html#c_a_i_flonum_asin">C_a_i_flonum_asin</a></li>
+<li><a href="C interface.html#c_a_i_flonum_acos">C_a_i_flonum_acos</a></li>
+<li><a href="C interface.html#c_a_i_flonum_atan">C_a_i_flonum_atan</a></li>
+<li><a href="C interface.html#c_a_i_flonum_atan2">C_a_i_flonum_atan2</a></li>
+<li><a href="C interface.html#c_a_i_flonum_log">C_a_i_flonum_log</a></li>
+<li><a href="C interface.html#c_a_i_flonum_exp">C_a_i_flonum_exp</a></li>
+<li><a href="C interface.html#c_a_i_flonum_expt">C_a_i_flonum_expt</a></li>
+<li><a href="C interface.html#c_a_i_flonum_sqrt">C_a_i_flonum_sqrt</a></li>
+<li><a href="C interface.html#c_a_i_flonum_abs">C_a_i_flonum_abs</a></li>
+<li><a href="C interface.html#c_u_i_flonum_nanp">C_u_i_flonum_nanp</a></li>
+<li><a href="C interface.html#c_u_i_flonum_finitep">C_u_i_flonum_finitep</a></li>
+<li><a href="C interface.html#c_u_i_flonum_infinitep">C_u_i_flonum_infinitep</a></li></ol></li>
+<li><a href="C interface.html#exact-integers">Exact integers</a>
+<ol>
+<li><a href="C interface.html#c_i_integer_evenp">C_i_integer_evenp</a></li>
+<li><a href="C interface.html#c_i_integer_oddp">C_i_integer_oddp</a></li>
+<li><a href="C interface.html#c_i_integer_positivep">C_i_integer_positivep</a></li>
+<li><a href="C interface.html#c_i_integer_negativep">C_i_integer_negativep</a></li>
+<li><a href="C interface.html#c_i_integer_equalp">C_i_integer_equalp</a></li>
+<li><a href="C interface.html#c_i_integer_greaterp">C_i_integer_greaterp</a></li>
+<li><a href="C interface.html#c_i_integer_greater_or_equalp">C_i_integer_greater_or_equalp</a></li>
+<li><a href="C interface.html#c_i_integer_lessp">C_i_integer_lessp</a></li>
+<li><a href="C interface.html#c_i_integer_less_or_equalp">C_i_integer_less_or_equalp</a></li></ol></li>
+<li><a href="C interface.html#pointers">Pointers</a>
+<ol>
+<li><a href="C interface.html#c_null_pointerp">C_null_pointerp</a></li>
+<li><a href="C interface.html#c_a_i_address_to_pointer">C_a_i_address_to_pointer</a></li>
+<li><a href="C interface.html#c_a_i_pointer_to_address">C_a_i_pointer_to_address</a></li></ol></li>
+<li><a href="C interface.html#ports">Ports</a>
+<ol>
+<li><a href="C interface.html#c_tty_portp">C_tty_portp</a></li></ol></li>
+<li><a href="C interface.html#structures">Structures</a>
+<ol>
+<li><a href="C interface.html#c_i_structurep">C_i_structurep</a></li></ol></li>
+<li><a href="C interface.html#characters">Characters</a>
+<ol>
+<li><a href="C interface.html#c_u_i_char_alphabeticp">C_u_i_char_alphabeticp</a></li>
+<li><a href="C interface.html#c_u_i_char_numericp">C_u_i_char_numericp</a></li>
+<li><a href="C interface.html#c_u_i_char_whitespacep">C_u_i_char_whitespacep</a></li>
+<li><a href="C interface.html#c_u_i_char_upper_casep">C_u_i_char_upper_casep</a></li>
+<li><a href="C interface.html#c_u_i_char_lower_casep">C_u_i_char_lower_casep</a></li></ol></li></ol></li>
+<li><a href="C interface.html#other-scheme-procedures-from-c">Other Scheme procedures from C</a>
+<ol>
+<li><a href="C interface.html#c_eqp">C_eqp</a></li>
+<li><a href="C interface.html#c_equalp">C_equalp</a></li>
+<li><a href="C interface.html#c_i_pairp">C_i_pairp</a></li>
+<li><a href="C interface.html#c_i_not_pair_p">C_i_not_pair_p</a></li></ol></li>
+<li><a href="C interface.html#an-example-for-simple-calls-to-foreign-code-involving-callbacks">An example for simple calls to foreign code involving callbacks</a></li>
+<li><a href="C interface.html#notes">Notes:</a></li></ol></li></ol></div><a href="C interface.html#c-interface">
+<a class="dashingAutolink" name="autolink-16"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/C%20interface"></a><h2 id="c-interface">C interface</h2></a>
+<p>The following functions and macros are available for C code that invokes Scheme or foreign procedures that are called by Scheme:</p><a href="C interface.html#temporary-stack">
+<a class="dashingAutolink" name="autolink-4"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Temporary%20stack"></a><h3 id="temporary-stack">Temporary stack</h3></a><a href="C interface.html#c_save">
+<h4 id="c_save">C_save</h4></a>
+<pre><tt>[C macro] void C_save (C_word x) :</tt></pre>
+<p>Saves the Scheme data object <tt>x</tt> on the temporary stack.</p><a href="C interface.html#c_restore">
+<h4 id="c_restore">C_restore</h4></a>
+<pre><tt>[C macro] C_word C_restore</tt></pre>
+<p>Pops and returns the topmost value from the temporary stack.</p><a href="C interface.html#typevalue-predicates">
+<a class="dashingAutolink" name="autolink-5"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Type%2Fvalue%20predicates"></a><h3 id="typevalue-predicates">Type/value predicates</h3></a>
+<p>When writing C code that accepts Scheme objects you often need to do checking what type of object is passed.  These can help you determine the type of an object.</p><a href="C interface.html#c-predicates">
+<h4 id="c-predicates">C predicates</h4></a>
+<p>These return regular C integer values (ie, zero is false, nonzero true).</p><a href="C interface.html#c_truep">
+<h5 id="c_truep">C_truep</h5></a>
+<pre><tt>[C macro] int C_truep(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a truthy value, i.e. anything except <tt>C_SCHEME_FALSE</tt>?</p><a href="C interface.html#c_immediatep">
+<h5 id="c_immediatep">C_immediatep</h5></a>
+<pre><tt>[C macro] int C_immediatep(C_word x)</tt></pre>
+<p>Is <tt>x</tt> an immediate object? (see below for a definition)</p><a href="C interface.html#c_fitsinfixnump">
+<h5 id="c_fitsinfixnump">C_fitsinfixnump</h5></a>
+<pre><tt>[C macro] int C_fitsinfixnump(int number)</tt></pre>
+<p>Will <tt>number</tt> fit in a fixnum?  It will fit when there is room for one additional type bit to tag it as a fixnum (assuming one bit is already used for the sign). In practice this means that the number&#39;s top two bits must be identical.</p><a href="C interface.html#c_ufitsinfixnump">
+<h5 id="c_ufitsinfixnump">C_ufitsinfixnump</h5></a>
+<pre><tt>[C macro] int C_ufitsinfixnump(unsigned int number)</tt></pre>
+<p>Like <tt>C_fitsinfixnump</tt> but for unsigned integers.  This checks the top <i>two</i> bits are zero, since fixnums <b>always</b> carry a sign.</p><a href="C interface.html#scheme-predicates">
+<h4 id="scheme-predicates">Scheme predicates</h4></a>
+<p>These return Scheme booleans (ie, C_SCHEME_TRUE or C_SCHEME_FALSE). This means they can be used directly from Scheme using <tt>##core#inline</tt>.</p><a href="C interface.html#c_zero_length_p">
+<h5 id="c_zero_length_p">C_zero_length_p</h5></a>
+<pre><tt>[C macro] C_word C_zero_length_p(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a Scheme object of zero length?  Only accepts non-immediate objects.</p><a href="C interface.html#c_unboundvaluep">
+<h5 id="c_unboundvaluep">C_unboundvaluep</h5></a>
+<pre><tt>[C macro] C_word C_unboundvaluep(C_word x)</tt></pre>
+<p>Is <tt>x</tt> the special unbound variable placeholder <tt>C_SCHEME_UNBOUND</tt>?</p><a href="C interface.html#c_boundp">
+<h5 id="c_boundp">C_boundp</h5></a>
+<pre><tt>[C macro] C_word C_boundp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a bound value?  Only accepts non-immediate objects.</p><a href="C interface.html#c_blockp">
+<h5 id="c_blockp">C_blockp</h5></a>
+<pre><tt>[C macro] C_word C_blockp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a &#34;block&#34; value?</p>
+<p>A &#34;block&#34; value is a value that contains a memory block, i.e. is not an immediate value.</p><a href="C interface.html#c_immp">
+<h5 id="c_immp">C_immp</h5></a>
+<pre><tt>[C macro] C_word C_immp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> an immediate value?</p><a href="C interface.html#c_forwardedp">
+<h5 id="c_forwardedp">C_forwardedp</h5></a>
+<pre><tt>[C macro] C_word C_forwardedp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a GC-forwarded object?</p><a href="C interface.html#c_flonump">
+<h5 id="c_flonump">C_flonump</h5></a>
+<pre><tt>[C macro] C_word C_flonump(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a Scheme flonum object?  Accepts only non-immediate objects.</p><a href="C interface.html#c_stringp">
+<h5 id="c_stringp">C_stringp</h5></a>
+<pre><tt>[C macro] C_word C_stringp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a Scheme string object?  Accepts only non-immediate objects.</p><a href="C interface.html#c_symbolp">
+<h5 id="c_symbolp">C_symbolp</h5></a>
+<pre><tt>[C macro] C_word C_symbolp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a symbol?  Accepts only non-immediate objects.</p><a href="C interface.html#c_pairp">
+<h5 id="c_pairp">C_pairp</h5></a>
+<pre><tt>[C macro] C_word C_pairp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a pair?  Accepts only non-immediate objects.</p><a href="C interface.html#c_closurep">
+<h5 id="c_closurep">C_closurep</h5></a>
+<pre><tt>[C macro] C_word C_closurep(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a closure?  Accepts only non-immediate objects.</p><a href="C interface.html#c_vectorp">
+<h5 id="c_vectorp">C_vectorp</h5></a>
+<pre><tt>[C macro] C_word C_vectorp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> any kind of vector?  Accepts only non-immediate objects.</p>
+<p>This returns true for both regular heterogenous R5RS vectors and bytevectors (&#34;blobs&#34;).  However, it does <i>not</i> return true for SRFI-4 vectors, as those are actually bytevectors wrapped in a structure with a type tag.</p><a href="C interface.html#c_bytevectorp">
+<h5 id="c_bytevectorp">C_bytevectorp</h5></a>
+<pre><tt>[C macro] C_word C_bytevectorp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a bytevector (&#34;blob&#34;)? Accepts only non-immediate objects.</p><a href="C interface.html#c_portp">
+<h5 id="c_portp">C_portp</h5></a>
+<pre><tt>[C macro] C_word C_portp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a port object?  Accepts only non-immediate objects.</p><a href="C interface.html#c_structurep">
+<h5 id="c_structurep">C_structurep</h5></a>
+<pre><tt>[C macro] C_word C_structurep(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a structure (record) object?  Accepts only non-immediate objects.</p><a href="C interface.html#c_locativep">
+<h5 id="c_locativep">C_locativep</h5></a>
+<pre><tt>[C macro] C_word C_locativep(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a locative object?  Accepts only non-immediate objects.</p><a href="C interface.html#c_charp">
+<h5 id="c_charp">C_charp</h5></a>
+<pre><tt>[C macro] C_word C_charp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a character object?</p><a href="C interface.html#c_booleanp">
+<h5 id="c_booleanp">C_booleanp</h5></a>
+<pre><tt>[C macro] C_word C_booleanp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a boolean object?</p><a href="C interface.html#c_eofp">
+<h5 id="c_eofp">C_eofp</h5></a>
+<pre><tt>[C macro] C_word C_eofp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> the <tt>#!eof</tt> object?</p><a href="C interface.html#c_undefinedp">
+<h5 id="c_undefinedp">C_undefinedp</h5></a>
+<pre><tt>[C macro] C_word C_undefinedp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> the undefined value?</p><a href="C interface.html#c_fixnump">
+<h5 id="c_fixnump">C_fixnump</h5></a>
+<pre><tt>[C macro] C_word C_fixnump(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a fixnum object?</p><a href="C interface.html#c_nfixnump">
+<h5 id="c_nfixnump">C_nfixnump</h5></a>
+<pre><tt>[C macro] C_word C_nfixnump(C_word x)</tt></pre>
+<p>Is <tt>x</tt> <i>not</i> a fixnum object?</p><a href="C interface.html#c_bignump">
+<h5 id="c_bignump">C_bignump</h5></a>
+<pre><tt>[C macro] C_word C_bignump(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a Scheme bignum object?  Accepts only non-immediate objects.</p><a href="C interface.html#c_i_numberp">
+<h5 id="c_i_numberp">C_i_numberp</h5></a>
+<pre><tt>[C function] C_word C_i_numberp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a number object (fixnum, bignum, flonum, ratnum, cplxnum)?</p><a href="C interface.html#c_i_bignump">
+<h5 id="c_i_bignump">C_i_bignump</h5></a>
+<pre><tt>[C function] C_word C_i_bignump(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a Scheme bignum object?</p><a href="C interface.html#c_i_cplxnump">
+<h5 id="c_i_cplxnump">C_i_cplxnump</h5></a>
+<pre><tt>[C function] C_word C_i_cplxnump(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a Scheme cplxnum object?</p><a href="C interface.html#c_i_ratnump">
+<h5 id="c_i_ratnump">C_i_ratnump</h5></a>
+<pre><tt>[C function] C_word C_i_ratnump(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a Scheme ratnum object?</p><a href="C interface.html#c_i_flonump">
+<h5 id="c_i_flonump">C_i_flonump</h5></a>
+<pre><tt>[C function] C_word C_i_flonump(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a flonum object?</p><a href="C interface.html#c_i_exact_integerp">
+<h5 id="c_i_exact_integerp">C_i_exact_integerp</h5></a>
+<pre><tt>[C macro] C_word C_i_exact_integerp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> an exact integer (i.e., a fixnum or a bignum)?</p><a href="C interface.html#c_pointerp">
+<h5 id="c_pointerp">C_pointerp</h5></a>
+<pre><tt>[C macro] C_word C_pointerp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a C pointer object?  Only accepts non-immediate objects.</p><a href="C interface.html#c_taggedpointerp">
+<h5 id="c_taggedpointerp">C_taggedpointerp</h5></a>
+<pre><tt>[C macro] C_word C_taggedpointerp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a tagged pointer object?  Only accepts non-immediate objects.</p><a href="C interface.html#c_anypointerp">
+<h5 id="c_anypointerp">C_anypointerp</h5></a>
+<pre><tt>[C macro] C_word C_anypointerp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> any type of pointer object?  Only accepts non-immediate objects.</p><a href="C interface.html#c_lambdainfop">
+<h5 id="c_lambdainfop">C_lambdainfop</h5></a>
+<pre><tt>[C macro] C_word C_lambdainfop(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a lambda-info object?  Only accepts non-immediate objects.</p><a href="C interface.html#c_byteblockp">
+<h5 id="c_byteblockp">C_byteblockp</h5></a>
+<pre><tt>[C macro] C_word C_byteblockp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a &#34;byteblock&#34; object?  Only accepts non-immediate objects.</p>
+<p>Strings, flonums, bytevectors and lambda-info objects are considered &#34;byteblock&#34; objects, as they are not containers for Scheme objects but simply point to contiguous memory ranges of bytes.</p><a href="C interface.html#c_specialp">
+<h5 id="c_specialp">C_specialp</h5></a>
+<pre><tt>[C macro] C_word C_specialp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a &#34;special&#34; object?  Only accepts non-immediate objects.</p>
+<p>Closures, ports, pointers and locatives are considered &#34;special&#34; objects, as they are not containers for Scheme objects (and they are not byte blocks either), so they have to be treated specially by the GC.</p><a href="C interface.html#c_nullp">
+<h5 id="c_nullp">C_nullp</h5></a>
+<pre><tt>[C macro] C_word C_nullp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> the empty list, i.e. is it <tt>C_SCHEME_END_OF_LIST</tt>?</p><a href="C interface.html#c_anyp">
+<h5 id="c_anyp">C_anyp</h5></a>
+<pre><tt>[C macro] C_word C_anyp(C_word x)</tt></pre>
+<p>Always returns <tt>C_SCHEME_TRUE</tt>.</p><a href="C interface.html#constructors">
+<a class="dashingAutolink" name="autolink-6"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Constructors"></a><h3 id="constructors">Constructors</h3></a><a href="C interface.html#constructors-for-immediate-scheme-objects">
+<h4 id="constructors-for-immediate-scheme-objects">Constructors for immediate Scheme objects</h4></a>
+<p>&#34;immediate&#34; Scheme objects are objects that are represented directly by a <tt>C_word</tt>.  There&#39;s no additional memory used by them.</p><a href="C interface.html#c_fix">
+<h5 id="c_fix">C_fix</h5></a>
+<pre><tt>[C macro] C_word C_fix (int integer)</tt></pre><a href="C interface.html#c_make_character">
+<h5 id="c_make_character">C_make_character</h5></a>
+<pre><tt>[C macro] C_word C_make_character (int char_code)</tt></pre><a href="C interface.html#c_mk_bool">
+<h5 id="c_mk_bool">C_mk_bool</h5></a>
+<pre><tt>[C macro] C_word C_mk_bool(int truth_value)</tt></pre><a href="C interface.html#c_mk_nbool">
+<h5 id="c_mk_nbool">C_mk_nbool</h5></a>
+<pre><tt>[C macro] C_word C_mk_nbool(int truth_value_to_negate)</tt></pre><a href="C interface.html#c_scheme_end_of_list">
+<h5 id="c_scheme_end_of_list">C_SCHEME_END_OF_LIST</h5></a>
+<pre><tt>[C macro] C_SCHEME_END_OF_LIST</tt></pre><a href="C interface.html#c_scheme_end_of_file">
+<h5 id="c_scheme_end_of_file">C_SCHEME_END_OF_FILE</h5></a>
+<pre><tt>[C macro] C_SCHEME_END_OF_FILE</tt></pre><a href="C interface.html#c_scheme_false">
+<h5 id="c_scheme_false">C_SCHEME_FALSE</h5></a>
+<pre><tt>[C macro] C_SCHEME_FALSE</tt></pre><a href="C interface.html#c_scheme_true">
+<h5 id="c_scheme_true">C_SCHEME_TRUE</h5></a>
+<pre><tt>[C macro] C_SCHEME_TRUE</tt></pre><a href="C interface.html#constructors-for-non-immediate-scheme-objects">
+<h4 id="constructors-for-non-immediate-scheme-objects">Constructors for non-immediate Scheme objects</h4></a>
+<p>Non-immediate Scheme objects are still represented and passed around by a single <tt>C_word</tt>, but this is basically just a pointer to the start of the object (which should never be treated as such, use the accessor macros instead).</p><a href="C interface.html#c_string">
+<h5 id="c_string">C_string</h5></a>
+<pre><tt>[C function] C_word C_string (C_word **ptr, int length, char *string)</tt></pre><a href="C interface.html#c_string2">
+<h5 id="c_string2">C_string2</h5></a>
+<pre><tt>[C function] C_word C_string2 (C_word **ptr, char *zero_terminated_string)</tt></pre><a href="C interface.html#c_intern">
+<h5 id="c_intern">C_intern</h5></a>
+<pre><tt>[C function] C_word C_intern (C_word **ptr, int length, char *string)</tt></pre><a href="C interface.html#c_intern2">
+<h5 id="c_intern2">C_intern2</h5></a>
+<pre><tt>[C function] C_word C_intern2 (C_word **ptr, char *zero_terminated_string)</tt></pre><a href="C interface.html#c_intern3">
+<h5 id="c_intern3">C_intern3</h5></a>
+<pre><tt>[C function] C_word C_intern3 (C_word **ptr, char *zero_terminated_string, C_word initial_value)</tt></pre><a href="C interface.html#c_pair">
+<h5 id="c_pair">C_pair</h5></a>
+<pre><tt>[C function] C_word C_pair (C_word **ptr, C_word car, C_word cdr)</tt></pre><a href="C interface.html#c_flonum">
+<h5 id="c_flonum">C_flonum</h5></a>
+<pre><tt>[C function] C_word C_flonum (C_word **ptr, double number)</tt></pre><a href="C interface.html#c_int_to_num">
+<h5 id="c_int_to_num">C_int_to_num</h5></a>
+<pre><tt>[C function] C_word C_int_to_num (C_word **ptr, int integer)</tt></pre><a href="C interface.html#c_mpointer">
+<h5 id="c_mpointer">C_mpointer</h5></a>
+<pre><tt>[C function] C_word C_mpointer (C_word **ptr, void *pointer)</tt></pre><a href="C interface.html#c_vector">
+<h5 id="c_vector">C_vector</h5></a>
+<pre><tt>[C function] C_word C_vector (C_word **ptr, int length, ...)</tt></pre><a href="C interface.html#c_structure">
+<h5 id="c_structure">C_structure</h5></a>
+<pre><tt>[C function] C_word C_structure (C_word **ptr, int length, ...)</tt></pre><a href="C interface.html#c_list">
+<h5 id="c_list">C_list</h5></a>
+<pre><tt>[C function] C_word C_list (C_word **ptr, int length, ...)</tt></pre><a href="C interface.html#c_closure">
+<h5 id="c_closure">C_closure</h5></a>
+<pre><tt>[C function] C_word C_closure (C_word **ptr, int length, C_word procedure, ...)</tt></pre>
+<p>These functions allocate memory from <tt>ptr</tt> and initialize a fresh data object. The new data object is returned. <tt>ptr</tt> should be the <b>address</b> of an allocation pointer created with <tt>C_alloc</tt>.</p>
+<p>To find out how big the memory block should be, use the <tt>C_SIZEOF_*</tt> macros described below.</p>
+<p>Here&#39;s an example how to create a closure that accepts a vector, stores the Scheme numbers 1, 2 and 3 and a given string in it and returns that vector to its continuation:</p>
+<pre><tt class="highlight scheme-language">#&gt;
+
+#include &lt;assert.h&gt;
+
+void fill_vector<span class="paren1">(<span class="default">C_word c, C_word closure, C_word vec</span>)</span>
+{
+  C_word kontinuation = C_block_item<span class="paren1">(<span class="default">closure, 1</span>)</span><span class="comment">;
+</span>
+  C_block_item<span class="paren1">(<span class="default">vec, 0</span>)</span> = C_fix<span class="paren1">(<span class="default">1</span>)</span><span class="comment">;
+</span>  C_block_item<span class="paren1">(<span class="default">vec, 1</span>)</span> = C_fix<span class="paren1">(<span class="default">2</span>)</span><span class="comment">;
+</span>  C_block_item<span class="paren1">(<span class="default">vec, 2</span>)</span> = C_fix<span class="paren1">(<span class="default">3</span>)</span><span class="comment">;
+</span>  C_block_item<span class="paren1">(<span class="default">vec, 3</span>)</span> = C_block_item<span class="paren1">(<span class="default">closure, 2</span>)</span><span class="comment">;
+</span>
+  C_kontinue<span class="paren1">(<span class="default">kontinuation, vec</span>)</span><span class="comment">;
+</span>}
+
+void one_two_three<span class="paren1">(<span class="default">C_word c, C_word self, C_word k, C_word str</span>)</span>
+{
+  /*
+   * Allocate room on <i><span class="symbol">the</span></i> stack to hold <i><span class="symbol">the</span></i> <span class="keyword">closure:</span>  1 word for
+   * <i><span class="symbol">the</span></i> type tag, 1 word for <i><span class="symbol">the</span></i> procedure and 2 words for <i><span class="symbol">the</span></i>
+   * values <span class="string">&#34;closed over&#34;</span><span class="comment">; this procedure&#39;s continuation &#34;k&#34; and
+</span>   * <i><span class="symbol">the</span></i> argument <span class="string">&#34;str&#34;</span>.  We could also use C_alloc<span class="paren1">(<span class="default">4</span>)</span>.
+   */
+  C_word closure<span class="paren1">[<span class="default">4</span>]</span>, *cp = closure<span class="comment">;
+</span>
+  /* Create <i><span class="symbol">the</span></i> closure.  It holds 3 values, not counting <i><span class="symbol">the</span></i> tag */
+  C_word closure_object = C_closure<span class="paren1">(<span class="default">&amp;cp, 3, <span class="paren2">(<span class="default">C_word</span>)</span>fill_vector, k, str</span>)</span><span class="comment">;
+</span>
+  /*
+   * After this, cp points just beyond <i><span class="symbol">the</span></i> last word of <i><span class="symbol">the</span></i> allocated
+   * data and closure_object is an opaque representation of <i><span class="symbol">the</span></i> newly
+   * created closure as a whole, i.e. <i><span class="symbol">the</span></i> following relations <span class="keyword">hold:</span>
+   */
+  assert<span class="paren1">(<span class="default">  <span class="paren2">(<span class="default">closure + 4</span>)</span> == cp  </span>)</span><span class="comment">;
+</span>  assert<span class="paren1">(<span class="default">  C_block_header<span class="paren2">(<span class="default">closure_object</span>)</span> == <span class="paren2">(<span class="default">*closure</span>)</span>  </span>)</span><span class="comment">;
+</span>  assert<span class="paren1">(<span class="default">  C_data_pointer<span class="paren2">(<span class="default">closure_object</span>)</span> == <span class="paren2">(<span class="default">closure + 1</span>)</span>  </span>)</span><span class="comment">;
+</span>  assert<span class="paren1">(<span class="default">  C_block_item<span class="paren2">(<span class="default">closure_object, 0</span>)</span> == <span class="paren2">(<span class="default">*<span class="paren3">(<span class="default">closure + 1</span>)</span></span>)</span>  </span>)</span><span class="comment">;
+</span>
+  /* Make a vector of 4 objects and use closure_object as continuation */
+  C_allocate_vector<span class="paren1">(<span class="default">6, <span class="paren2">(<span class="default">C_word</span>)</span>NULL, closure_object, C_fix<span class="paren2">(<span class="default">4</span>)</span>,
+                    C_SCHEME_FALSE,  /* not a byte vector */
+                    C_SCHEME_FALSE,  /* initialization value. Don&#39;t care */
+                    C_SCHEME_FALSE</span>)</span><span class="comment">; /* don&#39;t align at 8 bytes */
+</span>  /* .. C_allocate_vector does not return ... */
+}
+&lt;#
+
+
+<span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> one-two-three
+   <span class="paren2">(<span class="default">foreign-primitive <span class="paren3">(<span class="default"><span class="paren4">(<span class="default">scheme-object str</span>)</span></span>)</span> <span class="string">&#34;one_two_three(C_c, C_self, C_k, str);&#34;</span></span>)</span></span>)</span>
+
+<span class="paren1">(<span class="default">print <span class="paren2">(<span class="default">one-two-three <span class="string">&#34;hi&#34;</span></span>)</span></span>)</span></tt></pre>
+<p>This is equivalent to the following in Scheme:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren2">(<span class="default">one-two-three str</span>)</span>
+  <span class="paren2">(<span class="default"><i><span class="symbol">let</span></i> <span class="paren3">(<span class="default"><span class="paren4">(<span class="default">fill-vector <span class="paren5">(<span class="default"><i><span class="symbol">lambda</span></i> <span class="paren6">(<span class="default">vec</span>)</span>
+                       <span class="paren6">(<span class="default">vector-set! vec 0 1</span>)</span>
+                       <span class="paren6">(<span class="default">vector-set! vec 1 2</span>)</span>
+                       <span class="paren6">(<span class="default">vector-set! vec 2 3</span>)</span>
+                       <span class="paren6">(<span class="default">vector-set! vec 3 str</span>)</span>
+                       vec</span>)</span></span>)</span></span>)</span>
+    <span class="paren3">(<span class="default">fill-vector <span class="paren4">(<span class="default">make-vector 4 #f</span>)</span></span>)</span></span>)</span></span>)</span>
+
+<span class="paren1">(<span class="default">print <span class="paren2">(<span class="default">one-two-three <span class="string">&#34;hi&#34;</span></span>)</span></span>)</span></tt></pre><a href="C interface.html#memory-allocation">
+<h4 id="memory-allocation">Memory allocation</h4></a>
+<p>These can be used to allocate memory for non-immediate objects.</p><a href="C interface.html#c_alloc">
+<h5 id="c_alloc">C_alloc</h5></a>
+<pre><tt>[C macro] C_word* C_alloc (int words)</tt></pre>
+<p>Allocates memory from the C stack (<tt>C_alloc</tt>) and returns a pointer to it. <tt>words</tt> should be the number of words needed for all data objects that are to be created in this function.  Note that stack-allocated data objects have to be passed to Scheme callback functions, or they will not be seen by the garbage collector. This is really only usable for callback procedure invocations, make sure not to use it in normal code, because the allocated memory will be re-used after the foreign procedure returns. When invoking Scheme callback procedures a minor garbage collection is performed, so data allocated with <tt>C_alloc</tt> will already have moved to a safe place.</p>
+<p>Note that <tt>C_alloc</tt> is really just a wrapper around <tt>alloca</tt>, and can also be simulated by declaring a stack-allocated array of <tt>C_word</tt>s:</p><a href="C interface.html#c_sizeof_list">
+<h5 id="c_sizeof_list">C_SIZEOF_LIST</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_LIST (int length)</tt></pre><a href="C interface.html#c_sizeof_string">
+<h5 id="c_sizeof_string">C_SIZEOF_STRING</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_STRING (int length)</tt></pre><a href="C interface.html#c_sizeof_vector">
+<h5 id="c_sizeof_vector">C_SIZEOF_VECTOR</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_VECTOR (int length)</tt></pre>
+<p>Returns the size in words needed for allocation of vector with <i>length</i> elements.</p><a href="C interface.html#c_sizeof_closure">
+<h5 id="c_sizeof_closure">C_SIZEOF_CLOSURE</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_CLOSURE (int length)</tt></pre>
+<p>Returns the size in words needed for allocation of a closure with <tt>length</tt> slots.  The C function pointer also counts as a slot, so always remember to include it when calculating <tt>length</tt>.</p><a href="C interface.html#c_sizeof_struct">
+<h5 id="c_sizeof_struct">C_SIZEOF_STRUCT</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_STRUCT (int length)</tt></pre>
+<p>Returns the size in words needed for allocation of a structure (record type) object with <tt>length</tt> slots.  The structure&#39;s type tag also counts as a slot, so always remember to include it when calculating <tt>length</tt>.</p><a href="C interface.html#c_sizeof_bignum">
+<h5 id="c_sizeof_bignum">C_SIZEOF_BIGNUM</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_BIGNUM (int length)</tt></pre>
+<p>Returns the size in words needed for allocation of a bignum object with <tt>length</tt> word-sized digits (limbs).</p><a href="C interface.html#c_sizeof_fix_bignum">
+<h5 id="c_sizeof_fix_bignum">C_SIZEOF_FIX_BIGNUM</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_FIX_BIGNUM</tt></pre>
+<p>The size in words needed for allocation of a bignum object which is large enough to store any fixnum (ie, if it were converted to a denormalized bignum, because if a number <i>can</i> be represented as a fixnum, it <i>will</i> be).</p><a href="C interface.html#c_sizeof_interned_symbol">
+<h5 id="c_sizeof_interned_symbol">C_SIZEOF_INTERNED_SYMBOL</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_INTERNED_SYMBOL (int length)</tt></pre><a href="C interface.html#c_sizeof_pair">
+<h5 id="c_sizeof_pair">C_SIZEOF_PAIR</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_PAIR</tt></pre><a href="C interface.html#c_sizeof_flonum">
+<h5 id="c_sizeof_flonum">C_SIZEOF_FLONUM</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_FLONUM</tt></pre><a href="C interface.html#c_sizeof_pointer">
+<h5 id="c_sizeof_pointer">C_SIZEOF_POINTER</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_POINTER</tt></pre><a href="C interface.html#c_sizeof_locative">
+<h5 id="c_sizeof_locative">C_SIZEOF_LOCATIVE</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_LOCATIVE</tt></pre><a href="C interface.html#c_sizeof_tagged_pointer">
+<h5 id="c_sizeof_tagged_pointer">C_SIZEOF_TAGGED_POINTER</h5></a>
+<pre><tt>[C macro] int C_SIZEOF_TAGGED_POINTER</tt></pre>
+<p>These are macros that return the size in words needed for a data object of a given type.</p><a href="C interface.html#accessors">
+<a class="dashingAutolink" name="autolink-7"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Accessors"></a><h3 id="accessors">Accessors</h3></a><a href="C interface.html#c_character_code">
+<h4 id="c_character_code">C_character_code</h4></a>
+<pre><tt>[C macro] int C_character_code (C_word character)</tt></pre><a href="C interface.html#c_unfix">
+<h4 id="c_unfix">C_unfix</h4></a>
+<pre><tt>[C macro] int C_unfix (C_word fixnum)</tt></pre><a href="C interface.html#c_flonum_magnitude">
+<h4 id="c_flonum_magnitude">C_flonum_magnitude</h4></a>
+<pre><tt>[C macro] double C_flonum_magnitude (C_word flonum)</tt></pre><a href="C interface.html#c_c_string">
+<h4 id="c_c_string">C_c_string</h4></a>
+<pre><tt>[C function] char* C_c_string (C_word string)</tt></pre><a href="C interface.html#c_num_to_int">
+<h4 id="c_num_to_int">C_num_to_int</h4></a>
+<pre><tt>[C function] int C_num_to_int (C_word fixnum_or_bignum)</tt></pre><a href="C interface.html#c_pointer_address">
+<h4 id="c_pointer_address">C_pointer_address</h4></a>
+<pre><tt>[C function] void* C_pointer_address (C_word pointer)</tt></pre>
+<p>These macros and functions can be used to convert Scheme data objects back to C data. Note that <tt>C_c_string()</tt> returns a pointer to the character buffer of the actual Scheme object and is not zero-terminated.</p><a href="C interface.html#c_header_size">
+<h4 id="c_header_size">C_header_size</h4></a>
+<pre><tt>[C macro] int C_header_size (C_word x)</tt></pre><a href="C interface.html#c_header_bits">
+<h4 id="c_header_bits">C_header_bits</h4></a>
+<pre><tt>[C macro] int C_header_bits (C_word x)</tt></pre>
+<p>Return the number of elements and the type-bits of the non-immediate Scheme data object <tt>x</tt>.</p><a href="C interface.html#c_block_item">
+<h4 id="c_block_item">C_block_item</h4></a>
+<pre><tt>[C macro] C_word C_block_item (C_word x, int index)</tt></pre>
+<p>This macro can be used to access slots of the non-immediate Scheme data object <tt>x</tt>.  <tt>index</tt> specifies the index of the slot to be fetched, starting at 0. Pairs have 2 slots, one for the <b>car</b> and one for the <b>cdr</b>. Vectors have one slot for each element.</p><a href="C interface.html#c_u_i_car">
+<h4 id="c_u_i_car">C_u_i_car</h4></a>
+<pre><tt>[C macro] C_word C_u_i_car (C_word x)</tt></pre><a href="C interface.html#c_u_i_cdr">
+<h4 id="c_u_i_cdr">C_u_i_cdr</h4></a>
+<pre><tt>[C macro] C_word C_u_i_cdr (C_word x)</tt></pre>
+<p>Aliases for <tt>C_block_item(x, 0)</tt> and <tt>C_block_item(x, 1)</tt>, respectively.</p><a href="C interface.html#c_port_file">
+<h4 id="c_port_file">C_port_file</h4></a>
+<pre><tt>[C macro] C_word C_port_file (C_word x)</tt></pre>
+<p>Alias for <tt>(FILE *)C_block_item(x, 0)</tt>.  To be used with port objects representing files (but will not work on sockets, for example).</p><a href="C interface.html#c_data_pointer">
+<h4 id="c_data_pointer">C_data_pointer</h4></a>
+<pre><tt>[C macro] void* C_data_pointer (C_word x)</tt></pre>
+<p>Returns a pointer to the data-section of a non-immediate Scheme object.</p><a href="C interface.html#c_make_header">
+<a class="dashingAutolink" name="autolink-8"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/C_make_header"></a><h3 id="c_make_header">C_make_header</h3></a>
+<pre><tt>[C macro] C_word C_make_header (C_word bits, C_word size)</tt></pre>
+<p>A macro to build a Scheme object header from its bits and size parts.</p><a href="C interface.html#c_mutate">
+<a class="dashingAutolink" name="autolink-9"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/C_mutate"></a><h3 id="c_mutate">C_mutate</h3></a>
+<pre><tt>[C function] C_word C_mutate (C_word *slot, C_word val)</tt></pre>
+<p>Assign the Scheme value <tt>val</tt> to the location specified by <tt>slot</tt>.  If the value points to data inside the nursery (the first heap-generation), then the garbage collector will remember to handle the data appropriately. Assigning nursery-pointers directly will otherwise result in lost data. Note that no copying takes place at the moment when <tt>C_mutate</tt> is called, but later - at the next (minor) garbage collection.</p><a href="C interface.html#c_symbol_value">
+<a class="dashingAutolink" name="autolink-10"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/C_symbol_value"></a><h3 id="c_symbol_value">C_symbol_value</h3></a>
+<pre><tt>[C macro] C_word C_symbol_value (C_word symbol)</tt></pre>
+<p>Returns the global value of the variable with the name <tt>symbol</tt>. If the variable is unbound <tt>C_SCHEME_UNBOUND</tt> is returned. You can set a variable&#39;s value with <tt>C_mutate(&amp;C_symbol_value(SYMBOL), VALUE)</tt>.</p><a href="C interface.html#gc-interface">
+<a class="dashingAutolink" name="autolink-11"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/GC%20interface"></a><h3 id="gc-interface">GC interface</h3></a><a href="C interface.html#c_gc_protect">
+<h4 id="c_gc_protect">C_gc_protect</h4></a>
+<pre><tt>[C function] void C_gc_protect (C_word *ptrs[], int n)</tt></pre>
+<p>Registers <tt>n</tt> variables at address <tt>ptrs</tt> to be garbage collection roots. The locations should not contain pointers to data allocated in the nursery, only immediate values or pointers to heap-data are valid. Any assignment of potential nursery data into a root-array should be done via <tt>C_mutate()</tt>. The variables have to be initialized to sensible values before the next garbage collection starts (when in doubt, set all locations in <tt>ptrs</tt> to <tt>C_SCHEME_UNDEFINED</tt>) <tt>C_gc_protect</tt> may not called before the runtime system has been initialized (either by <tt>CHICKEN_initialize</tt>, <tt>CHICKEN_run</tt> or <tt>CHICKEN_invoke</tt>.</p>
+<p>For a slightly simpler interface to creating and using GC roots see <tt>CHICKEN_new_gc_root</tt>.</p><a href="C interface.html#c_gc_unprotect">
+<h4 id="c_gc_unprotect">C_gc_unprotect</h4></a>
+<pre><tt>[C function] void C_gc_unprotect (int n)</tt></pre>
+<p>Removes the last <tt>n</tt> registered variables from the set of root variables.</p><a href="C interface.html#c_pre_gc_hook">
+<h4 id="c_pre_gc_hook">C_pre_gc_hook</h4></a>
+<pre><tt>[C Variable] void (*C_pre_gc_hook)(int mode)</tt></pre>
+<p>If not <tt>NULL</tt>, the function pointed to by this variable will be called before each garbage collection with a flag indicating what kind of collection was performed (either <tt>0</tt> for a minor or major collection or <tt>2</tt> for a resizing collection). A &#34;resizing&#34; collection means a secondary collection that moves all live data into a enlarged (or shrinked) heap-space. Minor collections happen very frequently, so the hook function should not consume too much time. The hook function may not invoke Scheme callbacks.</p>
+<p>Note that resizing collections may be nested in normal major collections.</p><a href="C interface.html#c_post_gc_hook">
+<h4 id="c_post_gc_hook">C_post_gc_hook</h4></a>
+<pre><tt>[C Variable] void (*C_post_gc_hook)(int mode, long ms)</tt></pre>
+<p>If not <tt>NULL</tt>, the function pointed to by this variable will be called after each garbage collection with a flag indicating what kind of collection was performed (either <tt>0</tt> for a minor collection, <tt>1</tt> for a major collection or <tt>2</tt> for a resizing collection). Minor collections happen very frequently, so the hook function should not consume too much time. The hook function may not invoke Scheme callbacks. The <tt>ms</tt> argument records the number of milliseconds required for the garbage collection, if the collection was a major one. For minor collections the value of the <tt>ms</tt> argument is undefined.</p><a href="C interface.html#type-specific-macros-and-functions">
+<a class="dashingAutolink" name="autolink-12"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Type-specific%20macros%20and%20functions"></a><h3 id="type-specific-macros-and-functions">Type-specific macros and functions</h3></a>
+<p>The following are macros and functions to ask information or perform operations on objects once their types are already known.  If you call it on any object of another type, it is not defined what will happen and likely your program will crash, especially if you pass immediates to procedures expecting non-immediates.</p><a href="C interface.html#vectors">
+<h4 id="vectors">Vectors</h4></a><a href="C interface.html#c_vemptyp">
+<h5 id="c_vemptyp">C_vemptyp</h5></a>
+<pre><tt>[C macro] C_word C_vemptyp(C_word v)</tt></pre>
+<p>Is the (byte- or heterogenous) vector <tt>v</tt> empty?</p><a href="C interface.html#c_notvemptyp">
+<h5 id="c_notvemptyp">C_notvemptyp</h5></a>
+<pre><tt>[C macro] C_word C_notvemptyp(C_word v)</tt></pre>
+<p>Is the (byte- or heterogenous) vector <tt>v</tt> nonempty?</p><a href="C interface.html#numbers">
+<h4 id="numbers">Numbers</h4></a>
+<p>These procedures accept any type of number, so you can pass in a fixnum, a flonum, a bignum, a ratnum or a cplxnum.  You shouldn&#39;t pass in another type though, since that could crash your program.</p><a href="C interface.html#c_u_i_exactp">
+<h5 id="c_u_i_exactp">C_u_i_exactp</h5></a>
+<pre><tt>[C macro] C_word C_u_i_exactp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> an exact number (i.e., a fixnum, bignum, ratnum or exact cplxnum)?</p><a href="C interface.html#c_u_i_inexactp">
+<h5 id="c_u_i_inexactp">C_u_i_inexactp</h5></a>
+<pre><tt>[C macro] C_word C_u_i_inexactp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> an inexact number (i.e., a flonum or an inexact cplxnum)?</p><a href="C interface.html#c_i_finitep">
+<h5 id="c_i_finitep">C_i_finitep</h5></a>
+<pre><tt>[C function] C_word C_i_finitep(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a finite number?  This returns false only when <tt>x</tt> is a flonum representing <tt>-inf</tt> or <tt>+inf</tt>.</p><a href="C interface.html#bignums">
+<h4 id="bignums">Bignums</h4></a><a href="C interface.html#c_bignum_negativep">
+<h5 id="c_bignum_negativep">C_bignum_negativep</h5></a>
+<pre><tt>[C macro] int C_bignum_negativep(C_word b)</tt></pre>
+<p>Returns nonzero if the bignum <tt>b</tt> is negative, zero if it is not.</p><a href="C interface.html#c_bignum_digits">
+<h5 id="c_bignum_digits">C_bignum_digits</h5></a>
+<pre><tt>[C macro] C_uword *C_bignum_digits(C_word b)</tt></pre>
+<p>Returns a pointer to the first digit (the least significant one) of the bignum <tt>b</tt>.</p><a href="C interface.html#c_bignum_size">
+<h5 id="c_bignum_size">C_bignum_size</h5></a>
+<pre><tt>[C macro] C_word C_bignum_size(b)</tt></pre>
+<p>Returns the number of digits in the bignum <tt>b</tt>, as an unboxed C number.  If you want a fixnum, use <tt>C_u_i_bignum_size</tt>.</p><a href="C interface.html#c_u_i_bignum_size">
+<h5 id="c_u_i_bignum_size">C_u_i_bignum_size</h5></a>
+<pre><tt>[C macro] C_word C_u_i_bignum_size(b)</tt></pre>
+<p>Returns the number of digits in the bignum <tt>b</tt>, as a Scheme fixnum.  If you want an unboxed integer, use <tt>C_bignum_size</tt>.</p><a href="C interface.html#c_i_bignum_cmp">
+<h5 id="c_i_bignum_cmp">C_i_bignum_cmp</h5></a>
+<pre><tt>[C macro] C_word C_i_bignum_cmp(x, y)</tt></pre>
+<p>Compares the bignums <tt>x</tt> and <tt>y</tt> and returns the fixnums <tt>-1</tt>, <tt>0</tt> or <tt>1</tt> if <tt>x</tt> is less than, equal to or greater than <tt>y</tt>, respectively.</p><a href="C interface.html#fixnums">
+<h4 id="fixnums">Fixnums</h4></a>
+<p>Note: Fixnums are immediates, so there is no <tt>C_fixnum_equalp</tt> macro.  You can just compare them without hassle (or use <a href="C interface.html#c-eqp" class="internal">C_eqp</a> if you prefer).</p><a href="C interface.html#c_i_fixnumevenp">
+<h5 id="c_i_fixnumevenp">C_i_fixnumevenp</h5></a>
+<pre><tt>[C macro] C_word C_i_fixnumevenp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> an even fixnum?</p><a href="C interface.html#c_i_fixnumoddp">
+<h5 id="c_i_fixnumoddp">C_i_fixnumoddp</h5></a>
+<pre><tt>[C macro] C_word C_i_fixnumoddp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> an odd fixnum?</p><a href="C interface.html#c_fixnum_times">
+<h5 id="c_fixnum_times">C_fixnum_times</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_times(C_word n1, C_word n2)</tt></pre>
+<p>Multiply fixnum n1 by fixnum n2.  Will not overflow into a bignum, but will handle overflows safely in the sense that it always produces a fixnum.</p><a href="C interface.html#c_a_i_fixnum_times">
+<h5 id="c_a_i_fixnum_times">C_a_i_fixnum_times</h5></a>
+<pre><tt>[C macro] C_word C_a_i_fixnum_times(C_word **ptr, C_word n, C_word x, C_word y)</tt></pre>
+<p>Calculate <tt>x</tt> * <tt>y</tt>, safely overflowing into a bignum, using the storage in <tt>ptr</tt> (which should be at least <tt>C_SIZEOF_BIGNUM(2)</tt>).</p><a href="C interface.html#c_fixnum_plus">
+<h5 id="c_fixnum_plus">C_fixnum_plus</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_plus(C_word n1, C_word n2)</tt></pre>
+<p>Add fixnum <tt>n1</tt> to fixnum <tt>n2</tt>.  Will not overflow into a bignum, but will handle overflows safely in the sense that it always produces a fixnum.</p><a href="C interface.html#c_u_fixnum_plus">
+<h5 id="c_u_fixnum_plus">C_u_fixnum_plus</h5></a>
+<pre><tt>[C macro] C_word C_u_fixnum_plus(C_word n1, C_word n2)</tt></pre>
+<p>Like <tt>C_fixnum_plus</tt>, but unsafe (assumes no overflow/underflow).</p><a href="C interface.html#c_a_i_fixnum_plus">
+<h5 id="c_a_i_fixnum_plus">C_a_i_fixnum_plus</h5></a>
+<pre><tt>[C macro] C_word C_a_i_fixnum_plus(C_word **ptr, C_word n, C_word x, C_word y)</tt></pre>
+<p>Calculate <tt>x</tt> + <tt>y</tt>, safely overflowing into a bignum, using the storage in <tt>ptr</tt> (which should be at least <tt>C_SIZEOF_FIX_BIGNUM</tt>).</p><a href="C interface.html#c_fixnum_difference">
+<h5 id="c_fixnum_difference">C_fixnum_difference</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_difference(C_word n1, C_word n2)</tt></pre>
+<p>Calculate <tt>n1</tt> - <tt>n2</tt>.  Will not overflow into a bignum, but will handle overflows safely in the sense that it always produces a fixnum.</p><a href="C interface.html#c_u_fixnum_difference">
+<h5 id="c_u_fixnum_difference">C_u_fixnum_difference</h5></a>
+<pre><tt>[C macro] C_word C_u_fixnum_difference(C_word n1, C_word n2)</tt></pre>
+<p>Like <tt>C_fixnum_difference</tt>, but unsafe (assumes no overflow/underflow).</p><a href="C interface.html#c_a_i_fixnum_difference">
+<h5 id="c_a_i_fixnum_difference">C_a_i_fixnum_difference</h5></a>
+<pre><tt>[C macro] C_word C_a_i_fixnum_difference(C_word **ptr, C_word n, C_word x, C_word y)</tt></pre>
+<p>Calculate <tt>x</tt> - <tt>y</tt>, safely overflowing into a bignum, using the storage in <tt>ptr</tt> (which should be at least <tt>C_SIZEOF_FIX_BIGNUM</tt>).</p><a href="C interface.html#c_fixnum_divide">
+<h5 id="c_fixnum_divide">C_fixnum_divide</h5></a><a href="C interface.html#c_u_fixnum_divide">
+<h5 id="c_u_fixnum_divide">C_u_fixnum_divide</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_divide(C_word n1, C_word n2)
+[C macro] C_word C_u_fixnum_divide(C_word n1, C_word n2)</tt></pre>
+<p>Divide <tt>n1</tt> by <tt>n2</tt>, returning the quotient (i.e., integer division). <tt>C_fixnum_divide</tt> signals an error if <tt>n2</tt> is zero.</p><a href="C interface.html#c_fixnum_modulo">
+<h5 id="c_fixnum_modulo">C_fixnum_modulo</h5></a><a href="C interface.html#c_u_fixnum_modulo">
+<h5 id="c_u_fixnum_modulo">C_u_fixnum_modulo</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_modulo(C_word n1, C_word n2)
+[C macro] C_word C_u_fixnum_modulo(C_word n1, C_word n2)</tt></pre>
+<p>Calculate <tt>n1</tt> modulo <tt>n2</tt>. <tt>C_fixnum_modulo</tt> signals an error if <tt>n2</tt> is zero.  Neither handles overflow into bignums.</p><a href="C interface.html#c_a_i_fixnum_quotient_checked">
+<h5 id="c_a_i_fixnum_quotient_checked">C_a_i_fixnum_quotient_checked</h5></a>
+<pre><tt>[C macro] C_word C_a_i_fixnum_quotient_checked(C_word **ptr, C_word n, C_word x, C_word y)</tt></pre>
+<p>Calculate integer division of <tt>x</tt> / <tt>y</tt>, safely overflowing into a bignum (which can happen when dividing by <tt>C_MOST_NEGATIVE_FIXNUM</tt>), using the storage in <tt>ptr</tt> (which should be at least <tt>C_SIZEOF_FIX_BIGNUM</tt>).  If <tt>y</tt> is zero, this will signal an error.</p><a href="C interface.html#c_i_fixnum_remainder_checked">
+<h5 id="c_i_fixnum_remainder_checked">C_i_fixnum_remainder_checked</h5></a>
+<pre><tt>[C macro] C_word C_i_fixnum_remainder_checked(C_word x, C_word y)</tt></pre>
+<p>Calculate the remainder of integer division <tt>x</tt> / <tt>y</tt>.  If <tt>y</tt> is zero, this will signal an error.</p><a href="C interface.html#c_fixnum_and">
+<h5 id="c_fixnum_and">C_fixnum_and</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_and(C_word n1, C_word n2)</tt></pre>
+<p>Calculate the bitwise <tt>AND</tt> of the integral values of <tt>n1</tt> and <tt>n2</tt>.</p><a href="C interface.html#c_u_fixnum_and">
+<h5 id="c_u_fixnum_and">C_u_fixnum_and</h5></a>
+<pre><tt>[C macro] C_word C_u_fixnum_and(C_word n1, C_word n2)</tt></pre>
+<p>Like <tt>C_fixnum_and</tt>, but unsafe.</p><a href="C interface.html#c_fixnum_or">
+<h5 id="c_fixnum_or">C_fixnum_or</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_or(C_word n1, C_word n2)</tt></pre>
+<p>Calculate the bitwise <tt>OR</tt> of the integral values of <tt>n1</tt> and <tt>n2</tt>.</p><a href="C interface.html#c_u_fixnum_or">
+<h5 id="c_u_fixnum_or">C_u_fixnum_or</h5></a>
+<pre><tt>[C macro] C_word C_u_fixnum_or(C_word n1, C_word n2)</tt></pre>
+<p>Like <tt>C_fixnum_or</tt>, but unsafe.</p><a href="C interface.html#c_fixnum_xor">
+<h5 id="c_fixnum_xor">C_fixnum_xor</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_xor(C_word n1, C_word n2)</tt></pre>
+<p>Calculate the bitwise <tt>XOR</tt> of the integral values of <tt>n1</tt> and <tt>n2</tt>.</p><a href="C interface.html#c_fixnum_not">
+<h5 id="c_fixnum_not">C_fixnum_not</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_not(C_word n)</tt></pre>
+<p>Calculate the bitwise <tt>NOT</tt> (inversion of bits) of the integral value of <tt>n</tt>.</p><a href="C interface.html#c_fixnum_shift_left">
+<h5 id="c_fixnum_shift_left">C_fixnum_shift_left</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_shift_left(C_word n1, C_word n2)</tt></pre>
+<p>Shift the integral value of <tt>n1</tt> left by <tt>n2</tt> positions.</p><a href="C interface.html#c_fixnum_shift_right">
+<h5 id="c_fixnum_shift_right">C_fixnum_shift_right</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_shift_right(C_word n1, C_word n2)</tt></pre>
+<p>Shift the integral value of <tt>n1</tt> right by <tt>n2</tt></p><a href="C interface.html#c_fixnum_negate">
+<h5 id="c_fixnum_negate">C_fixnum_negate</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_negate(C_word n)</tt></pre>
+<p>Negate <tt>n</tt>, i.e. return <tt>-n</tt>.  This will <i>not</i> overflow into a bignum.</p><a href="C interface.html#c_a_i_fixnum_negate">
+<h5 id="c_a_i_fixnum_negate">C_a_i_fixnum_negate</h5></a>
+<pre><tt>[C macro] C_word C_a_i_fixnum_negate(C_word **ptr, C_word n, C_word x)</tt></pre>
+<p>Negate <tt>n</tt>, i.e. return <tt>-n</tt>.  This will not overflow into a bignum, using the storage pointed to by <tt>ptr</tt>, which should at least be <tt>C_SIZEOF_FIX_BIGNUM</tt>.</p><a href="C interface.html#c_fixnum_greaterp">
+<h5 id="c_fixnum_greaterp">C_fixnum_greaterp</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_greaterp(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> is greater than <tt>n2</tt>, <tt>C_SCHEME_FALSE</tt> if not.</p><a href="C interface.html#c_fixnum_greater_or_equal_p">
+<h5 id="c_fixnum_greater_or_equal_p">C_fixnum_greater_or_equal_p</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_greater_or_equalp(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> is greater than or equal to <tt>n2</tt>, <tt>C_SCHEME_FALSE</tt> if not.</p><a href="C interface.html#c_fixnum_lessp">
+<h5 id="c_fixnum_lessp">C_fixnum_lessp</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_lessp(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> is less than <tt>n2</tt>, <tt>C_SCHEME_FALSE</tt> if not.</p><a href="C interface.html#c_fixnum_less_or_equal_p">
+<h5 id="c_fixnum_less_or_equal_p">C_fixnum_less_or_equal_p</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_less_or_equalp(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> is less than or equal to <tt>n2</tt>, <tt>C_SCHEME_FALSE</tt> if not.</p><a href="C interface.html#c_i_fixnum_positivep">
+<h5 id="c_i_fixnum_positivep">C_i_fixnum_positivep</h5></a>
+<pre><tt>[C macro] C_word C_i_fixnum_positivep(C_word n)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n</tt> is a positive fixnum, <tt>C_SCHEME_FALSE</tt> if it is zero or negative.</p><a href="C interface.html#c_i_fixnum_negativep">
+<h5 id="c_i_fixnum_negativep">C_i_fixnum_negativep</h5></a>
+<pre><tt>[C macro] C_word C_i_fixnum_negativep(C_word n)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n</tt> is a negative fixnum, <tt>C_SCHEME_FALSE</tt> if it is zero or positive.</p><a href="C interface.html#c_fixnum_increase">
+<h5 id="c_fixnum_increase">C_fixnum_increase</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_increase(C_word n)</tt></pre>
+<p>Adds 1 to <tt>n</tt></p><a href="C interface.html#c_u_fixnum_increase">
+<h5 id="c_u_fixnum_increase">C_u_fixnum_increase</h5></a>
+<pre><tt>[C macro] C_word C_u_fixnum_increase(C_word n)</tt></pre>
+<p>As <tt>C_fixnum_increase</tt>, but unsafe (assumes the result will not overflow).</p><a href="C interface.html#c_fixnum_decrease">
+<h5 id="c_fixnum_decrease">C_fixnum_decrease</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_decrease(C_word n)</tt></pre>
+<p>Subtracts 1 from <tt>n</tt></p><a href="C interface.html#c_u_fixnum_decrease">
+<h5 id="c_u_fixnum_decrease">C_u_fixnum_decrease</h5></a>
+<pre><tt>[C macro] C_word C_u_fixnum_decrease(C_word n)</tt></pre>
+<p>As <tt>C_fixnum_increase</tt>, but unsafe (assumes the result will not underflow).</p><a href="C interface.html#c_fixnum_abs">
+<h5 id="c_fixnum_abs">C_fixnum_abs</h5></a>
+<pre><tt>[C macro] C_word C_fixnum_abs(C_word n)</tt></pre>
+<p>Returns the absolute value of <tt>n</tt>.</p><a href="C interface.html#c_i_fixnum_min">
+<h5 id="c_i_fixnum_min">C_i_fixnum_min</h5></a>
+<pre><tt>[C function] C_word C_i_fixnum_min(C_word n1, C_word n2)</tt></pre>
+<p>Returns the smallest of the two fixnums <tt>n1</tt> and <tt>n2</tt>.</p><a href="C interface.html#c_i_fixnum_max">
+<h5 id="c_i_fixnum_max">C_i_fixnum_max</h5></a>
+<pre><tt>[C function] C_word C_i_fixnum_max(C_word n1, C_word n2)</tt></pre>
+<p>Returns the largest of the two fixnums <tt>n1</tt> and <tt>n2</tt>.</p><a href="C interface.html#c_i_fixnum_gcd">
+<h5 id="c_i_fixnum_gcd">C_i_fixnum_gcd</h5></a>
+<pre><tt>[C function] C_word C_i_fixnum_gcd(C_word n1, C_word n2)</tt></pre>
+<p>Returns the greatest common divisor of the two fixnums <tt>n1</tt> and <tt>n2</tt>.</p><a href="C interface.html#c_i_fixnum_length">
+<h5 id="c_i_fixnum_length">C_i_fixnum_length</h5></a>
+<pre><tt>[C function] C_word C_i_fixnum_length(C_word x)</tt></pre>
+<p>Returns the integer length in bits of the fixnum <tt>x</tt> (as a fixnum).</p><a href="C interface.html#flonums">
+<h4 id="flonums">Flonums</h4></a><a href="C interface.html#c_flonum_equalp">
+<h5 id="c_flonum_equalp">C_flonum_equalp</h5></a>
+<pre><tt>[C macro] C_word C_flonum_equalp(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> and <tt>n2</tt> are equal flonums, <tt>C_SCHEME_FALSE</tt> otherwise.</p><a href="C interface.html#c_flonum_greaterp">
+<h5 id="c_flonum_greaterp">C_flonum_greaterp</h5></a>
+<pre><tt>[C macro] C_word C_flonum_greaterp(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> is greater than <tt>n2</tt>, <tt>C_SCHEME_FALSE</tt> if not.</p><a href="C interface.html#c_flonum_greater_or_equal_p">
+<h5 id="c_flonum_greater_or_equal_p">C_flonum_greater_or_equal_p</h5></a>
+<pre><tt>[C macro] C_word C_flonum_greater_or_equal_p(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> is greater than or equal to <tt>n2</tt>, <tt>C_SCHEME_FALSE</tt> if not.</p><a href="C interface.html#c_flonum_lessp">
+<h5 id="c_flonum_lessp">C_flonum_lessp</h5></a>
+<pre><tt>[C macro] C_word C_flonum_lessp(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> is less than <tt>n2</tt>, <tt>C_SCHEME_FALSE</tt> if not.</p><a href="C interface.html#c_flonum_less_or_equal_p">
+<h5 id="c_flonum_less_or_equal_p">C_flonum_less_or_equal_p</h5></a>
+<pre><tt>[C macro] C_word C_flonum_less_or_equal_p(C_word n1, C_word n2)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n1</tt> is less than or equal to <tt>n2</tt>, <tt>C_SCHEME_FALSE</tt> if not.</p><a href="C interface.html#c_a_i_flonum_plus">
+<h5 id="c_a_i_flonum_plus">C_a_i_flonum_plus</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_plus(C_word **ptr, int c, C_word n1, C_word n2)</tt></pre>
+<p>Adds the flonum <tt>n1</tt> to the flonum <tt>n2</tt>, using the storage at <tt>ptr</tt>.  <tt>c</tt> should always be 2.</p>
+<p>Example:</p>
+<pre><tt class="highlight scheme-language">#include &lt;chicken.h&gt;
+#include &lt;stdio.h&gt;
+
+int main<span class="paren1">(<span class="default">void</span>)</span>
+{
+  C_word *mema, *memb, *memresult<span class="comment">;
+</span>  C_word a, b, result<span class="comment">;
+</span>
+  mema = C_alloc<span class="paren1">(<span class="default">C_SIZEOF_FLONUM</span>)</span><span class="comment">;
+</span>  memb = C_alloc<span class="paren1">(<span class="default">C_SIZEOF_FLONUM</span>)</span><span class="comment">;
+</span>  memresult = C_alloc<span class="paren1">(<span class="default">C_SIZEOF_FLONUM</span>)</span><span class="comment">;
+</span>  a = C_flonum<span class="paren1">(<span class="default">&amp;mema, 1.2</span>)</span><span class="comment">;
+</span>  b = C_flonum<span class="paren1">(<span class="default">&amp;memb, 4.7</span>)</span><span class="comment">;
+</span>  result = C_a_i_flonum_plus<span class="paren1">(<span class="default">&amp;memresult, 2, a, b</span>)</span><span class="comment">;
+</span>  printf<span class="paren1">(<span class="default"><span class="string">&#34;%lf</span><span class="string">\n</span><span class="string">&#34;</span>, C_flonum_magnitude<span class="paren2">(<span class="default">result</span>)</span></span>)</span><span class="comment">;
+</span>  return 0<span class="comment">;
+</span>}</tt></pre>
+<p>This will print <tt>5.9</tt></p><a href="C interface.html#c_a_i_flonum_difference">
+<h5 id="c_a_i_flonum_difference">C_a_i_flonum_difference</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_difference(C_word **ptr, int c, C_word n1, C_word n2)</tt></pre>
+<p>Subtracts the flonum <tt>n2</tt> from the flonum <tt>n1</tt>, using the storage at <tt>ptr</tt>.  <tt>c</tt> should always be 2.</p><a href="C interface.html#c_a_i_flonum_times">
+<h5 id="c_a_i_flonum_times">C_a_i_flonum_times</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_times(C_word **ptr, int c, C_word n1, C_word n2)</tt></pre>
+<p>Multiplies the flonum <tt>n1</tt> by the flonum <tt>n2</tt>, using the storage at <tt>ptr</tt>.  <tt>c</tt> should always be 2.</p><a href="C interface.html#c_a_i_flonum_quotient">
+<h5 id="c_a_i_flonum_quotient">C_a_i_flonum_quotient</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_quotient(C_word **ptr, int c, C_word n1, C_word n2)
+[C macro] C_word C_a_i_flonum_quotient_checked(C_word **ptr, int c, C_word n1, C_word n2)</tt></pre>
+<p>These are misnamed because they don&#39;t calculate the Scheme &#34;quotient&#34;, but the simple result of flonum <tt>n1</tt> divided by the flonum <tt>n2</tt>, using the storage at <tt>ptr</tt>.  <tt>c</tt> should always be 2.</p>
+<p><tt>C_a_i_flonum_checked</tt> will signal an error if <tt>n2</tt> is zero.</p><a href="C interface.html#c_a_i_flonum_actual_quotient_checked">
+<h5 id="c_a_i_flonum_actual_quotient_checked">C_a_i_flonum_actual_quotient_checked</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_actual_quotient_checked(C_word **ptr, int c, C_word n1, C_word n2)</tt></pre>
+<p>Due to the misnaming of <tt>C_a_i_flonum_quotient[_checked]</tt>, this function has a peculiar name.  It calculates the Scheme integer quotient of <tt>n1</tt> divided by <tt>n2</tt>, using the storage at <tt>ptr</tt>. <tt>c</tt> should always be 2.</p>
+<p>If <tt>n2</tt> is zero or either of the numbers is not an integral flonum, an error will be signaled.</p><a href="C interface.html#c_a_i_flonum_gcd">
+<h5 id="c_a_i_flonum_gcd">C_a_i_flonum_gcd</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_gcd(C_word **ptr, int c, C_word n1, C_word n2)</tt></pre>
+<p>Calculates the greatest common divisor of the flonums <tt>n1</tt> and <tt>n2</tt>, using the storage at <tt>ptr</tt>.  <tt>c</tt> should always be 2.</p><a href="C interface.html#c_a_i_flonum_negate">
+<h5 id="c_a_i_flonum_negate">C_a_i_flonum_negate</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_negate(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Negates the flonum <tt>n</tt>, using the storage at <tt>ptr</tt>. <tt>c</tt> should always be 1.</p><a href="C interface.html#c_a_i_flonum_truncate">
+<h5 id="c_a_i_flonum_truncate">C_a_i_flonum_truncate</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_truncate(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Truncate the flonum <tt>n</tt>, using the storage at <tt>ptr</tt>. <tt>c</tt> should always be 1.</p><a href="C interface.html#c_a_i_flonum_ceiling">
+<h5 id="c_a_i_flonum_ceiling">C_a_i_flonum_ceiling</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_ceiling(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Round the flonum <tt>n</tt>, rounding upwards, using the storage at <tt>ptr</tt>. <tt>c</tt> should always be 1.</p><a href="C interface.html#c_a_i_flonum_floor">
+<h5 id="c_a_i_flonum_floor">C_a_i_flonum_floor</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_floor(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Round the flonum <tt>n</tt>, rounding downwards, using the storage at <tt>ptr</tt>. <tt>c</tt> should always be 1.</p><a href="C interface.html#c_a_i_flonum_round">
+<h5 id="c_a_i_flonum_round">C_a_i_flonum_round</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_round(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Round the flonum <tt>n</tt>, rounding towards the nearest integer, using the storage at <tt>ptr</tt>. <tt>c</tt> should always be 1.</p>
+<p>This macro returns the value like returned by C&#39;s <tt>round()</tt> function.  That means it rounds to the larger value (away from 0) when rounding numbers halfway between two integers.</p><a href="C interface.html#c_a_i_flonum_round_proper">
+<h5 id="c_a_i_flonum_round_proper">C_a_i_flonum_round_proper</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_round_proper(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Round the flonum <tt>n</tt>, rounding towards the nearest integer, using the storage at <tt>ptr</tt>. <tt>c</tt> should always be 1.</p>
+<p>This macro returns the value like returned by Scheme&#39;s <tt>round</tt> procedure.  That means it rounds to even numbers when rounding numbers halfway between two integers.</p><a href="C interface.html#c_a_i_flonum_sin">
+<h5 id="c_a_i_flonum_sin">C_a_i_flonum_sin</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_sin(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the sine of <tt>n</tt> (in radians).</p><a href="C interface.html#c_a_i_flonum_cos">
+<h5 id="c_a_i_flonum_cos">C_a_i_flonum_cos</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_cos(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the cosine of <tt>n</tt> (in radians).</p><a href="C interface.html#c_a_i_flonum_tan">
+<h5 id="c_a_i_flonum_tan">C_a_i_flonum_tan</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_tan(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the tangent of <tt>n</tt> (in radians).</p><a href="C interface.html#c_a_i_flonum_asin">
+<h5 id="c_a_i_flonum_asin">C_a_i_flonum_asin</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_asin(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the arc sine of <tt>n</tt> (in radians, in the range -pi/2 through +pi/2).</p><a href="C interface.html#c_a_i_flonum_acos">
+<h5 id="c_a_i_flonum_acos">C_a_i_flonum_acos</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_acos(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the arc cosine of <tt>n</tt> (in radians, in the range 0 through pi).</p><a href="C interface.html#c_a_i_flonum_atan">
+<h5 id="c_a_i_flonum_atan">C_a_i_flonum_atan</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_atan(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the arc tangent of <tt>n</tt> (in radians, in the range -pi/2 through +pi/2).</p>
+<p>Like C&#39;s <tt>atan()</tt> or Scheme&#39;s unary <tt>atan</tt>.</p><a href="C interface.html#c_a_i_flonum_atan2">
+<h5 id="c_a_i_flonum_atan2">C_a_i_flonum_atan2</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_atan2(C_word **ptr, int c, C_word n1, C_word n2)</tt></pre>
+<p>Calculates the arc tangent of <tt>n1/n2</tt> (in radians), using the sign of both to determine the quadrant of the result.</p>
+<p>Like C&#39;s <tt>atan2()</tt> or Scheme&#39;s binary <tt>atan</tt>.</p><a href="C interface.html#c_a_i_flonum_log">
+<h5 id="c_a_i_flonum_log">C_a_i_flonum_log</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_log(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculate the natural (base <tt>e</tt>) logarithm of <tt>n</tt>.</p><a href="C interface.html#c_a_i_flonum_exp">
+<h5 id="c_a_i_flonum_exp">C_a_i_flonum_exp</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_exp(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the base <tt>e</tt> exponent of <tt>n</tt> (i.e., the inverse operation of <tt>C_a_i_flonum_log</tt>).</p><a href="C interface.html#c_a_i_flonum_expt">
+<h5 id="c_a_i_flonum_expt">C_a_i_flonum_expt</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_expt(C_word **ptr, int c, C_word n1, C_word n2)</tt></pre>
+<p>Calculates <tt>n1</tt> raised to the power <tt>n2</tt>.</p><a href="C interface.html#c_a_i_flonum_sqrt">
+<h5 id="c_a_i_flonum_sqrt">C_a_i_flonum_sqrt</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_sqrt(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the square root of <tt>n</tt>.</p><a href="C interface.html#c_a_i_flonum_abs">
+<h5 id="c_a_i_flonum_abs">C_a_i_flonum_abs</h5></a>
+<pre><tt>[C macro] C_word C_a_i_flonum_abs(C_word **ptr, int c, C_word n)</tt></pre>
+<p>Calculates the absolute value of <tt>n</tt>.</p><a href="C interface.html#c_u_i_flonum_nanp">
+<h5 id="c_u_i_flonum_nanp">C_u_i_flonum_nanp</h5></a>
+<pre><tt>[C macro] C_word C_u_i_flonum_nanp(C_word n)</tt></pre>
+<p>Is <tt>n</tt> a flonum NaN value?</p><a href="C interface.html#c_u_i_flonum_finitep">
+<h5 id="c_u_i_flonum_finitep">C_u_i_flonum_finitep</h5></a>
+<pre><tt>[C macro] C_word C_u_i_flonum_finitep(C_word n)</tt></pre>
+<p>Is <tt>n</tt> a finite flonum (i.e., not NaN or one of the infinities)?</p><a href="C interface.html#c_u_i_flonum_infinitep">
+<h5 id="c_u_i_flonum_infinitep">C_u_i_flonum_infinitep</h5></a>
+<pre><tt>[C macro] C_word C_u_i_flonum_infinitep(C_word n)</tt></pre>
+<p>Is <tt>n</tt> an infinite flonum?</p><a href="C interface.html#exact-integers">
+<h4 id="exact-integers">Exact integers</h4></a>
+<p>Often you know a value is an integer, but you don&#39;t know whether it&#39;s a fixnum or a bignum.  In those cases, there are some optimized C functions and macros to perform operations on them.</p><a href="C interface.html#c_i_integer_evenp">
+<h5 id="c_i_integer_evenp">C_i_integer_evenp</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_evenp(C_word n)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n</tt> is an even fixnum or bignum, <tt>C_SCHEME_FALSE</tt> if it is odd.</p><a href="C interface.html#c_i_integer_oddp">
+<h5 id="c_i_integer_oddp">C_i_integer_oddp</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_oddp(C_word n)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n</tt> is an odd fixnum or bignum, <tt>C_SCHEME_FALSE</tt> if it is even.</p><a href="C interface.html#c_i_integer_positivep">
+<h5 id="c_i_integer_positivep">C_i_integer_positivep</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_positivep(C_word n)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n</tt> is a positive fixnum or bignum, <tt>C_SCHEME_FALSE</tt> if it is zero or negative.</p><a href="C interface.html#c_i_integer_negativep">
+<h5 id="c_i_integer_negativep">C_i_integer_negativep</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_negativep(C_word n)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>n</tt> is a negative fixnum or bignum, <tt>C_SCHEME_FALSE</tt> if it is zero or positive.</p><a href="C interface.html#c_i_integer_equalp">
+<h5 id="c_i_integer_equalp">C_i_integer_equalp</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_equalp(x, y)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>x</tt> and <tt>y</tt> are numerically equal, <tt>C_SCHEME_FALSE</tt> if they differ.</p><a href="C interface.html#c_i_integer_greaterp">
+<h5 id="c_i_integer_greaterp">C_i_integer_greaterp</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_greaterp(x, y)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>x</tt> is greater than <tt>y</tt>, <tt>C_SCHEME_FALSE</tt> if it is equal or less.</p><a href="C interface.html#c_i_integer_greater_or_equalp">
+<h5 id="c_i_integer_greater_or_equalp">C_i_integer_greater_or_equalp</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_greaterp(x, y)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>x</tt> is greater than or equal to <tt>y</tt>, <tt>C_SCHEME_FALSE</tt> if it is less.</p><a href="C interface.html#c_i_integer_lessp">
+<h5 id="c_i_integer_lessp">C_i_integer_lessp</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_lessp(x, y)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>x</tt> is less than <tt>y</tt>, <tt>C_SCHEME_FALSE</tt> if it is equal or greater.</p><a href="C interface.html#c_i_integer_less_or_equalp">
+<h5 id="c_i_integer_less_or_equalp">C_i_integer_less_or_equalp</h5></a>
+<pre><tt>[C macro] C_word C_i_integer_less_or_equalp(x, y)</tt></pre>
+<p>Returns <tt>C_SCHEME_TRUE</tt> when <tt>x</tt> is less than or equal to <tt>y</tt>, <tt>C_SCHEME_FALSE</tt> if it is greater.</p><a href="C interface.html#pointers">
+<h4 id="pointers">Pointers</h4></a><a href="C interface.html#c_null_pointerp">
+<h5 id="c_null_pointerp">C_null_pointerp</h5></a>
+<pre><tt>[C macro] C_word C_null_pointerp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a NULL pointer?</p><a href="C interface.html#c_a_i_address_to_pointer">
+<h5 id="c_a_i_address_to_pointer">C_a_i_address_to_pointer</h5></a>
+<pre><tt>[C macro] C_word C_a_i_address_to_pointer(C_word **ptr, int c, C_word addr)</tt></pre>
+<p>Convert <tt>addr</tt> to a pointer object using the storage at <tt>ptr</tt>. <tt>addr</tt> is can be either a flonum or a fixnum representing a memory address.</p><a href="C interface.html#c_a_i_pointer_to_address">
+<h5 id="c_a_i_pointer_to_address">C_a_i_pointer_to_address</h5></a>
+<pre><tt>[C macro] C_word C_a_i_pointer_to_address(C_word **ptr, int c, C_word pptr)</tt></pre>
+<p>Convert back the pointer <tt>pptr</tt> to an address number, possibly using the storage at <tt>ptr</tt>.  The number returned can be either a fixnum or a flonum, so you will have to pass a memory storage that can hold a flonum at <tt>ptr</tt>.  Whether it is actually used depends on the size of the address.</p><a href="C interface.html#ports">
+<h4 id="ports">Ports</h4></a><a href="C interface.html#c_tty_portp">
+<h5 id="c_tty_portp">C_tty_portp</h5></a>
+<pre><tt>[C macro] C_word C_tty_portp(C_word x)</tt></pre>
+<p>Is <tt>x</tt> a TTY port object?</p><a href="C interface.html#structures">
+<h4 id="structures">Structures</h4></a><a href="C interface.html#c_i_structurep">
+<h5 id="c_i_structurep">C_i_structurep</h5></a>
+<pre><tt>[C macro] C_word C_i_structurep(C_word x, C_word s)</tt></pre>
+<p>Is <tt>x</tt> a structure (record) object with type tag <tt>s</tt>?  This is completely safe to use, because it checks whether x is an immediate or not.</p><a href="C interface.html#characters">
+<h4 id="characters">Characters</h4></a>
+<p>These understand only ASCII characters.</p><a href="C interface.html#c_u_i_char_alphabeticp">
+<h5 id="c_u_i_char_alphabeticp">C_u_i_char_alphabeticp</h5></a>
+<pre><tt>[C macro] C_word C_u_i_char_alphabeticp(C_word c)</tt></pre>
+<p>Is <tt>c</tt> an alphabetic character?</p><a href="C interface.html#c_u_i_char_numericp">
+<h5 id="c_u_i_char_numericp">C_u_i_char_numericp</h5></a>
+<pre><tt>[C macro] C_word C_u_i_char_numericp(C_word c)</tt></pre>
+<p>Is <tt>c</tt> a numeric character?</p><a href="C interface.html#c_u_i_char_whitespacep">
+<h5 id="c_u_i_char_whitespacep">C_u_i_char_whitespacep</h5></a>
+<pre><tt>[C macro] C_word C_u_i_char_whitespacep(C_word c)</tt></pre>
+<p>Is <tt>c</tt> a whitespace character?</p><a href="C interface.html#c_u_i_char_upper_casep">
+<h5 id="c_u_i_char_upper_casep">C_u_i_char_upper_casep</h5></a>
+<pre><tt>[C macro] C_word C_u_i_char_upper_casep(C_word c)</tt></pre>
+<p>Is <tt>c</tt> an uppercase character?</p><a href="C interface.html#c_u_i_char_lower_casep">
+<h5 id="c_u_i_char_lower_casep">C_u_i_char_lower_casep</h5></a>
+<pre><tt>[C macro] C_word C_u_i_char_lower_casep(C_word c)</tt></pre>
+<p>Is <tt>c</tt> a lowercase character?</p><a href="C interface.html#other-scheme-procedures-from-c">
+<a class="dashingAutolink" name="autolink-13"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Other%20Scheme%20procedures%20from%20C"></a><h3 id="other-scheme-procedures-from-c">Other Scheme procedures from C</h3></a>
+<p>There are a number of Scheme procedures that have a direct C implementation, so you can call them from C too.</p><a href="C interface.html#c_eqp">
+<h4 id="c_eqp">C_eqp</h4></a>
+<pre><tt>[C macro] C_word C_eqp(C_word a, C_word b)</tt></pre>
+<p>The C version of <tt>(eq? a b)</tt>.</p><a href="C interface.html#c_equalp">
+<h4 id="c_equalp">C_equalp</h4></a>
+<pre><tt>[C macro] C_word C_equalp(C_word a, C_word b)</tt></pre>
+<p>The C version of <tt>(equal? a b)</tt>.</p><a href="C interface.html#c_i_pairp">
+<h4 id="c_i_pairp">C_i_pairp</h4></a>
+<pre><tt>[C function] C_word C_i_pair_p(C_word x)</tt></pre>
+<p>The C version of <tt>(pair? x)</tt>.</p><a href="C interface.html#c_i_not_pair_p">
+<h4 id="c_i_not_pair_p">C_i_not_pair_p</h4></a>
+<pre><tt>[C macro] C_word C_i_not_pair_p(C_word x)</tt></pre>
+<p>The C version of <tt>(not (pair? x))</tt>.</p><a href="C interface.html#an-example-for-simple-calls-to-foreign-code-involving-callbacks">
+<a class="dashingAutolink" name="autolink-14"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/An%20example%20for%20simple%20calls%20to%20foreign%20code%20involving%20callbacks"></a><h3 id="an-example-for-simple-calls-to-foreign-code-involving-callbacks">An example for simple calls to foreign code involving callbacks</h3></a>
+<pre><tt>% cat foo.scm
+#&gt;
+extern int callout(int, int, int);
+&lt;#
+
+(define callout (foreign-safe-lambda int &#34;callout&#34; int int int))
+
+(define-external (callin (scheme-object xyz)) int
+  (print &#34;This is &#39;callin&#39;: &#34; xyz)
+  123)
+
+(print (callout 1 2 3))</tt></pre>
+<pre><tt>% cat bar.c
+#include &lt;stdio.h&gt;
+#include &#34;chicken.h&#34;
+
+extern int callout(int, int, int);
+extern int callin(C_word x);
+
+int callout(int x, int y, int z)
+{
+  C_word *ptr = C_alloc(C_SIZEOF_LIST(3));
+  C_word lst;
+
+  printf(&#34;This is &#39;callout&#39;: %d, %d, %d\n&#34;, x, y, z);
+  lst = C_list(&amp;ptr, 3, C_fix(x), C_fix(y), C_fix(z));
+  return callin(lst);  /* Note: `callin&#39; will have GC&#39;d the data in `ptr&#39; */
+}</tt></pre>
+<pre><tt>% csc foo.scm bar.c -o foo
+% foo
+This is &#39;callout&#39;: 1, 2, 3
+This is &#39;callin&#39;: (1 2 3)
+123</tt></pre><a href="C interface.html#notes">
+<a class="dashingAutolink" name="autolink-15"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Notes%3A"></a><h3 id="notes">Notes:</h3></a>
+<ul>
+<li>Scheme procedures can call C functions, and C functions can call Scheme procedures, but for every pending C stack frame, the available size of the first heap generation (the <i>nursery</i>) will be decreased, because the C stack is identical to the nursery. On systems with a small nursery this might result in thrashing, since the C code between the invocation of C from Scheme and the actual calling back to Scheme might build up several stack-frames or allocates large amounts of stack data. To prevent this it is advisable to increase the default nursery size, either when compiling the file (using the <tt>-nursery</tt> option) or when running the executable (using the <tt>-:s</tt> runtime option).</li>
+<li>Calls to Scheme/C may be nested arbitrarily, and Scheme continuations can be invoked as usual, but keep in mind that C stack frames will not be recovered, when a Scheme procedure call from C does not return normally.</li>
+<li>When multiple threads are running concurrently, and control switches from one thread to another, then the continuation of the current thread is captured and saved. Any pending C stack frame still active from a callback will remain on the stack until the threads is re-activated again. This means that in a multithreading situation, when C callbacks are involved, the available nursery space can be smaller than expected. So doing many nested Scheme-&gt;C-&gt;Scheme calls can reduce the available memory up to the point of thrashing. It is advisable to have only a single thread with pending C stack-frames at any given time.</li>
+<li>Pointers to Scheme data objects should not be stored in local or global variables while calling back to Scheme.  Any Scheme object not passed back to Scheme will be reclaimed or moved by the garbage collector.</li>
+<li>Calls from C to Scheme are never tail-recursive.</li>
+<li>Continuations captured via <tt>call-with-current-continuation</tt> and passed to C code can be invoked like any other Scheme procedure.</li></ul>
+<hr/>
+<p>Previous: <a href="Embedding.html" class="internal">Embedding</a></p>
+<p>Next: <a href="Data representation.html" class="internal">Data representation</a></p></div></body></html>

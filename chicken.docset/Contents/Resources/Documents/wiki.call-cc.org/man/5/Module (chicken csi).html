@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken csi) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20csi)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20csi)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20csi)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken csi).html#module-chicken-csi">Module (chicken csi)</a>
+<ol>
+<li><a href="Module (chicken csi).html#toplevel-command">toplevel-command</a></li>
+<li><a href="Module (chicken csi).html#set-describer">set-describer!</a></li>
+<li><a href="Module (chicken csi).html#editor-command">editor-command</a></li></ol></li></ol></div><a href="Module (chicken csi).html#module-chicken-csi">
+<a class="dashingAutolink" name="autolink-475"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20csi%29"></a><a class="dashingAutolink" name="autolink-479"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20csi%29"></a><h2 id="module-chicken-csi">Module (chicken csi)</h2></a>
+<p>This module provides procedures to access features specific to the <tt>csi</tt> interactive interpreter.</p><a href="Module (chicken csi).html#toplevel-command">
+<a class="dashingAutolink" name="autolink-476"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/toplevel-command"></a><h3 id="toplevel-command">toplevel-command</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-480"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28toplevel-command%20SYMBOL%20PROC%20%5BHELPSTRING%5D%29"></a><tt>(toplevel-command SYMBOL PROC [HELPSTRING])</tt>
+<br/></span>
+<p>Defines or redefines a toplevel interpreter command which can be invoked by entering <tt>,SYMBOL</tt>. <tt>PROC</tt> will be invoked when the command is entered and may read any required argument via <tt>read</tt> (or <tt>read-line</tt>). If the optional argument <tt>HELPSTRING</tt> is given, it will be listed by the <tt>,?</tt> command.</p><a href="Module (chicken csi).html#set-describer">
+<a class="dashingAutolink" name="autolink-477"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/set-describer%21"></a><h3 id="set-describer">set-describer!</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-481"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-describer%21%20TAG%20PROC%29"></a><tt>(set-describer! TAG PROC)</tt>
+<br/></span>
+<p>Sets a custom description handler that invokes <tt>PROC</tt> when the <tt>,d</tt> command is invoked with a record-type object that has the type <tt>TAG</tt> (a symbol). <tt>PROC</tt> is called with two arguments: the object to be described and an output-port. It should write a possibly useful textual description of the object to the passed output-port. For example:</p>
+<pre><tt>#;1&gt; (define-record-type point (make-point x y) point?
+       (x point-x)
+       (y point-y))
+#;2&gt; (set-describer! &#39;point 
+       (lambda (pt o)
+         (with-output-to-port o
+           (lambda ()
+             (print &#34;a point with x=&#34; (point-x pt) &#34; and y=&#34; (point-y pt))))))
+#;3&gt; ,d (make-point 1 2)
+a point with x=1 and y=2</tt></pre><a href="Module (chicken csi).html#editor-command">
+<a class="dashingAutolink" name="autolink-478"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/editor-command"></a><h3 id="editor-command">editor-command</h3></a><span class="definition parameter"><em>[parameter]</em> <a class="dashingAutolink" name="autolink-482"></a><a class="dashAnchor" name="//apple_ref/cpp/Parameter/editor-command"></a><tt>editor-command</tt>
+<br/></span>
+<p>Holds the name of an editor that should be used when the toplevel command <tt>,e</tt> is used.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken continuation).html" class="internal">Module (chicken continuation)</a></p>
+<p>Next: <a href="Module (chicken errno).html" class="internal">Module (chicken errno)</a></p></div></body></html>

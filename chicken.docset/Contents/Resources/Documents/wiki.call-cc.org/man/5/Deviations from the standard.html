@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Confirmed deviations from R5RS - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Deviations%20from%20the%20standard?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Deviations%20from%20the%20standard?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Deviations%20from%20the%20standard?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul><a href="Deviations from the standard.html#confirmed-deviations-from-r5rs">
+<a class="dashingAutolink" name="autolink-82"></a><a class="dashAnchor" name="//apple_ref/cpp/Guide/Confirmed%20deviations%20from%20R5RS"></a><h2 id="confirmed-deviations-from-r5rs">Confirmed deviations from R5RS</h2></a>
+<p>Identifiers are by default case-sensitive (see <a href="Using the compiler.html" class="internal">Using the compiler</a>).</p><a href="Deviations from the standard.html#number-of-arguments-to-procedures-and-macros">
+<a class="dashingAutolink" name="autolink-74"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Number%20of%20arguments%20to%20procedures%20and%20macros"></a><h3 id="number-of-arguments-to-procedures-and-macros">Number of arguments to procedures and macros</h3></a>
+<p>The maximal number of arguments that may be passed to a compiled procedure or macro is limited to around 1000. Likewise, the maximum number of values that can be passed to continuations captured using <tt>call-with-current-continuation</tt> is 1000.  This is an implementation restriction that is unlikely to be lifted.</p><a href="Deviations from the standard.html#numeric-string-conversion-considerations">
+<a class="dashingAutolink" name="autolink-75"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Numeric%20string-conversion%20considerations"></a><h3 id="numeric-string-conversion-considerations">Numeric string-conversion considerations</h3></a>
+<p>In some cases the runtime system uses the numerical string-conversion routines of the underlying C library.  Consequently, the procedures <tt>string-&gt;number</tt>, <tt>read</tt>, <tt>write</tt>, and <tt>display</tt> do not obey read/write invariance for inexact numbers.</p><a href="Deviations from the standard.html#environments-and-non-standard-syntax">
+<a class="dashingAutolink" name="autolink-76"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Environments%20and%20non-standard%20syntax"></a><h3 id="environments-and-non-standard-syntax">Environments and non-standard syntax</h3></a>
+<p>In addition to the standard bindings, <tt>scheme-report-environment</tt> and <tt>null-environment</tt> contain additional non-standard bindings for the following syntactic forms: <tt>import</tt>, <tt>require-extension</tt>, <tt>require-library</tt>, <tt>begin-for-syntax</tt>, <tt>export</tt>, <tt>module</tt>, <tt>cond-expand</tt>, <tt>syntax</tt>, <tt>reexport</tt>, <tt>import-for-syntax</tt>.</p><a href="Deviations from the standard.html#unconfirmed-deviations">
+<h2 id="unconfirmed-deviations">Unconfirmed deviations</h2></a><a href="Deviations from the standard.html#char-ready">
+<a class="dashingAutolink" name="autolink-77"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/char-ready%3F"></a><h3 id="char-ready"><tt>char-ready?</tt></h3></a>
+<p>The procedure <tt>char-ready?</tt> always returns <tt>#t</tt> for terminal ports.</p><a href="Deviations from the standard.html#doubtful-deviations">
+<h2 id="doubtful-deviations">Doubtful deviations</h2></a><a href="Deviations from the standard.html#letrec">
+<a class="dashingAutolink" name="autolink-78"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/letrec"></a><h3 id="letrec"><tt>letrec</tt></h3></a>
+<p><tt>letrec</tt> does evaluate the initial values for the bound variables sequentially and not in parallel, that is:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">letrec <span class="paren2">(<span class="default"><span class="paren3">(<span class="default">x 1</span>)</span> <span class="paren3">(<span class="default">y 2</span>)</span></span>)</span> <span class="paren2">(<span class="default">cons x y</span>)</span></span>)</span></tt></pre>
+<p>is equivalent to</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">let</span></i> <span class="paren2">(<span class="default"><span class="paren3">(<span class="default">x <span class="paren4">(<span class="default">void</span>)</span></span>)</span> <span class="paren3">(<span class="default">y <span class="paren4">(<span class="default">void</span>)</span></span>)</span></span>)</span>
+  <span class="paren2">(<span class="default">set! x 1</span>)</span>
+  <span class="paren2">(<span class="default">set! y 2</span>)</span>
+  <span class="paren2">(<span class="default">cons x y</span>)</span> </span>)</span></tt></pre>
+<p>where R5RS requires</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">let</span></i> <span class="paren2">(<span class="default"><span class="paren3">(<span class="default">x <span class="paren4">(<span class="default">void</span>)</span></span>)</span> <span class="paren3">(<span class="default">y <span class="paren4">(<span class="default">void</span>)</span></span>)</span></span>)</span>
+  <span class="paren2">(<span class="default"><i><span class="symbol">let</span></i> <span class="paren3">(<span class="default"><span class="paren4">(<span class="default">tmp1 1</span>)</span> <span class="paren4">(<span class="default">tmp2 2</span>)</span></span>)</span>
+    <span class="paren3">(<span class="default">set! x tmp1</span>)</span>
+    <span class="paren3">(<span class="default">set! y tmp2</span>)</span>
+    <span class="paren3">(<span class="default">cons x y</span>)</span> </span>)</span> </span>)</span></tt></pre>
+<p>It is unclear whether R5RS permits this behavior or not; in any case, this only affects letrecs where the bound values are not lambda-expressions.</p><a href="Deviations from the standard.html#non-deviations-that-might-surprise-you">
+<h2 id="non-deviations-that-might-surprise-you">Non-deviations that might surprise you</h2></a><a href="Deviations from the standard.html#let-syntaxand-letrec-syntax">
+<a class="dashingAutolink" name="autolink-79"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/let-syntax%20and%20letrec-syntax"></a><h3 id="let-syntaxand-letrec-syntax"><tt>let-syntax</tt> and <tt>letrec-syntax</tt></h3></a>
+<p><tt>let-syntax</tt> and <tt>letrec-syntax</tt> introduce a new scope.</p><a href="Deviations from the standard.html#equalcompares-all-structured-data-recursively">
+<a class="dashingAutolink" name="autolink-80"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/equal%3F%20compares%20all%20structured%20data%20recursively"></a><h3 id="equalcompares-all-structured-data-recursively"><tt>equal?</tt> compares all structured data recursively</h3></a>
+<p><tt>equal?</tt> compares all structured data with the exception of procedures recursively, while R5RS specifies that <tt>eqv?</tt> is used for data other than pairs, strings and vectors.  However, R5RS does not dictate the treatment of data types that are not specified by R5RS</p><a href="Deviations from the standard.html#transcript-onand-transcript-offare-not-implemented">
+<a class="dashingAutolink" name="autolink-81"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/transcript-on%20and%20transcript-off%20are%20not%20implemented"></a><h3 id="transcript-onand-transcript-offare-not-implemented"><tt>transcript-on</tt> and <tt>transcript-off</tt> are not implemented</h3></a>
+<p>The <tt>transcript-on</tt> and <tt>transcript-off</tt> procedures are not implemented.  R5RS does not require them.</p>
+<hr/>
+<p>Previous: <a href="Using the compiler.html" class="internal">Using the compiler</a></p>
+<p>Next: <a href="Extensions to the standard.html" class="internal">Extensions to the standard</a></p></div></body></html>

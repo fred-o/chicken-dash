@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module srfi-4 - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20srfi-4?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20srfi-4?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20srfi-4?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module srfi-4.html#module-srfi-4">Module srfi-4</a>
+<ol>
+<li><a href="Module srfi-4.html#chicken-implementation-specifics-and-extensions">CHICKEN implementation specifics and extensions</a></li>
+<li><a href="Module srfi-4.html#blob-conversions">Blob conversions</a></li>
+<li><a href="Module srfi-4.html#subvectors">Subvectors</a></li>
+<li><a href="Module srfi-4.html#vector-io">Vector I/O</a></li></ol></li>
+<li><a href="Module srfi-4.html#srfi-4-specification">SRFI-4 specification</a>
+<ol>
+<li><a href="Module srfi-4.html#datatypes">Datatypes</a></li>
+<li><a href="Module srfi-4.html#external-representation">External representation</a></li>
+<li><a href="Module srfi-4.html#predicates">Predicates</a></li>
+<li><a href="Module srfi-4.html#constructors">Constructors</a></li>
+<li><a href="Module srfi-4.html#length">Length</a></li>
+<li><a href="Module srfi-4.html#getters">Getters</a></li>
+<li><a href="Module srfi-4.html#setters">Setters</a></li>
+<li><a href="Module srfi-4.html#conversions">Conversions</a></li>
+<li><a href="Module srfi-4.html#release-number-vectors-allocated-in-static-memory">Release number vectors allocated in static memory</a></li></ol></li></ol></div><a href="Module srfi-4.html#module-srfi-4">
+<a class="dashingAutolink" name="autolink-1776"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20srfi-4"></a><a class="dashingAutolink" name="autolink-1791"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/srfi-4"></a><h2 id="module-srfi-4">Module srfi-4</h2></a>
+<p>Homogeneous numeric vector datatypes.  Also see the <a href="http://srfi.schemers.org/srfi-4/srfi-4.html" class="external">original SRFI-4 document</a>.</p><a href="Module srfi-4.html#chicken-implementation-specifics-and-extensions">
+<a class="dashingAutolink" name="autolink-1778"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/CHICKEN%20implementation%20specifics%20and%20extensions"></a><h3 id="chicken-implementation-specifics-and-extensions">CHICKEN implementation specifics and extensions</h3></a>
+<ul>
+<li>Procedures for <a href="Module (chicken blob).html" class="internal">blob</a> conversion, subvectors and vector I/O are provided.</li>
+<li>SRFI-17 setters for <tt>XXXvector-ref</tt> are defined.</li>
+<li>Constructors allow allocating the storage in non garbage collected memory.</li></ul><a href="Module srfi-4.html#blob-conversions">
+<a class="dashingAutolink" name="autolink-1779"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Blob%20conversions"></a><h3 id="blob-conversions">Blob conversions</h3></a>
+<p>As a SRFI-4 vector is basically just a <a href="Module (chicken blob).html" class="internal">blob</a> wrapped by a SRFI-4 type &#34;header object&#34; to structure its contents, there are several procedures which can convert between blobs and SRFI-4 vectors.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1641"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u8vector-%3Eblob%20U8VECTOR%29"></a><tt>(u8vector-&gt;blob U8VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1642"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s8vector-%3Eblob%20S8VECTOR%29"></a><tt>(s8vector-&gt;blob S8VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1643"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u16vector-%3Eblob%20U16VECTOR%29"></a><tt>(u16vector-&gt;blob U16VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1644"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s16vector-%3Eblob%20S16VECTOR%29"></a><tt>(s16vector-&gt;blob S16VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1645"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u32vector-%3Eblob%20U32VECTOR%29"></a><tt>(u32vector-&gt;blob U32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1646"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s32vector-%3Eblob%20S32VECTOR%29"></a><tt>(s32vector-&gt;blob S32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1647"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u64vector-%3Eblob%20U64VECTOR%29"></a><tt>(u64vector-&gt;blob U64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1648"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s64vector-%3Eblob%20S64VECTOR%29"></a><tt>(s64vector-&gt;blob S64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1649"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f32vector-%3Eblob%20F32VECTOR%29"></a><tt>(f32vector-&gt;blob F32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1650"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f64vector-%3Eblob%20F64VECTOR%29"></a><tt>(f64vector-&gt;blob F64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1651"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u8vector-%3Eblob%2Fshared%20U8VECTOR%29"></a><tt>(u8vector-&gt;blob/shared U8VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1652"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s8vector-%3Eblob%2Fshared%20S8VECTOR%29"></a><tt>(s8vector-&gt;blob/shared S8VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1653"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u16vector-%3Eblob%2Fshared%20U16VECTOR%29"></a><tt>(u16vector-&gt;blob/shared U16VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1654"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s16vector-%3Eblob%2Fshared%20S16VECTOR%29"></a><tt>(s16vector-&gt;blob/shared S16VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1655"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u32vector-%3Eblob%2Fshared%20U32VECTOR%29"></a><tt>(u32vector-&gt;blob/shared U32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1656"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s32vector-%3Eblob%2Fshared%20S32VECTOR%29"></a><tt>(s32vector-&gt;blob/shared S32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1657"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u64vector-%3Eblob%2Fshared%20U64VECTOR%29"></a><tt>(u64vector-&gt;blob/shared U64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1658"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s64vector-%3Eblob%2Fshared%20S64VECTOR%29"></a><tt>(s64vector-&gt;blob/shared S64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1659"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f32vector-%3Eblob%2Fshared%20F32VECTOR%29"></a><tt>(f32vector-&gt;blob/shared F32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1660"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f64vector-%3Eblob%2Fshared%20F64VECTOR%29"></a><tt>(f64vector-&gt;blob/shared F64VECTOR)</tt>
+<br/></span>
+<p>Each of these procedures return the contents of the given vector as a &#39;packed&#39; blob. The byte order in that vector is platform-dependent (for example little-endian on an <b>Intel</b> processor). The <tt>/shared</tt> variants return a blob that shares memory with the contents of the vector, the others will copy the contents of the SRFI-4 vector&#39;s internal blob object.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1661"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Eu8vector%20BLOB%29"></a><tt>(blob-&gt;u8vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1662"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Es8vector%20BLOB%29"></a><tt>(blob-&gt;s8vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1663"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Eu16vector%20BLOB%29"></a><tt>(blob-&gt;u16vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1664"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Es16vector%20BLOB%29"></a><tt>(blob-&gt;s16vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1665"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Eu32vector%20BLOB%29"></a><tt>(blob-&gt;u32vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1666"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Es32vector%20BLOB%29"></a><tt>(blob-&gt;s32vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1667"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Eu64vector%20BLOB%29"></a><tt>(blob-&gt;u64vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1668"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Es64vector%20BLOB%29"></a><tt>(blob-&gt;s64vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1669"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Ef32vector%20BLOB%29"></a><tt>(blob-&gt;f32vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1670"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Ef64vector%20BLOB%29"></a><tt>(blob-&gt;f64vector BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1671"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Eu8vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;u8vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1672"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Es8vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;s8vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1673"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Eu16vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;u16vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1674"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Es16vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;s16vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1675"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Eu32vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;u32vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1676"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Es32vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;s32vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1677"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Eu64vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;u64vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1678"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Es64vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;s64vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1679"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Ef32vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;f32vector/shared BLOB)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1680"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28blob-%3Ef64vector%2Fshared%20BLOB%29"></a><tt>(blob-&gt;f64vector/shared BLOB)</tt>
+<br/></span>
+<p>Each of these procedures return a vector where the argument <tt>BLOB</tt> is taken as a &#39;packed&#39; representation of the contents of the vector. The <tt>/shared</tt> variants return a vector that shares memory with the contents of the blob, the others will copy the blob.</p><a href="Module srfi-4.html#subvectors">
+<a class="dashingAutolink" name="autolink-1780"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Subvectors"></a><h3 id="subvectors">Subvectors</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1681"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subu8vector%20U8VECTOR%20FROM%20TO%29"></a><tt>(subu8vector U8VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1682"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subu16vector%20U16VECTOR%20FROM%20TO%29"></a><tt>(subu16vector U16VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1683"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subu32vector%20U32VECTOR%20FROM%20TO%29"></a><tt>(subu32vector U32VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1684"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subu64vector%20U32VECTOR%20FROM%20TO%29"></a><tt>(subu64vector U32VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1685"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subs8vector%20S8VECTOR%20FROM%20TO%29"></a><tt>(subs8vector S8VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1686"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subs16vector%20S16VECTOR%20FROM%20TO%29"></a><tt>(subs16vector S16VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1687"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subs32vector%20S32VECTOR%20FROM%20TO%29"></a><tt>(subs32vector S32VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1688"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subs64vector%20S32VECTOR%20FROM%20TO%29"></a><tt>(subs64vector S32VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1689"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subf32vector%20F32VECTOR%20FROM%20TO%29"></a><tt>(subf32vector F32VECTOR FROM TO)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1690"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28subf64vector%20F64VECTOR%20FROM%20TO%29"></a><tt>(subf64vector F64VECTOR FROM TO)</tt>
+<br/></span>
+<p>Creates a fresh number vector of the same type as the argument vector with the elements at the positions <tt>FROM</tt> up to but not including <tt>TO</tt>.</p><a href="Module srfi-4.html#vector-io">
+<a class="dashingAutolink" name="autolink-1781"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Vector%20I%2FO"></a><h3 id="vector-io">Vector I/O</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1691"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28read-u8vector%20%5BLENGTH%20%5BPORT%5D%5D%29"></a><tt>(read-u8vector [LENGTH [PORT]])</tt>
+<br/></span>
+<p>Reads <tt>LENGTH</tt> bytes from the <tt>PORT</tt> and returns a fresh <tt>u8vector</tt>, or as many as are available before end-of-file is encountered. <tt>PORT</tt> defaults to the value of <tt>(current-input-port)</tt>. If no bytes are available before the end-of-file, <tt>#!eof</tt> is returned.</p>
+<p>If <tt>LENGTH</tt> is <tt>#f</tt>, the vector will be filled completely until end-of-file is reached.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1692"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28read-u8vector%21%20LENGTH%20U8VECTOR%20%5BPORT%20%5BSTART%5D%5D%29"></a><tt>(read-u8vector! LENGTH U8VECTOR [PORT [START]])</tt>
+<br/></span>
+<p>Reads <tt>LENGTH</tt> bytes from the <tt>PORT</tt> writing the read input into <tt>U8VECTOR</tt> beginning at <tt>START</tt> (or 0 if not given). <tt>PORT</tt> defaults to the value of <tt>(current-input-port)</tt>.</p>
+<p>If <tt>LENGTH</tt> is <tt>#f</tt>, the vector will be filled completely until end-of-file is reached. This procedure returns the number of bytes read.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1693"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28write-u8vector%20U8VECTOR%20%5BPORT%20%5BSTART%20%5BEND%5D%5D%5D%29"></a><tt>(write-u8vector U8VECTOR [PORT [START [END]]])</tt>
+<br/></span>
+<p>Writes the bytes <tt>U8VECTOR</tt> between the indices <tt>START</tt> (inclusive) and <tt>END</tt> (exclusive) to <tt>PORT</tt>.</p>
+<p><tt>PORT</tt> defaults to the value of <tt>(current-output-port)</tt>.</p><a href="Module srfi-4.html#srfi-4-specification">
+<a class="dashingAutolink" name="autolink-1777"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/SRFI-4%20specification"></a><h2 id="srfi-4-specification">SRFI-4 specification</h2></a>
+<p>SRFI-4 describes a set of datatypes for vectors whose elements are of the same numeric type (signed or unsigned exact integer or inexact real of a given precision). These datatypes support operations analogous to the Scheme vector type, but they are distinct datatypes. An external representation is specified which must be supported by the <tt>read</tt> and <tt>write</tt> procedures and by the program parser (i.e. programs can contain references to literal homogeneous vectors).</p><a href="Module srfi-4.html#datatypes">
+<a class="dashingAutolink" name="autolink-1782"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Datatypes"></a><h3 id="datatypes">Datatypes</h3></a>
+<p>There are 8 datatypes of exact integer homogeneous vectors (which will be called integer vectors):</p>
+<table>
+<tbody><tr>
+<th>Datatype</th>
+<th>Type of elements</th></tr>
+
+<tr>
+<td><tt>s8vector</tt></td>
+<td>signed exact integer in the range -(2^7) to (2^7)-1</td></tr>
+
+<tr>
+<td><tt>u8vector</tt></td>
+<td>unsigned exact integer in the range 0 to (2^8)-1</td></tr>
+
+<tr>
+<td><tt>s16vector</tt></td>
+<td>signed exact integer in the range -(2^15) to (2^15)-1</td></tr>
+
+<tr>
+<td><tt>u16vector</tt></td>
+<td>unsigned exact integer in the range 0 to (2^16)-1</td></tr>
+
+<tr>
+<td><tt>s32vector</tt></td>
+<td>signed exact integer in the range -(2^31) to (2^31)-1</td></tr>
+
+<tr>
+<td><tt>u32vector</tt></td>
+<td>unsigned exact integer in the range 0 to (2^32)-1</td></tr>
+
+<tr>
+<td><tt>s64vector</tt></td>
+<td>signed exact integer in the range -(2^31) to (2^31)-1</td></tr>
+
+<tr>
+<td><tt>u64vector</tt></td>
+<td>unsigned exact integer in the range 0 to (2^64)-1</td></tr>
+
+<tr>
+<td><tt>s64vector</tt></td>
+<td>signed exact integer in the range -(2^63) to (2^63)-1</td></tr>
+
+<tr>
+<td><tt>u64vector</tt></td>
+<td>unsigned exact integer in the range 0 to (2^64)-1</td></tr></tbody></table>
+<p>There are 2 datatypes of inexact real homogeneous vectors (which will be called float vectors):</p>
+<table>
+<tbody><tr>
+<th>Datatype</th>
+<th>Type of elements</th></tr>
+
+<tr>
+<td><tt>f32vector</tt></td>
+<td>inexact real</td></tr>
+
+<tr>
+<td><tt>f64vector</tt></td>
+<td>inexact real</td></tr></tbody></table>
+<p>The only difference between the two float vector types is that <tt>f64vector</tt>s preserve at least as much precision as <tt>f32vector</tt>s.</p>
+<p>Each homogeneous vector datatype has an external representation which is supported by the <tt>read</tt> and <tt>write</tt> procedures and by the program parser. Each datatype also has a set of associated predefined procedures analogous to those available for Scheme&#39;s heterogeneous vectors.</p><a href="Module srfi-4.html#external-representation">
+<a class="dashingAutolink" name="autolink-1783"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/External%20representation"></a><h3 id="external-representation">External representation</h3></a><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-1633"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23u8"></a><tt>#u8</tt>
+<br/></span><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-1634"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23u16"></a><tt>#u16</tt>
+<br/></span><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-1635"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23u32"></a><tt>#u32</tt>
+<br/></span><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-1636"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23s8"></a><tt>#s8</tt>
+<br/></span><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-1637"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23s16"></a><tt>#s16</tt>
+<br/></span><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-1638"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23s32"></a><tt>#s32</tt>
+<br/></span><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-1639"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23f32"></a><tt>#f32</tt>
+<br/></span><span class="definition read"><em>[read]</em> <a class="dashingAutolink" name="autolink-1640"></a><a class="dashAnchor" name="//apple_ref/cpp/Literal/%23f64"></a><tt>#f64</tt>
+<br/></span>
+<p>The external representation of instances of the datatype <tt>XXXvector</tt> is <tt>#XXX( ...elements... )</tt>.</p>
+<p>For example,</p>
+<pre><tt>#u8(0 #e1e2 #xff)}}  ; a {{u8vector}} of length 3 containing 0, 100, 255
+#f64(-1.5)           ; a {{f64vector}} of length 1 containing -1.5.</tt></pre>
+<p>This external representation is also available in program source code. For example,</p>
+<pre><tt>(set! x &#39;#u8(1 2 3))</tt></pre>
+<p>will set <tt>x</tt> to the object <tt>#u8(1 2 3)</tt>. Since CHICKEN 4.9.0, literal homogeneous vectors do not have to be quoted. Homogeneous vectors can appear in quasiquotations but must not contain <tt>unquote</tt> or <tt>unquote-splicing</tt> forms.  <i>I.e.</i>,</p>
+<pre><tt>`(,x #u8(1 2))        ; legal
+`#u8(1 ,x 2)          ; illegal</tt></pre><a href="Module srfi-4.html#predicates">
+<a class="dashingAutolink" name="autolink-1784"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Predicates"></a><h3 id="predicates">Predicates</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1694"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u8vector%3F%20OBJ%29"></a><tt>(u8vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1695"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s8vector%3F%20OBJ%29"></a><tt>(s8vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1696"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u16vector%3F%20OBJ%29"></a><tt>(u16vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1697"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s16vector%3F%20OBJ%29"></a><tt>(s16vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1698"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u32vector%3F%20OBJ%29"></a><tt>(u32vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1699"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s32vector%3F%20OBJ%29"></a><tt>(s32vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1700"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u64vector%3F%20OBJ%29"></a><tt>(u64vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1701"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s64vector%3F%20OBJ%29"></a><tt>(s64vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1702"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f32vector%3F%20OBJ%29"></a><tt>(f32vector? OBJ)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1703"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f64vector%3F%20OBJ%29"></a><tt>(f64vector? OBJ)</tt>
+<br/></span>
+<p>Return <tt>#t</tt> if <tt>obj</tt> is an object of the specified type or <tt>#f</tt> if not.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1704"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28number-vector%3F%20OBJ%29"></a><tt>(number-vector? OBJ)</tt>
+<br/></span>
+<p>Return <tt>#t</tt> if <tt>obj</tt> is a number vector, <tt>#f</tt> if not.  A &#34;number vector&#34; is any of the homogeneous number vector types defined by SRFI-4, ie it&#39;s one of <tt>u8vector</tt>, <tt>s8vector</tt>, <tt>u16vector</tt>, <tt>s16vector</tt>, <tt>u32vector</tt>, <tt>s32vector</tt>, <tt>u64vector</tt>, <tt>s64vector</tt>, <tt>f32vector</tt> or <tt>f64vector</tt>).</p><a href="Module srfi-4.html#constructors">
+<a class="dashingAutolink" name="autolink-1785"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Constructors"></a><h3 id="constructors">Constructors</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1705"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-u8vector%20N%20%5BU8VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-u8vector N [U8VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1706"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-s8vector%20N%20%5BS8VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-s8vector N [S8VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1707"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-u16vector%20N%20%5BU16VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-u16vector N [U16VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1708"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-s16vector%20N%20%5BS16VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-s16vector N [S16VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1709"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-u32vector%20N%20%5BU32VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-u32vector N [U32VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1710"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-s32vector%20N%20%5BS32VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-s32vector N [S32VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1711"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-u64vector%20N%20%5BU64VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-u64vector N [U64VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1712"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-s64vector%20N%20%5BS64VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-s64vector N [S64VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1713"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-f32vector%20N%20%5BF32VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-f32vector N [F32VALUE NONGC FINALIZE])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1714"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28make-f64vector%20N%20%5BF64VALUE%20NONGC%20FINALIZE%5D%29"></a><tt>(make-f64vector N [F64VALUE NONGC FINALIZE])</tt>
+<br/></span>
+<p>Return a newly-allocated SRFI-4 homogeneous number vector of length N.</p>
+<p>If the optional fill VALUE is specified, it specifies the initial value for each slot in the vector.  If not, the content of the vector is unspecified but individual elements of the vector are guaranteed to be in the range of values permitted for that type of vector.</p>
+<p>The type of the fill value must be compatible with the elements of the vector datatype.  It is an error if otherwise -- for example, if an inexact integer is passed to <tt>make-u8vector</tt>.</p>
+<p>On CHICKEN, these procedures have been extended to allow allocating the storage in non-garbage collected memory, as follows:</p>
+<p>The optional arguments <tt>NONGC</tt> and <tt>FINALIZE</tt> define whether the vector should be allocated in a memory area not subject to garbage collection and whether the associated storage should be automatically freed (using finalization) when there are no references from Scheme variables and data.  <tt>NONGC</tt> defaults to <tt>#f</tt> (the vector will be located in normal garbage collected memory) and <tt>FINALIZE</tt> defaults to <tt>#t</tt>. Note that the <tt>FINALIZE</tt> argument is only used when <tt>NONGC</tt> is true.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1715"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u8vector%20U8VALUE%20...%29"></a><tt>(u8vector U8VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1716"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s8vector%20S8VALUE%20...%29"></a><tt>(s8vector S8VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1717"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u16vector%20U16VALUE%20...%29"></a><tt>(u16vector U16VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1718"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s16vector%20S16VALUE%20...%29"></a><tt>(s16vector S16VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1719"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u32vector%20U32VALUE%20...%29"></a><tt>(u32vector U32VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1720"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s32vector%20S32VALUE%20...%29"></a><tt>(s32vector S32VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1721"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u64vector%20U64VALUE%20...%29"></a><tt>(u64vector U64VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1722"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s64vector%20S64VALUE%20...%29"></a><tt>(s64vector S64VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1723"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f32vector%20F32VALUE%20...%29"></a><tt>(f32vector F32VALUE ...)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1724"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f64vector%20F64VALUE%20...%29"></a><tt>(f64vector F64VALUE ...)</tt>
+<br/></span>
+<p>Return a newly-allocated SRFI-4 homogeneous number vector of the specified type, composed of the arguments.</p><a href="Module srfi-4.html#length">
+<a class="dashingAutolink" name="autolink-1786"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Length"></a><h3 id="length">Length</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1725"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u8vector-length%20U8VECTOR%29"></a><tt>(u8vector-length U8VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1726"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s8vector-length%20S8VECTOR%29"></a><tt>(s8vector-length S8VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1727"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u16vector-length%20U16VECTOR%29"></a><tt>(u16vector-length U16VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1728"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s16vector-length%20S16VECTOR%29"></a><tt>(s16vector-length S16VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1729"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u32vector-length%20U32VECTOR%29"></a><tt>(u32vector-length U32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1730"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s32vector-length%20S32VECTOR%29"></a><tt>(s32vector-length S32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1731"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u64vector-length%20U64VECTOR%29"></a><tt>(u64vector-length U64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1732"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s64vector-length%20S64VECTOR%29"></a><tt>(s64vector-length S64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1733"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f32vector-length%20F32VECTOR%29"></a><tt>(f32vector-length F32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1734"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f64vector-length%20F64VECTOR%29"></a><tt>(f64vector-length F64VECTOR)</tt>
+<br/></span>
+<p>Returns the length of the SRFI-4 homogeneous number VECTOR.</p><a href="Module srfi-4.html#getters">
+<a class="dashingAutolink" name="autolink-1787"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Getters"></a><h3 id="getters">Getters</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1735"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u8vector-ref%20U8VECTOR%20I%29"></a><tt>(u8vector-ref U8VECTOR I)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1736"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s8vector-ref%20S8VECTOR%20i%29"></a><tt>(s8vector-ref S8VECTOR i)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1737"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u16vector-ref%20U16VECTOR%20I%29"></a><tt>(u16vector-ref U16VECTOR I)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1738"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s16vector-ref%20S16VECTOR%20I%29"></a><tt>(s16vector-ref S16VECTOR I)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1739"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u32vector-ref%20U32VECTOR%20I%29"></a><tt>(u32vector-ref U32VECTOR I)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1740"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s32vector-ref%20S32VECTOR%20I%29"></a><tt>(s32vector-ref S32VECTOR I)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1741"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u64vector-ref%20U64VECTOR%20I%29"></a><tt>(u64vector-ref U64VECTOR I)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1742"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s64vector-ref%20S64VECTOR%20I%29"></a><tt>(s64vector-ref S64VECTOR I)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1743"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f32vector-ref%20F32VECTOR%20I%29"></a><tt>(f32vector-ref F32VECTOR I)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1744"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f64vector-ref%20F64VECTOR%20I%29"></a><tt>(f64vector-ref F64VECTOR I)</tt>
+<br/></span>
+<p>Return the value of the <i>i</i>th element of the SRFI-4 homogeneous number vector, where <tt>I</tt> is a nonnegative exact integer less than the length of the vector.</p><a href="Module srfi-4.html#setters">
+<a class="dashingAutolink" name="autolink-1788"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Setters"></a><h3 id="setters">Setters</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1745"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u8vector-set%21%20U8VECTOR%20I%20U8VALUE%29"></a><tt>(u8vector-set! U8VECTOR I U8VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1746"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s8vector-set%21%20S8VECTOR%20I%20S8VALUE%29"></a><tt>(s8vector-set! S8VECTOR I S8VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1747"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u16vector-set%21%20U16VECTOR%20I%20U16VALUE%29"></a><tt>(u16vector-set! U16VECTOR I U16VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1748"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s16vector-set%21%20S16VECTOR%20I%20S16VALUE%29"></a><tt>(s16vector-set! S16VECTOR I S16VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1749"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u32vector-set%21%20U32VECTOR%20I%20U32VALUE%29"></a><tt>(u32vector-set! U32VECTOR I U32VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1750"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s32vector-set%21%20S32VECTOR%20I%20S32VALUE%29"></a><tt>(s32vector-set! S32VECTOR I S32VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1751"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u64vector-set%21%20U64VECTOR%20I%20U64VALUE%29"></a><tt>(u64vector-set! U64VECTOR I U64VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1752"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s64vector-set%21%20S64VECTOR%20I%20S64VALUE%29"></a><tt>(s64vector-set! S64VECTOR I S64VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1753"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f32vector-set%21%20F32VECTOR%20I%20F32VALUE%29"></a><tt>(f32vector-set! F32VECTOR I F32VALUE)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1754"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f64vector-set%21%20F64VECTOR%20I%20F64VALUE%29"></a><tt>(f64vector-set! F64VECTOR I F64VALUE)</tt>
+<br/></span>
+<p>Set the <tt>i</tt>th element of the SRFI-4 homogeneous number VECTOR to VALUE.  <tt>I</tt> is a nonnegative exact integer less than the length of the vector and VALUE must be the same type as the elements of the vector datatype.</p>
+<p>Additionally, SRFI-17 setters are defined on all <tt>xxxvector-ref</tt> procedures.  For example, to set the <tt>i</tt>th element of SRFI-4 <tt>u8vector</tt> to <tt>u8value</tt>:</p>
+<pre><tt>(set! (u8vector-ref u8vector i) u8value)</tt></pre><a href="Module srfi-4.html#conversions">
+<a class="dashingAutolink" name="autolink-1789"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Conversions"></a><h3 id="conversions">Conversions</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1755"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u8vector-%3Elist%20U8VECTOR%29"></a><tt>(u8vector-&gt;list U8VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1756"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s8vector-%3Elist%20S8VECTOR%29"></a><tt>(s8vector-&gt;list S8VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1757"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u16vector-%3Elist%20U16VECTOR%29"></a><tt>(u16vector-&gt;list U16VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1758"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s16vector-%3Elist%20S16VECTOR%29"></a><tt>(s16vector-&gt;list S16VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1759"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u32vector-%3Elist%20U32VECTOR%29"></a><tt>(u32vector-&gt;list U32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1760"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s32vector-%3Elist%20S32VECTOR%29"></a><tt>(s32vector-&gt;list S32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1761"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28u64vector-%3Elist%20U64VECTOR%29"></a><tt>(u64vector-&gt;list U64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1762"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28s64vector-%3Elist%20S64VECTOR%29"></a><tt>(s64vector-&gt;list S64VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1763"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f32vector-%3Elist%20F32VECTOR%29"></a><tt>(f32vector-&gt;list F32VECTOR)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1764"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28f64vector-%3Elist%20F64VECTOR%29"></a><tt>(f64vector-&gt;list F64VECTOR)</tt>
+<br/></span>
+<p>Return a list consisting of the elements of SRFI-4 homogeneous number VECTOR.</p><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1765"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Eu8vector%20U8LIST%29"></a><tt>(list-&gt;u8vector U8LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1766"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Es8vector%20S8LIST%29"></a><tt>(list-&gt;s8vector S8LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1767"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Eu16vector%20U16LIST%29"></a><tt>(list-&gt;u16vector U16LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1768"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Es16vector%20S16LIST%29"></a><tt>(list-&gt;s16vector S16LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1769"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Eu32vector%20U32LIST%29"></a><tt>(list-&gt;u32vector U32LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1770"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Es32vector%20S32LIST%29"></a><tt>(list-&gt;s32vector S32LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1771"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Eu64vector%20U64LIST%29"></a><tt>(list-&gt;u64vector U64LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1772"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Es64vector%20S64LIST%29"></a><tt>(list-&gt;s64vector S64LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1773"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Ef32vector%20F32LIST%29"></a><tt>(list-&gt;f32vector F32LIST)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1774"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28list-%3Ef64vector%20F64LIST%29"></a><tt>(list-&gt;f64vector F64LIST)</tt>
+<br/></span>
+<p>Return a newly-allocated SRFI-4 homogeneous number VECTOR consisting of the elements of LIST.  Each element of LIST must be compatible with the datatype of VECTOR.</p><a href="Module srfi-4.html#release-number-vectors-allocated-in-static-memory">
+<a class="dashingAutolink" name="autolink-1790"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Release%20number%20vectors%20allocated%20in%20static%20memory"></a><h3 id="release-number-vectors-allocated-in-static-memory">Release number vectors allocated in static memory</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1775"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28release-number-vector%20NVECTOR%29"></a><tt>(release-number-vector NVECTOR)</tt>
+<br/></span>
+<p>Release the storage of a SRFI-4 vector that was allocated in non-garbage collected memory (for example using the <tt>NONGC</tt> argument for one of the <tt>make-XXXvector</tt> constructor procedures). The effect of calling this procedure with a number vector allocated in normal garbage collected memory is undefined.</p>
+<hr/>
+<p>Previous: <a href="Module r4rs.html" class="internal">Module r4rs</a></p>
+<p>Next: <a href="Module (chicken base).html" class="internal">Module (chicken base)</a></p></div></body></html>

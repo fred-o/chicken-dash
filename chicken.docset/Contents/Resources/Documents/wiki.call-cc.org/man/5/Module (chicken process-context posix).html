@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken process-context posix) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process-context%20posix)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process-context%20posix)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20process-context%20posix)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken process-context posix).html#module-chicken-process-context-posix">Module (chicken process-context posix)</a>
+<ol>
+<li><a href="Module (chicken process-context posix).html#process-filesystem-context">Process filesystem context</a>
+<ol>
+<li><a href="Module (chicken process-context posix).html#change-directory">change-directory*</a></li>
+<li><a href="Module (chicken process-context posix).html#set-root-directory">set-root-directory!</a></li></ol></li>
+<li><a href="Module (chicken process-context posix).html#retrieving-user-group-information">Retrieving user &amp; group information</a>
+<ol>
+<li><a href="Module (chicken process-context posix).html#current-user-id">current-user-id</a></li>
+<li><a href="Module (chicken process-context posix).html#current-user-name">current-user-name</a></li>
+<li><a href="Module (chicken process-context posix).html#current-effective-user-id">current-effective-user-id</a></li>
+<li><a href="Module (chicken process-context posix).html#current-effective-user-name">current-effective-user-name</a></li>
+<li><a href="Module (chicken process-context posix).html#current-group-id">current-group-id</a></li>
+<li><a href="Module (chicken process-context posix).html#current-effective-group-id">current-effective-group-id</a></li></ol></li>
+<li><a href="Module (chicken process-context posix).html#process-identity">Process identity</a>
+<ol>
+<li><a href="Module (chicken process-context posix).html#current-process-id">current-process-id</a></li>
+<li><a href="Module (chicken process-context posix).html#parent-process-id">parent-process-id</a></li>
+<li><a href="Module (chicken process-context posix).html#process-group-id">process-group-id</a></li>
+<li><a href="Module (chicken process-context posix).html#user-information">user-information</a></li></ol></li></ol></li></ol></div><a href="Module (chicken process-context posix).html#module-chicken-process-context-posix">
+<a class="dashingAutolink" name="autolink-1170"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20process-context%20posix%29"></a><a class="dashingAutolink" name="autolink-1174"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20process-context%20posix%29"></a><h2 id="module-chicken-process-context-posix">Module (chicken process-context posix)</h2></a>
+<p>This module provides access to POSIX-specific procedures which deal with the current process context.</p><a href="Module (chicken process-context posix).html#process-filesystem-context">
+<a class="dashingAutolink" name="autolink-1171"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Process%20filesystem%20context"></a><h3 id="process-filesystem-context">Process filesystem context</h3></a><a href="Module (chicken process-context posix).html#change-directory">
+<h4 id="change-directory">change-directory*</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1175"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28change-directory%2A%20FD%29"></a><tt>(change-directory* FD)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1176"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set%21%20%28current-directory%29%20FD%29"></a><tt>(set! (current-directory) FD)</tt>
+<br/></span>
+<p>Changes the current working directory to the one represented by the file-descriptor <tt>FD</tt>, which should be an exact integer.</p>
+<p><b>NOTE</b>: Windows does not allow <tt>{open</tt>} on directories, so while technically it is supported, in practice you cannot use this procedure on native Windows builds (on cygwin it works because cygwin emulates this).</p><a href="Module (chicken process-context posix).html#set-root-directory">
+<h4 id="set-root-directory">set-root-directory!</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1177"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28set-root-directory%21%20STRING%29"></a><tt>(set-root-directory! STRING)</tt>
+<br/></span>
+<p>Sets the root directory for the current process to the path given in <tt>STRING</tt> (using the <tt>chroot</tt> function).  If the current process has no root permissions, the operation will fail.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process-context posix).html#retrieving-user-group-information">
+<a class="dashingAutolink" name="autolink-1172"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Retrieving%20user%20%26%20group%20information"></a><h3 id="retrieving-user-group-information">Retrieving user &amp; group information</h3></a><a href="Module (chicken process-context posix).html#current-user-id">
+<h4 id="current-user-id">current-user-id</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1178"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-user-id%29"></a><tt>(current-user-id)</tt>
+<br/></span>
+<pre><tt>[setter] (set! (current-user-id) UID)</tt></pre>
+<p>Get or set the real user-id of the current process. The procedure corresponds to the getuid and setuid C functions.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process-context posix).html#current-user-name">
+<h4 id="current-user-name">current-user-name</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1179"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-user-name%29"></a><tt>(current-user-name)</tt>
+<br/></span>
+<p>Get the login name corresponding to the real user-id of the current process from the system password database.</p>
+<p>On Windows, there&#39;s no user-id and no distinction between real and effective user, but this procedure <i>will</i> return the username associated with the current process, so it is safe to use.</p><a href="Module (chicken process-context posix).html#current-effective-user-id">
+<h4 id="current-effective-user-id">current-effective-user-id</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1180"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-effective-user-id%29"></a><tt>(current-effective-user-id)</tt>
+<br/></span>
+<pre><tt>[setter] (set! (current-effective-user-id) UID)</tt></pre>
+<p>Get or set the effective user-id of the current process.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process-context posix).html#current-effective-user-name">
+<h4 id="current-effective-user-name">current-effective-user-name</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1181"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-effective-user-name%29"></a><tt>(current-effective-user-name)</tt>
+<br/></span>
+<p>Get the login name corresponding to the effective user-id of the current process from the system password database.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process-context posix).html#current-group-id">
+<h4 id="current-group-id">current-group-id</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1182"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-group-id%29"></a><tt>(current-group-id)</tt>
+<br/></span>
+<pre><tt>[setter] (set! (current-group-id) GID)</tt></pre>
+<p>Get or set the real group-id of the current process.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process-context posix).html#current-effective-group-id">
+<h4 id="current-effective-group-id">current-effective-group-id</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1183"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-effective-group-id%29"></a><tt>(current-effective-group-id)</tt>
+<br/></span>
+<pre><tt>[setter] (set! (current-effective-group-id) GID)</tt></pre>
+<p>Get or set the effective group-id of the current process. ID can be found, then <tt>#f</tt> is returned.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process-context posix).html#process-identity">
+<a class="dashingAutolink" name="autolink-1173"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Process%20identity"></a><h3 id="process-identity">Process identity</h3></a><a href="Module (chicken process-context posix).html#current-process-id">
+<h4 id="current-process-id">current-process-id</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1184"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28current-process-id%29"></a><tt>(current-process-id)</tt>
+<br/></span>
+<p>Returns the process ID of the current process.</p><a href="Module (chicken process-context posix).html#parent-process-id">
+<h4 id="parent-process-id">parent-process-id</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1185"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28parent-process-id%29"></a><tt>(parent-process-id)</tt>
+<br/></span>
+<p>Returns the process ID of the parent of the current process.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process-context posix).html#process-group-id">
+<h4 id="process-group-id">process-group-id</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1186"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28process-group-id%20PID%29"></a><tt>(process-group-id PID)</tt>
+<br/></span>
+<pre><tt>[setter] (set! (process-group-id PID) PGID)</tt></pre>
+<p>Get or set the process group ID of the process specified by <tt>PID</tt>.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p><a href="Module (chicken process-context posix).html#user-information">
+<h4 id="user-information">user-information</h4></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1187"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28user-information%20USER%20%5BAS-VECTOR%5D%29"></a><tt>(user-information USER [AS-VECTOR])</tt>
+<br/></span>
+<p>If <tt>USER</tt> specifes a valid username (as a string) or user ID, then the user database is consulted and a list of 7 values are returned: the user-name, the encrypted password, the user ID, the group ID, a user-specific string, the home directory and the default shell. When <tt>AS-VECTOR</tt> is <tt>#t</tt> a vector of 7 elements is returned instead of a list. If no user with this name or id then <tt>#f</tt> is returned.</p>
+<p>Note: on Android systems, the user-specific string is always <tt>&#34;&#34;</tt>, since <tt>pw_gecos</tt> is not available in the C <tt>passwd</tt> struct on that platform.</p>
+<p><b>NOTE</b>: On native Windows builds (all except cygwin), this procedure is unimplemented and will raise an error.</p>
+<hr/>
+<p>Previous: <a href="Module (chicken process-context).html" class="internal">Module (chicken process-context)</a></p>
+<p>Next: <a href="Module (chicken random).html" class="internal">Module (chicken random)</a></p></div></body></html>

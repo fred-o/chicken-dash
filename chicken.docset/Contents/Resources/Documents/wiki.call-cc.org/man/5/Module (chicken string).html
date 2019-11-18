@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>Module (chicken string) - The CHICKEN Scheme wiki</title>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<link rel="stylesheet" type="text/css" href="../../chicken.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/></head>
+<body>
+<div id="menu">
+<ul>
+<li><a href="http://wiki.call-cc.org/" class="internal">Wiki</a></li>
+<li><a href="http://code.call-cc.org/" class="internal">Download</a></li>
+<li><a href="http://wiki.call-cc.org/manual/index" class="internal">Manual</a></li>
+<li><a href="http://eggs.call-cc.org/" class="internal">Eggs</a></li>
+<li><a href="http://api.call-cc.org/doc/" class="internal">API</a></li>
+<li><a href="http://tests.call-cc.org/" class="internal">Tests</a></li>
+<li><a href="http://bugs.call-cc.org/" class="internal">Bugs</a></li></ul></div>
+<div id="search">
+<form action="http://wiki.call-cc.org/search">
+<div><label>free text<input type="text" name="text"/></label><label>identifier<input type="text" name="ident"/></label><input type="submit" value="search"/><a href="http://wiki.call-cc.org/search-help">search help</a></div></form></div>
+<ul id="page-specific-links">
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20string)?action=show">show</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20string)?action=edit" rel="nofollow">edit</a></li>
+<li><a href="http://wiki.call-cc.org/man/5/Module%20(chicken%20string)?action=history">history</a></li></ul>
+<div id="content">
+<ul class="tags">
+<li>manual</li></ul>
+<div id="toc">
+<ol>
+<li><a href="Module (chicken string).html#module-chicken-string">Module (chicken string)</a>
+<ol>
+<li><a href="Module (chicken string).html#conc">conc</a></li>
+<li><a href="Module (chicken string).html#string">-&gt;string</a></li>
+<li><a href="Module (chicken string).html#string-chop">string-chop</a></li>
+<li><a href="Module (chicken string).html#string-chomp">string-chomp</a></li>
+<li><a href="Module (chicken string).html#string-compare3">string-compare3</a></li>
+<li><a href="Module (chicken string).html#string-intersperse">string-intersperse</a></li>
+<li><a href="Module (chicken string).html#string-split">string-split</a></li>
+<li><a href="Module (chicken string).html#string-translate">string-translate</a></li>
+<li><a href="Module (chicken string).html#string-translate">string-translate*</a></li>
+<li><a href="Module (chicken string).html#substring">substring=?</a></li>
+<li><a href="Module (chicken string).html#substring-index">substring-index</a></li>
+<li><a href="Module (chicken string).html#reverse-list-string">reverse-list-&gt;string</a></li>
+<li><a href="Module (chicken string).html#reverse-string-append">reverse-string-append</a></li></ol></li></ol></div><a href="Module (chicken string).html#module-chicken-string">
+<a class="dashingAutolink" name="autolink-1251"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/Module%20%28chicken%20string%29"></a><a class="dashingAutolink" name="autolink-1265"></a><a class="dashAnchor" name="//apple_ref/cpp/Module/%28chicken%20string%29"></a><h2 id="module-chicken-string">Module (chicken string)</h2></a>
+<p>This module contains procedures which can perform various useful string operations.</p><a href="Module (chicken string).html#conc">
+<a class="dashingAutolink" name="autolink-1252"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/conc"></a><h3 id="conc">conc</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1266"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28conc%20X%20...%29"></a><tt>(conc X ...)</tt>
+<br/></span>
+<p>Returns a string with the string-represenation of all arguments concatenated together. <tt>conc</tt> could be implemented as</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default"><i><span class="symbol">define</span></i> <span class="paren2">(<span class="default">conc . args</span>)</span>
+  <span class="paren2">(<span class="default">apply string-append <span class="paren3">(<span class="default">map -&gt;string args</span>)</span></span>)</span> </span>)</span></tt></pre><a href="Module (chicken string).html#string">
+<a class="dashingAutolink" name="autolink-1253"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/-%3Estring"></a><h3 id="string">-&gt;string</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1267"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28-%3Estring%20X%29"></a><tt>(-&gt;string X)</tt>
+<br/></span>
+<p>Returns a string-representation of <tt>X</tt>.</p><a href="Module (chicken string).html#string-chop">
+<a class="dashingAutolink" name="autolink-1254"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/string-chop"></a><h3 id="string-chop">string-chop</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1268"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-chop%20STRING%20LENGTH%29"></a><tt>(string-chop STRING LENGTH)</tt>
+<br/></span>
+<p>Returns a list of substrings taken by <i>chopping</i> <tt>STRING</tt> every <tt>LENGTH</tt> characters:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">string-chop <span class="string">&#34;one two three&#34;</span> 4</span>)</span>  ==&gt;  <span class="paren1">(<span class="default"><span class="string">&#34;one &#34;</span> <span class="string">&#34;two &#34;</span> <span class="string">&#34;thre&#34;</span> <span class="string">&#34;e&#34;</span></span>)</span></tt></pre><a href="Module (chicken string).html#string-chomp">
+<a class="dashingAutolink" name="autolink-1255"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/string-chomp"></a><h3 id="string-chomp">string-chomp</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1269"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-chomp%20STRING%20%5BSUFFIX%5D%29"></a><tt>(string-chomp STRING [SUFFIX])</tt>
+<br/></span>
+<p>If <tt>STRING</tt> ends with <tt>SUFFIX</tt>, then this procedure returns a copy of its first argument with the suffix removed, otherwise returns <tt>STRING</tt> unchanged. <tt>SUFFIX</tt> defaults to <tt>&#34;\n&#34;</tt>.</p><a href="Module (chicken string).html#string-compare3">
+<a class="dashingAutolink" name="autolink-1256"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/string-compare3"></a><h3 id="string-compare3">string-compare3</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1270"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-compare3%20STRING1%20STRING2%29"></a><tt>(string-compare3 STRING1 STRING2)</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1271"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-compare3-ci%20STRING1%20STRING2%29"></a><tt>(string-compare3-ci STRING1 STRING2)</tt>
+<br/></span>
+<p>Perform a three-way comparison between the <tt>STRING1</tt> and <tt>STRING2</tt>, returning either <tt>-1</tt> if <tt>STRING1</tt> is lexicographically less than <tt>STRING2</tt>, <tt>0</tt> if it is equal, or <tt>1</tt> if it s greater. <tt>string-compare3-ci</tt> performs a case-insensitive comparison.</p><a href="Module (chicken string).html#string-intersperse">
+<a class="dashingAutolink" name="autolink-1257"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/string-intersperse"></a><h3 id="string-intersperse">string-intersperse</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1272"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-intersperse%20LIST%20%5BSTRING%5D%29"></a><tt>(string-intersperse LIST [STRING])</tt>
+<br/></span>
+<p>Returns a string that contains all strings in <tt>LIST</tt> concatenated together.  <tt>STRING</tt> is placed between each concatenated string and defaults to <tt>&#34; &#34;</tt>.</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">string-intersperse &#39;<span class="paren2">(<span class="default"><span class="string">&#34;one&#34;</span> <span class="string">&#34;two&#34;</span></span>)</span> <span class="string">&#34;three&#34;</span></span>)</span></tt></pre>
+<p>is equivalent to</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">apply string-append <span class="paren2">(<span class="default">intersperse &#39;<span class="paren3">(<span class="default"><span class="string">&#34;one&#34;</span> <span class="string">&#34;two&#34;</span></span>)</span> <span class="string">&#34;three&#34;</span></span>)</span></span>)</span></tt></pre><a href="Module (chicken string).html#string-split">
+<a class="dashingAutolink" name="autolink-1258"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/string-split"></a><h3 id="string-split">string-split</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1273"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-split%20STRING%20%5BDELIMITER-STRING%20%5BKEEPEMPTY%5D%5D%29"></a><tt>(string-split STRING [DELIMITER-STRING [KEEPEMPTY]])</tt>
+<br/></span>
+<p>Split string into substrings delimited by any of the characters given in the delimiter string. If no delimiters are specified, a string comprising the tab, newline and space characters is assumed. If the parameter <tt>KEEPEMPTY</tt> is given and not <tt>#f</tt>, then empty substrings are retained:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">string-split <span class="string">&#34;one  two  three&#34;</span></span>)</span> ==&gt; <span class="paren1">(<span class="default"><span class="string">&#34;one&#34;</span> <span class="string">&#34;two&#34;</span> <span class="string">&#34;three&#34;</span></span>)</span>
+<span class="paren1">(<span class="default">string-split <span class="string">&#34;foo:bar::baz:&#34;</span> <span class="string">&#34;:&#34;</span> #t</span>)</span> ==&gt; <span class="paren1">(<span class="default"><span class="string">&#34;foo&#34;</span> <span class="string">&#34;bar&#34;</span> <span class="string">&#34;&#34;</span> <span class="string">&#34;baz&#34;</span> <span class="string">&#34;&#34;</span></span>)</span>
+<span class="paren1">(<span class="default">string-split <span class="string">&#34;foo:bar:baz,quux,zot&#34;</span> <span class="string">&#34;:,&#34;</span> </span>)</span> ==&gt; <span class="paren1">(<span class="default"><span class="string">&#34;foo&#34;</span> <span class="string">&#34;bar&#34;</span> <span class="string">&#34;baz&#34;</span> <span class="string">&#34;quux&#34;</span> <span class="string">&#34;zot&#34;</span></span>)</span></tt></pre><a href="Module (chicken string).html#string-translate">
+<a class="dashingAutolink" name="autolink-1259"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/string-translate"></a><h3 id="string-translate">string-translate</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1274"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-translate%20STRING%20FROM%20%5BTO%5D%29"></a><tt>(string-translate STRING FROM [TO])</tt>
+<br/></span>
+<p>Returns a fresh copy of <tt>STRING</tt> with characters matching <tt>FROM</tt> translated to <tt>TO</tt>.  If <tt>TO</tt> is omitted, then matching characters are removed. <tt>FROM</tt> and <tt>TO</tt> may be a character, a string or a list. If both <tt>FROM</tt> and <tt>TO</tt> are strings, then the character at the same position in <tt>TO</tt> as the matching character in <tt>FROM</tt> is substituted.</p><a href="Module (chicken string).html#string-translate">
+<a class="dashingAutolink" name="autolink-1260"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/string-translate%2A"></a><h3 id="string-translate">string-translate*</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1275"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28string-translate%2A%20STRING%20SMAP%29"></a><tt>(string-translate* STRING SMAP)</tt>
+<br/></span>
+<p>Substitutes elements of <tt>STRING</tt> according to <tt>SMAP</tt>. <tt>SMAP</tt> should be an association-list where each element of the list is a pair of the form <tt>(MATCH . REPLACEMENT)</tt>. Every occurrence of the string <tt>MATCH</tt> in <tt>STRING</tt> will be replaced by the string <tt>REPLACEMENT</tt>:</p>
+<pre><tt class="highlight scheme-language"><span class="paren1">(<span class="default">string-translate*
+  <span class="string">&#34;&lt;h1&gt;this is a </span><span class="string">\&#34;</span><span class="string">string</span><span class="string">\&#34;</span><span class="string">&lt;/h1&gt;&#34;</span>
+  &#39;<span class="paren2">(<span class="default"><span class="paren3">(<span class="default"><span class="string">&#34;&lt;&#34;</span> . <span class="string">&#34;&amp;lt;&#34;</span></span>)</span> <span class="paren3">(<span class="default"><span class="string">&#34;&gt;&#34;</span> . <span class="string">&#34;&amp;gt;&#34;</span></span>)</span> <span class="paren3">(<span class="default"><span class="string">&#34;</span><span class="string">\&#34;</span><span class="string">&#34;</span> . <span class="string">&#34;&amp;quot;&#34;</span></span>)</span></span>)</span> </span>)</span>
+=&gt;  <span class="string">&#34;&amp;lt;h1&amp;gt;this is a &amp;quot;string&amp;quot;&amp;lt;/h1&amp;gt;&#34;</span></tt></pre><a href="Module (chicken string).html#substring">
+<a class="dashingAutolink" name="autolink-1261"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/substring%3D%3F"></a><h3 id="substring">substring=?</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1276"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28substring%3D%3F%20STRING1%20STRING2%20%5BSTART1%20%5BSTART2%20%5BLENGTH%5D%5D%5D%29"></a><tt>(substring=? STRING1 STRING2 [START1 [START2 [LENGTH]]])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1277"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28substring-ci%3D%3F%20STRING1%20STRING2%20%5BSTART1%20%5BSTART2%20%5BLENGTH%5D%5D%5D%29"></a><tt>(substring-ci=? STRING1 STRING2 [START1 [START2 [LENGTH]]])</tt>
+<br/></span>
+<p>Returns <tt>#t</tt> if the strings <tt>STRING1</tt> and <tt>STRING2</tt> are equal, or <tt>#f</tt> otherwise.  The comparison starts at the positions <tt>START1</tt> and <tt>START2</tt> (which default to 0), comparing <tt>LENGTH</tt> characters (which defaults to the minimum of the remaining length of both strings).</p><a href="Module (chicken string).html#substring-index">
+<a class="dashingAutolink" name="autolink-1262"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/substring-index"></a><h3 id="substring-index">substring-index</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1278"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28substring-index%20WHICH%20WHERE%20%5BSTART%5D%29"></a><tt>(substring-index WHICH WHERE [START])</tt>
+<br/></span><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1279"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28substring-index-ci%20WHICH%20WHERE%20%5BSTART%5D%29"></a><tt>(substring-index-ci WHICH WHERE [START])</tt>
+<br/></span>
+<p>Searches for first index in string <tt>WHERE</tt> where string <tt>WHICH</tt> occurs.  If the optional argument <tt>START</tt> is given, then the search starts at that index.  <tt>substring-index-ci</tt> is a case-insensitive version of <tt>substring-index</tt>.</p><a href="Module (chicken string).html#reverse-list-string">
+<a class="dashingAutolink" name="autolink-1263"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/reverse-list-%3Estring"></a><h3 id="reverse-list-string">reverse-list-&gt;string</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1280"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28reverse-list-%3Estring%20LIST%29"></a><tt>(reverse-list-&gt;string LIST)</tt>
+<br/></span>
+<p>Returns a string with the characters in <tt>LIST</tt> in reverse order. This is equivalent to <tt>(list-&gt;string (reverse LIST))</tt>, but much more efficient.</p><a href="Module (chicken string).html#reverse-string-append">
+<a class="dashingAutolink" name="autolink-1264"></a><a class="dashAnchor" name="//apple_ref/cpp/Section/reverse-string-append"></a><h3 id="reverse-string-append">reverse-string-append</h3></a><span class="definition procedure"><em>[procedure]</em> <a class="dashingAutolink" name="autolink-1281"></a><a class="dashAnchor" name="//apple_ref/cpp/Procedure/%28reverse-string-append%20LIST%29"></a><tt>(reverse-string-append LIST)</tt>
+<br/></span>
+<p><tt>(apply string-append (reverse LIST))</tt></p>
+<hr/>
+<p>Previous: <a href="Module (chicken sort).html" class="internal">Module (chicken sort)</a></p>
+<p>Next: <a href="Module (chicken syntax).html" class="internal">Module (chicken syntax)</a></p></div></body></html>
